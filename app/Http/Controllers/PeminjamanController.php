@@ -46,7 +46,7 @@ class PeminjamanController extends Controller
                 'subsubkelompokbarang.id',
                 'subsubkelompokbarang.nama',
                 DB::raw(
-                    'count(inventarisbarang.subsubkelompokbarang_id) as `jumlah`'
+                    'count(inventarisbarang.subsubkelompokbarang_id) as jumlah'
                 )
             )
             ->groupBy('subsubkelompokbarang.id')
@@ -90,7 +90,7 @@ class PeminjamanController extends Controller
                 'subsubkelompokbarang.id',
                 'subsubkelompokbarang.nama',
                 DB::raw(
-                    'count(inventarisbarang.subsubkelompokbarang_id) as `jumlah`'
+                    'count(inventarisbarang.subsubkelompokbarang_id) as jumlah'
                 )
             )
             ->groupBy('subsubkelompokbarang.id')
