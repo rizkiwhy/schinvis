@@ -14,31 +14,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::statement('ALTER TABLE agama DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE jeniskelamin DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE role DISABLE TRIGGER ALL;');
-        // DB::statement('ALTER TABLE user DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE title DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE personal DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE gedung DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE ruangan DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE golonganbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE bidangbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE kelompokbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE subkelompokbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE subsubkelompokbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE jenispenggunaanbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE bahanbarang DISABLE TRIGGER ALL;');
-        // DB::statement('ALTER TABLE ukurangbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE kondisibarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE statusbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE inventarisbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE statuspengajuan DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE jenispengajuanbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE pengajuanbarang DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE inventarisdigunakan DISABLE TRIGGER ALL;');
-        DB::statement('ALTER TABLE inventarisdiperbaiki DISABLE TRIGGER ALL;');
+        // // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // DB::statement('ALTER TABLE agama DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE jeniskelamin DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE role DISABLE TRIGGER ALL;');
+        // // DB::statement('ALTER TABLE user DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE title DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE personal DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE gedung DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE ruangan DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE golonganbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE bidangbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE kelompokbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE subkelompokbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE subsubkelompokbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE jenispenggunaanbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE bahanbarang DISABLE TRIGGER ALL;');
+        // // DB::statement('ALTER TABLE ukurangbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE kondisibarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE statusbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE inventarisbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE statuspengajuan DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE jenispengajuanbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE pengajuanbarang DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE inventarisdigunakan DISABLE TRIGGER ALL;');
+        // DB::statement('ALTER TABLE inventarisdiperbaiki DISABLE TRIGGER ALL;');
 
         $this->call(AgamaSeeder::class);
         $this->call(JenisKelaminSeeder::class);
