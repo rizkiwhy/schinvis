@@ -58,8 +58,8 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusPengajuanSeeder::class);
         $this->call(JenisPengajuanBarangSeeder::class);
         $this->call(JenisPenggunaanBarangSeeder::class);
-        $this->call(InventarisBarangSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(InventarisBarangSeeder::class);
 
         // DB::statement('ALTER TABLE agama ENABLE TRIGGER ALL;');
         // DB::statement('ALTER TABLE jeniskelamin ENABLE TRIGGER ALL;');
