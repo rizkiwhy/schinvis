@@ -70,13 +70,16 @@ class InventarisController extends Controller
 
         $jumlahAwal = InventarisBarang::count();
 
-        $noRegister = substr($request->noregisterhidden, -2);
+        $noRegister = substr($request->noregisterhidden, -3);
+
+        // dd($noRegister);
 
         for ($i = 0; $i < $request->jumlahbarang; $i++) {
             $inventarisBarang = InventarisBarang::create([
                 'id' =>
                     $request->subsubkelompokbarang_id .
                     sprintf('%03s', $noRegister),
+                    // $noRegister,
                 'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
                 'noregister' => $noRegister,
                 'merekmodel' => $request->merekmodel,
@@ -201,7 +204,7 @@ class InventarisController extends Controller
             'statusbarang_id' => 'required',
         ]);
 
-        $noRegister = substr($request->noregisterhidden, -2);
+        $noRegister = substr($request->noregisterhidden, -3);
 
         $inventaris = InventarisBarang::find($request->id);
         $inventaris->update([
