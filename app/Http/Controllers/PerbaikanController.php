@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\InventarisDiperbaiki;
 use App\Models\InventarisBarang;
@@ -82,12 +83,31 @@ class PerbaikanController extends Controller
             $request->inventarisbarang_id
         );
 
+        //2104034001001
+        $id = DB::table('inventarisdiperbaiki')
+            ->whereDate('created_at', date('Y-m-d'))
+            // ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            ->max(DB::raw('substring(id::text, 11)')); // pgsql
+
+        if ($id === null) {
+            $id = 1;
+        } else {
+            $id = ++$id;
+        }
+
+        $id = substr($id, -3);
+
         if ($inventarisBarang->statusbarang_id === 1) {
             // $inventarisTersedia = InventarisTersedia::where(
             //     'inventarisbarang_id',
             //     $request->inventarisbarang_id
             // )->delete();
             $inventarisDiperbaiki = InventarisDiperbaiki::create([
+                'id' =>
+                    substr(date('Ymd'), 2) .
+                    4 .
+                    sprintf('%03s', $request->user_id) .
+                    sprintf('%03s', $id),
                 'inventarisbarang_id' => $request->inventarisbarang_id,
                 'masalah' => $request->masalah,
                 'jenispengajuanbarang_id' => 4,
@@ -100,6 +120,11 @@ class PerbaikanController extends Controller
                 $request->inventarisbarang_id
             )->first();
             $inventarisDiperbaiki = InventarisDiperbaiki::create([
+                'id' =>
+                    substr(date('Ymd'), 2) .
+                    4 .
+                    sprintf('%03s', $request->user_id) .
+                    sprintf('%03s', $id),
                 'inventarisbarang_id' => $request->inventarisbarang_id,
                 'masalah' => $request->masalah,
                 'jenispengajuanbarang_id' => 4,
@@ -164,7 +189,24 @@ class PerbaikanController extends Controller
             'inventarisbarang_id',
             $request->inventarisbarang_id
         )->first();
+        $id = DB::table('inventarisdiperbaiki')
+            ->whereDate('created_at', date('Y-m-d'))
+            // ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            ->max(DB::raw('substring(id::text, 11)')); // pgsql
+
+        if ($id === null) {
+            $id = 1;
+        } else {
+            $id = ++$id;
+        }
+
+        $id = substr($id, -3);
         $inventarisDiperbaiki = InventarisDiperbaiki::create([
+            'id' =>
+                substr(date('Ymd'), 2) .
+                4 .
+                sprintf('%03s', Auth::user()->id) .
+                sprintf('%03s', $id),
             'inventarisbarang_id' => $request->inventarisbarang_id,
             'masalah' => $request->masalah,
             'jenispengajuanbarang_id' => 4,
@@ -375,33 +417,45 @@ class PerbaikanController extends Controller
     {
         $inventarisDiperbaiki = InventarisDiperbaiki::find($request->delete_id);
 
-        if ($inventarisDiperbaiki->user_id === 1) {
-            $inventarisBarang = InventarisBarang::find(
-                $inventarisDiperbaiki->inventarisbarang_id
-            );
-            $inventarisBarang->update([
-                'kondisibarang_id' => 1,
-                'statusbarang_id' => 1,
-            ]);
+        // if ($inventarisDiperbaiki->user_id === 1) {
+        // $inventarisBarang = InventarisBarang::find(
+        //     $inventarisDiperbaiki->inventarisbarang_id
+        // );
+        $inventarisDigunakan = InventarisDigunakan::where(
+            'inventarisbarang_id',
+            $inventarisDiperbaiki->inventarisbarang_id
+        )
+            ->whereNull('selesaidigunakan')
+            ->count();
+        // dd($inventarisDigunakan);
+        if ($inventarisDigunakan > 0) {
+            $statusBarangId = 2;
         } else {
-            $inventarisBarang = InventarisBarang::find(
-                $inventarisDiperbaiki->inventarisbarang_id
-            );
-            $inventarisBarang->update([
-                'kondisibarang_id' => 1,
-                'statusbarang_id' => 2,
-            ]);
-            $inventarisDigunakan = InventarisDigunakan::where(
-                'user_id',
-                $inventarisDiperbaiki->user_id
-            )->first();
-            $inventarisDigunakan = InventarisDigunakan::create([
-                'inventarisbarang_id' =>
-                    $inventarisDiperbaiki->inventarisbarang_id,
-                'ruangan_id' => 9, // Harusnya ruangan_id gudang
-                'user_id' => $inventarisDiperbaiki->user_id,
-            ]);
+            $statusBarangId = 1;
         }
+        $inventarisDiperbaiki->inventarisBarang->update([
+            'kondisibarang_id' => 1,
+            'statusbarang_id' => $statusBarangId,
+        ]);
+        // } else {
+        //     $inventarisBarang = InventarisBarang::find(
+        //         $inventarisDiperbaiki->inventarisbarang_id
+        //     );
+        //     $inventarisBarang->update([
+        //         'kondisibarang_id' => 1,
+        //         'statusbarang_id' => 2,
+        //     ]);
+        // $inventarisDigunakan = InventarisDigunakan::where(
+        //     'user_id',
+        //     $inventarisDiperbaiki->user_id
+        // )->first();
+        // $inventarisDigunakan = InventarisDigunakan::create([
+        //     'inventarisbarang_id' =>
+        //         $inventarisDiperbaiki->inventarisbarang_id,
+        //     'ruangan_id' => 9, // Harusnya ruangan_id gudang
+        //     'user_id' => $inventarisDiperbaiki->user_id,
+        // ]);
+        // }
 
         $inventarisDiperbaiki->delete();
 
@@ -437,34 +491,18 @@ class PerbaikanController extends Controller
     public function destroyPribadi(Request $request)
     {
         $inventarisDiperbaiki = InventarisDiperbaiki::find($request->delete_id);
-
-        if ($inventarisDiperbaiki->user_id === 1) {
-            $inventarisBarang = InventarisBarang::find(
-                $inventarisDiperbaiki->inventarisbarang_id
-            );
-            $inventarisBarang->update([
-                'kondisibarang_id' => 1,
-                'statusbarang_id' => 1,
-            ]);
-        } else {
-            $inventarisBarang = InventarisBarang::find(
-                $inventarisDiperbaiki->inventarisbarang_id
-            );
-            $inventarisBarang->update([
-                'kondisibarang_id' => 1,
-                'statusbarang_id' => 2,
-            ]);
-            // $inventarisDigunakan = InventarisDigunakan::where(
-            //     'user_id',
-            //     $inventarisDiperbaiki->user_id
-            // )->first();
-            // $inventarisDigunakan = InventarisDigunakan::create([
-            //     'inventarisbarang_id' =>
-            //         $inventarisDiperbaiki->inventarisbarang_id,
-            //     'ruangan_id' => 9, // Harusnya ruangan_id gudang
-            //     'user_id' => $inventarisDiperbaiki->user_id,
-            // ]);
-        }
+        InventarisDigunakan::where(
+            'inventarisbarang_id',
+            $inventarisDiperbaiki->inventarisbarang_id
+        )
+            ->whereNull('selesaidigunakan')
+            ->count() > 0
+            ? ($statusBarangId = 2)
+            : ($statusBarangId = 1);
+        $inventarisDiperbaiki->inventarisBarang->update([
+            'kondisibarang_id' => 1,
+            'statusbarang_id' => $statusBarangId,
+        ]);
 
         $inventarisDiperbaiki->delete();
 

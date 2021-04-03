@@ -131,6 +131,7 @@
                                         <th class="text-center">Pengguna</th>
                                         <th class="text-center">Aksi</th>
                                         <th class="text-center">Estimasi Perbaikan</th>
+                                        <th class="text-center">Kondisi Barang</th>
                                         <th class="text-center">Masalah</th>
                                         <th class="text-center">Solusi</th>
                                     </tr>
@@ -179,6 +180,17 @@
                                                     <i class="fas fa-trash"></i></a>
                                             </td>
                                             <td>{{ $item->estimasiperbaikan }}</td>
+                                            <td>
+                                                @if ($item->inventarisBarang->kondisibarang_id === 1)
+                                                    <span class="badge badge-success">
+                                                    @elseif($item->inventarisBarang->kondisibarang_id === 2)
+                                                        <span class="badge badge-warning">
+                                                        @elseif($item->inventarisBarang->kondisibarang_id === 3)
+                                                            <span class="badge badge-danger">
+                                                @endif
+                                                {{ $item->inventarisBarang->kondisiBarang->nama }}
+                                                </span>
+                                            </td>
                                             <td>{{ $item->masalah }}</td>
                                             <td>{{ $item->solusi }}</td>
                                         </tr>
@@ -199,6 +211,7 @@
                                         <th class="text-center">Pengguna</th>
                                         <th class="text-center">Aksi</th>
                                         <th class="text-center">Estimasi Perbaikan</th>
+                                        <th class="text-center">Kondisi Barang</th>
                                         <th class="text-center">Masalah</th>
                                         <th class="text-center">Solusi</th>
                                     </tr>
@@ -294,7 +307,8 @@
                 </div>
                 <div class="modal-body">
                     @if (Auth::user()->role_id === 1)
-                        <form action="{{ route('admin.gudang.perbaikan.end') }}" method="post" class="form-horizontal" id="form-">
+                        <form action="{{ route('admin.gudang.perbaikan.end') }}" method="post" class="form-horizontal"
+                            id="form-">
                         @else
                             <form action="{{ route('manajemen.gudang.perbaikan.end') }}" method="post"
                                 class="form-horizontal">
@@ -358,6 +372,7 @@
                 $(element).removeClass('is-invalid');
             }
         });
+
         function deletePerbaikanBarangPribadi(arr) {
             $('#delete_id').val(arr.id)
             $('#delete_nama').text(arr.id)
