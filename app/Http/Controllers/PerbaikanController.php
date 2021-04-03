@@ -60,7 +60,7 @@ class PerbaikanController extends Controller
             Auth::user()->id
         )
             ->alatkerja()
-            ->whereNotNull('selesaidigunakan')
+            ->whereNull('selesaidigunakan')
             ->get();
 
         $data['kondisiBarang'] = KondisiBarang::whereNotIn('id', [1])->get();
