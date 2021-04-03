@@ -102,7 +102,8 @@ class DistribusiBarangController extends Controller
                     ->where('jenispenggunaanbarang_id', 1)
                     ->whereDate('created_at', date('Y-m-d'))
                     // ganti max('noregister')
-                    ->max(DB::raw('substring(id, -3, 3)'));
+                    ->max(DB::raw('substring(id, -3, 3)')); // mysql
+                    // ->max(DB::raw('substring(id::text, 14)')); // pgsql
 
                 if ($id === null) {
                     $id = 1;
@@ -116,18 +117,11 @@ class DistribusiBarangController extends Controller
                     'statusbarang_id',
                     1
                 )->first();
-                $inventarisBarang->update([
-                    'statusbarang_id' => 2,
-                ]);
-                // $inventarisTersedia = InventarisTersedia::where(
-                //     'inventarisbarang_id',
-                //     $inventarisBarang->id
-                // )->delete();
 
                 $inventarisDigunakan = InventarisDigunakan::create([
                     'id' =>
                         substr(date('Ymd'), 2) .
-                        2 .
+                        1 .
                         sprintf('%03s', $request->user_id) .
                         sprintf('%03s', $noPengajuan) .
                         sprintf('%03s', $id),
@@ -137,6 +131,9 @@ class DistribusiBarangController extends Controller
                     'ruangan_id' => $request->ruangan_id,
                     'user_id' => $request->user_id,
                     'jenispenggunaanbarang_id' => 1,
+                ]);
+                $inventarisBarang->update([
+                    'statusbarang_id' => 2,
                 ]);
             }
             if (!empty($request->pengajuanbarang_id)) {

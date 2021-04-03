@@ -177,7 +177,8 @@ class PengajuanBarangController extends Controller
         $id = DB::table('pengajuanbarang')
             ->where('jenispengajuanbarang_id', 2)
             ->whereDate('created_at', date('Y-m-d'))
-            ->max(DB::raw('substring(id, -3, 3)'));
+            ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            // ->max(DB::raw('substring(id::text, 11)')); // pgsql
 
         if ($id === null) {
             $id = 1;
@@ -248,7 +249,9 @@ class PengajuanBarangController extends Controller
         $id = DB::table('pengajuanbarang')
             ->where('jenispengajuanbarang_id', 2)
             ->whereDate('created_at', date('Y-m-d'))
-            ->max(DB::raw('substring(id, -3, 3)'));
+            ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            // ->max(DB::raw('substring(id::text, 11)')); // pgsql
+
 
         if ($id === null) {
             $id = 1;
@@ -345,7 +348,8 @@ class PengajuanBarangController extends Controller
         $id = DB::table('pengajuanbarang')
             ->where('jenispengajuanbarang_id', 1)
             ->whereDate('created_at', date('Y-m-d'))
-            ->max(DB::raw('substring(id, -3, 3)'));
+            ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            // ->max(DB::raw('substring(id::text, 11)')); // pgsql
 
         if ($id === null) {
             $id = 1;
@@ -416,7 +420,8 @@ class PengajuanBarangController extends Controller
         $id = DB::table('pengajuanbarang')
             ->where('jenispengajuanbarang_id', 3)
             ->whereDate('created_at', date('Y-m-d'))
-            ->max(DB::raw('substring(id, -3, 3)'));
+            ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            // ->max(DB::raw('substring(id::text, 11)')); // pgsql
 
         if ($id === null) {
             $id = 1;
@@ -491,7 +496,8 @@ class PengajuanBarangController extends Controller
         $id = DB::table('pengajuanbarang')
             ->where('jenispengajuanbarang_id', 3)
             ->whereDate('created_at', date('Y-m-d'))
-            ->max(DB::raw('substring(id, -3, 3)'));
+            ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            // ->max(DB::raw('substring(id::text, 11)')); // pgsql
 
         if ($id === null) {
             $id = 1;
@@ -587,7 +593,8 @@ class PengajuanBarangController extends Controller
         $id = DB::table('pengajuanbarang')
             ->where('jenispengajuanbarang_id', 1)
             ->whereDate('created_at', date('Y-m-d'))
-            ->max(DB::raw('substring(id, -3, 3)'));
+            ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            // ->max(DB::raw('substring(id::text, 11)')); // pgsql
 
         if ($id === null) {
             $id = 1;

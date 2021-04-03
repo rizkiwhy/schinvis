@@ -146,7 +146,8 @@ class PermintaanController extends Controller
                 $id = DB::table('inventarisdigunakan')
                     ->where('jenispenggunaanbarang_id', 3)
                     ->whereDate('created_at', date('Y-m-d'))
-                    ->max(DB::raw('substring(id, -3, 3)'));
+                    ->max(DB::raw('substring(id, -3, 3)')); // mysql
+                    // ->max(DB::raw('substring(id::text, 14)')); // pgsql
 
                 if ($id === null) {
                     $id = 1;

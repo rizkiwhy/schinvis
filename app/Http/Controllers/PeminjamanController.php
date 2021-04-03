@@ -146,7 +146,8 @@ class PeminjamanController extends Controller
                     ->where('jenispenggunaanbarang_id', 2)
                     ->whereDate('created_at', date('Y-m-d'))
                     // ganti max('noregister')
-                    ->max(DB::raw('substring(id, -3, 3)'));
+                    ->max(DB::raw('substring(id, -3, 3)')); // mysql
+                    // ->max(DB::raw('substring(id::text, 14)')); // pgsql
 
                 if ($id === null) {
                     $id = 1;
@@ -160,7 +161,6 @@ class PeminjamanController extends Controller
                     'statusbarang_id',
                     1
                 )->first();
-
                 $inventarisDigunakan = InventarisDigunakan::create([
                     'id' =>
                         substr(date('Ymd'), 2) .
@@ -168,12 +168,12 @@ class PeminjamanController extends Controller
                         sprintf('%03s', $request->user_id) .
                         sprintf('%03s', $noPengajuan) .
                         sprintf('%03s', $id),
+                    'mulaidigunakan' => date('Ymd'),
+                    'nopengajuan' => $request->pengajuanbarang_id,
                     'inventarisbarang_id' => $inventarisBarang->id,
                     'ruangan_id' => $request->ruangan_id,
                     'user_id' => $request->user_id,
                     'jenispenggunaanbarang_id' => 2,
-                    'mulaidigunakan' => date('Ymd'),
-                    'nopengajuan' => $request->pengajuanbarang_id,
                 ]);
                 $inventarisBarang->update([
                     'statusbarang_id' => 2,
