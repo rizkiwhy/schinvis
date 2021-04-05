@@ -269,5 +269,9 @@
             $('#delete_nama').text(arr.id)
         }
 
+        $(function() {
+            $('.select2').select2()
+        })
+
     </script>
 @endsection
