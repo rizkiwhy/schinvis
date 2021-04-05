@@ -1,7 +1,7 @@
 @extends($data['layout'])
 @section('title', $data['page'] . ' | ' . $data['app'])
 @section('content-header')
-    
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -31,9 +31,8 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
+                            <h3>{{ $data['totalInventarisBarang'] }}</h3>
+                            <p>Inventaris Barang</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -46,9 +45,8 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
+                            <h3>{{ $data['totalPengajuanBarang'] }}</h3>
+                            <p>Pengajuan Barang</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -61,9 +59,9 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{ $data['totalUser'] }}</h3>
 
-                            <p>User Registrations</p>
+                            <p>User Terdaftar</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -76,9 +74,9 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{ $data['totalInventarisRusak'] }}</h3>
 
-                            <p>Unique Visitors</p>
+                            <p>Inventaris Rusak</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
@@ -619,7 +617,7 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    
+
     <!-- jQuery -->
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
