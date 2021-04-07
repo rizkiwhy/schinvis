@@ -20,6 +20,7 @@ class TitleController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'nama' => 'required|unique:title,nama',
             'aktif' => 'required',

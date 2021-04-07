@@ -43,8 +43,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nama</label>
                                     <div class="input-group">
-                                        <input type="text" name="name" class="form-control"
-                                            style="text-transform: capitalize" id="name" required>
+                                        <input type="text" name="nama" class="form-control"
+                                            style="text-transform: capitalize" id="nama">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-signature"></span>
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Status</label>
                                     <div class="input-group col-sm-12">
-                                        <select class="form-control select2" id="active" name="active" style="width: 100%;">
+                                        <select class="form-control select2" id="aktif" name="aktif" style="width: 100%;">
                                             <option value="" disabled selected>Pilih Status</option>
                                             <option value="1">
                                                 Aktif
