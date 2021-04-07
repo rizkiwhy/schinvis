@@ -18,10 +18,12 @@
                 <div class="col-sm-6">
                 </div>
                 <div class="col-sm-6">
-                    <button class="btn btn-primary btn-sm mr-2 float-sm-right" data-toggle="modal"
-                        data-target="#modal-add-user" data-backdrop="static">
-                        <i class="fas fa-plus mr-2"></i>Tambah
-                    </button>
+                    @if (Auth::user()->role_id === 1)
+                        <button class="btn btn-primary btn-sm mr-2 float-sm-right" data-toggle="modal"
+                            data-target="#modal-add-user" data-backdrop="static">
+                            <i class="fas fa-plus mr-2"></i>Tambah
+                        </button>
+                    @endif
                 </div>
             </div>
 
@@ -243,7 +245,9 @@
                                         <th class="text-center">Email</th>
                                         <th class="text-center">Role</th>
                                         <th class="text-center">Status</th>
-                                        <th class="text-center">Aksi</th>
+                                        @if (Auth::user()->role_id === 1)
+                                            <th class="text-center">Aksi</th>
+                                        @endif
                                         <th class="text-center">Jenis Kelamin</th>
                                         <th class="text-center">Tanggal Lahir</th>
                                         <th class="text-center">Agama</th>
@@ -272,14 +276,17 @@
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td class="text-center">
-                                                <a class="btn btn-warning btn-sm"
-                                                    href="{{ route('admin.user.edit', ['id' => $item->id]) }}"><i
-                                                        class="fas fa-edit"></i></a>
-                                                <a class="btn btn-danger btn-sm" onclick="deleteUser({{ $item }})"
-                                                    data-toggle="modal" data-target="#modal-delete-user" href="#">
-                                                    <i class="fas fa-trash"></i></a>
-                                            </td>
+                                            @if (Auth::user()->role_id === 1)
+                                                <td class="text-center">
+                                                    <a class="btn btn-warning btn-sm"
+                                                        href="{{ route('admin.user.edit', ['id' => $item->id]) }}"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    <a class="btn btn-danger btn-sm"
+                                                        onclick="deleteUser({{ $item }})" data-toggle="modal"
+                                                        data-target="#modal-delete-user" href="#">
+                                                        <i class="fas fa-trash"></i></a>
+                                                </td>
+                                            @endif
                                             <td>{{ $item->personal->jeniskelamin->nama }}</td>
                                             <td>{{ $item->personal->tanggallahir }}</td>
                                             <td>{{ $item->personal->agama->nama }}</td>
@@ -299,7 +306,9 @@
                                         <th class="text-center">Email</th>
                                         <th class="text-center">Role</th>
                                         <th class="text-center">Status</th>
-                                        <th class="text-center">Aksi</th>
+                                        @if (Auth::user()->role_id === 1)
+                                            <th class="text-center">Aksi</th>
+                                        @endif
                                         <th class="text-center">Jenis Kelamin</th>
                                         <th class="text-center">Tanggal Lahir</th>
                                         <th class="text-center">Agama</th>
@@ -441,11 +450,11 @@
                 $(element).removeClass('is-invalid');
             }
         });
-    
+
         function deleteUser(arr) {
             $('#delete_id').val(arr.id)
             $('#delete_nama').text(arr.nama)
         }
-    
+
     </script>
 @endsection

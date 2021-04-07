@@ -38,7 +38,13 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        @if (Auth::user()->role_id === 1)
+                            <a href="{{ route('admin.gudang.inventaris.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        @elseif (Auth::user()->role_id === 3)
+                            <a href="{{ route('manajemen.gudang.inventaris.index') }}" class="small-box-footer">More info
+                                <i class="fas fa-arrow-circle-right"></i></a>
+                        @endif
                     </div>
                 </div>
                 <!-- ./col -->
@@ -53,7 +59,13 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        @if (Auth::user()->role_id === 1)
+                            <a href="{{ route('admin.gudang.pengajuan.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        @elseif (Auth::user()->role_id === 3)
+                            <a href="{{ route('manajemen.gudang.pengajuan.index') }}" class="small-box-footer">More info
+                                <i class="fas fa-arrow-circle-right"></i></a>
+                        @endif
                     </div>
                 </div>
                 <!-- ./col -->
@@ -68,7 +80,13 @@
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        @if (Auth::user()->role_id === 1)
+                            <a href="{{ route('admin.user.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        @elseif (Auth::user()->role_id === 3)
+                            <a href="{{ route('manajemen.user.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        @endif
                     </div>
                 </div>
                 <!-- ./col -->
@@ -83,7 +101,13 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        @if (Auth::user()->role_id === 1)
+                            <a href="{{ route('admin.gudang.perbaikan.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        @elseif (Auth::user()->role_id === 3)
+                            <a href="{{ route('manajemen.gudang.perbaikan.index') }}" class="small-box-footer">More info
+                                <i class="fas fa-arrow-circle-right"></i></a>
+                        @endif
                     </div>
                 </div>
                 <!-- ./col -->

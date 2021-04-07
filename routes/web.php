@@ -98,6 +98,13 @@ Route::middleware(['auth'])->group(function () {
                     ])->name('admin.gudang.inventaris.destroy');
                 });
 
+                Route::prefix('pengajuan')->group(function () {
+                    Route::get('/', [
+                        PengajuanBarangController::class,
+                        'indexAll',
+                    ])->name('admin.gudang.pengajuan.index');
+                });
+
                 Route::prefix('distribusi')->group(function () {
                     Route::get('/', [
                         DistribusiBarangController::class,
@@ -1013,6 +1020,13 @@ Route::middleware(['auth'])->group(function () {
                     ])->name('manajemen.gudang.inventaris.destroy');
                 });
 
+                Route::prefix('pengajuan')->group(function () {
+                    Route::get('/', [
+                        PengajuanBarangController::class,
+                        'indexAll',
+                    ])->name('manajemen.gudang.pengajuan.index');
+                });
+
                 Route::prefix('distribusi')->group(function () {
                     Route::get('/', [
                         DistribusiBarangController::class,
@@ -1659,6 +1673,27 @@ Route::middleware(['auth'])->group(function () {
                         'destroy',
                     ])->name('manajemen.master.title.destroy');
                 });
+            });
+            Route::prefix('user')->group(function () {
+                Route::get('/', [UserController::class, 'index'])->name(
+                    'manajemen.user.index'
+                );
+                Route::get('{id}', [UserController::class, 'show'])->name(
+                    'manajemen.user.get'
+                );
+                Route::get('edit/{id}', [UserController::class, 'edit'])->name(
+                    'manajemen.user.edit'
+                );
+                Route::post('update', [UserController::class, 'update'])->name(
+                    'manajemen.user.update'
+                );
+                Route::post('store', [UserController::class, 'store'])->name(
+                    'manajemen.user.store'
+                );
+                Route::post('destroy', [
+                    UserController::class,
+                    'destroy',
+                ])->name('admin.user.destroy');
             });
             Route::prefix('user-profile')->group(function () {
                 Route::get('edit', [

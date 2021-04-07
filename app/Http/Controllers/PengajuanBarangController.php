@@ -15,6 +15,26 @@ use App\Models\InventarisDigunakan;
 
 class PengajuanBarangController extends Controller
 {
+    public function indexAll()
+    {
+        $data['layout'] = 'layouts.master';
+        $data['subpage'] = 'Index';
+        $data['page'] = 'Pengajuan';
+        $data['app'] = 'Assek App';
+
+        $data['pengajuanBarang'] = PengajuanBarang::with([
+            'user',
+            'jenispengajuanbarang',
+            'subsubkelompokbarang',
+            'statuspengajuan',
+        ])->get();
+
+        $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
+        $data['user'] = User::all();
+
+        return view('pages.gudang.pengajuan.index', compact('data'));
+    }
+
     public function index()
     {
         $data['layout'] = 'layouts.master';
@@ -251,7 +271,6 @@ class PengajuanBarangController extends Controller
             ->whereDate('created_at', date('Y-m-d'))
             // ->max(DB::raw('substring(id, -3, 3)')); // mysql
             ->max(DB::raw('substring(id::text, 11)')); // pgsql
-
 
         if ($id === null) {
             $id = 1;
