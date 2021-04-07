@@ -24,8 +24,7 @@ class TitleController extends Controller
             'nama' => 'required|unique:title,nama',
             'aktif' => 'required',
         ]);
-
-        // dd($request->all());
+        
         $title = Title::create([
             'nama' => ucwords($request->nama),
             'aktif' => $request->aktif,

@@ -47,48 +47,51 @@
                             <form action="{{ route('admin.master.title.update') }}" method="post" class="form-horizontal"
                                 id="form-edit-title">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{ $item->id }}">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label for="exampleInputEmail1">Name</label>
-                                        <div class="input-group form-group">
-                                            <div class="input-group">
-                                                <input type="text" name="nama" class="form-control"
-                                                    style="text-transform: capitalize" id="nama"
-                                                    value="{{ $item->nama }}">
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text">
-                                                        <span class="fas fa-signature"></span>
+                                @foreach ($data['title'] as $item)
+
+                                    <input type="hidden" id="id" name="id" value="{{ $item->id }}">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="exampleInputEmail1">Name</label>
+                                            <div class="input-group form-group">
+                                                <div class="input-group">
+                                                    <input type="text" name="nama" class="form-control"
+                                                        style="text-transform: capitalize" id="nama"
+                                                        value="{{ $item->nama }}">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            <span class="fas fa-signature"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="exampleInputPassword1">Status</label>
-                                        <div class="input-group form-group">
-                                            <div class="input-group">
-                                                <select class="form-control select2" id="aktif" name="aktif">
-                                                    @if ($item->aktif === 1)
-                                                        <option value="{{ $item->aktif }}" selected>
-                                                            Aktif
-                                                        </option>
-                                                        <option value="0">
-                                                            Tidak Aktif
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $item->active }}" selected>
-                                                            Tidak Aktif
-                                                        </option>
-                                                        <option value="1">
-                                                            Aktif
-                                                        </option>
-                                                    @endif
-                                                </select>
+                                        <div class="col-sm-6">
+                                            <label for="exampleInputPassword1">Status</label>
+                                            <div class="input-group form-group">
+                                                <div class="input-group">
+                                                    <select class="form-control select2" id="aktif" name="aktif">
+                                                        @if ($item->aktif === 1)
+                                                            <option value="{{ $item->aktif }}" selected>
+                                                                Aktif
+                                                            </option>
+                                                            <option value="0">
+                                                                Tidak Aktif
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $item->active }}" selected>
+                                                                Tidak Aktif
+                                                            </option>
+                                                            <option value="1">
+                                                                Aktif
+                                                            </option>
+                                                        @endif
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -140,6 +143,6 @@
                 $(element).removeClass('is-invalid');
             }
         });
-    
+
     </script>
 @endsection
