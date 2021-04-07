@@ -1,7 +1,7 @@
 @extends($data['layout'])
 @section('title', $data['page'] . ' | ' . $data['app'])
 @section('content-header')
-
+    {{-- <meta http-equiv="refresh" content="5"> --}}
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -113,30 +113,57 @@
                 <!-- ./col -->
             </div>
             <!-- /.row -->
-            <div class="col-md-6">
-                <!-- STACKED BAR CHART -->
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title">Stacked Bar Chart</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- STACKED BAR CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Stacked Bar Chart</h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart">
-                            <canvas id="stackedBarChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="stackedBarChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
                         </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <div class="col-md-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Bar Chart</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="barChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -144,60 +171,95 @@
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('src/plugins/chart.js/Chart.min.js') }}"></script>
     <script>
-        $(function() {
-            var areaChartData = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                        label: 'Digital Goods',
-                        backgroundColor: 'rgba(60,141,188,0.9)',
-                        borderColor: 'rgba(60,141,188,0.8)',
-                        pointRadius: false,
-                        pointColor: '#3b8bba',
-                        pointStrokeColor: 'rgba(60,141,188,1)',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: [28, 48, 40, 19, 86, 27, 90]
-                    },
-                    {
-                        label: 'Electronics',
-                        backgroundColor: 'rgba(210, 214, 222, 1)',
-                        borderColor: 'rgba(210, 214, 222, 1)',
-                        pointRadius: false,
-                        pointColor: 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor: '#c1c7d1',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
-                ]
-            }
+        var getChartData = function(value) {
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/pengajuan-barang-stackedbar') !!}',
+                success: function(data) {
+                    // console.log(data)
+                    var areaChartData = {
+                        labels: data.label,
+                        datasets: [{
+                                label: 'Pengajuan Barang',
+                                backgroundColor: 'rgba(60,141,188,0.9)',
+                                borderColor: 'rgba(60,141,188,0.8)',
+                                pointRadius: false,
+                                pointColor: '#3b8bba',
+                                pointStrokeColor: 'rgba(60,141,188,1)',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(60,141,188,1)',
+                                data: data.dataPengajuan
+                            },
+                            {
+                                label: 'Distribusi Barang',
+                                backgroundColor: 'rgba(210, 214, 222, 1)',
+                                borderColor: 'rgba(210, 214, 222, 1)',
+                                pointRadius: false,
+                                pointColor: 'rgba(210, 214, 222, 1)',
+                                pointStrokeColor: '#c1c7d1',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(220,220,220,1)',
+                                data: data.dataDistribusi
+                            },
+                        ]
+                    }
+                    //-------------
+                    //- BAR CHART -
+                    //-------------
+                    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+                    var barChartData = $.extend(true, {}, areaChartData)
+                    var temp0 = areaChartData.datasets[0]
+                    var temp1 = areaChartData.datasets[1]
+                    barChartData.datasets[0] = temp1
+                    barChartData.datasets[1] = temp0
 
-            var barChartData = $.extend(true, {}, areaChartData)
+                    var barChartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        datasetFill: false
+                    }
 
-            //---------------------
-            //- STACKED BAR CHART -
-            //---------------------
-            var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-            var stackedBarChartData = $.extend(true, {}, barChartData)
+                    var barChart = new Chart(barChartCanvas, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: barChartOptions
+                    })
 
-            var stackedBarChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        stacked: true,
-                    }],
-                    yAxes: [{
-                        stacked: true
-                    }]
+                    //---------------------
+                    //- STACKED BAR CHART -
+                    //---------------------
+                    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+                    var stackedBarChartData = $.extend(true, {}, barChartData)
+
+                    var stackedBarChartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+
+                    var stackedBarChart = new Chart(stackedBarChartCanvas, {
+                        type: 'bar',
+                        data: stackedBarChartData,
+                        options: stackedBarChartOptions
+                    })
                 }
-            }
-
-            var stackedBarChart = new Chart(stackedBarChartCanvas, {
-                type: 'bar',
-                data: stackedBarChartData,
-                options: stackedBarChartOptions
             })
+            setTimeout(function() {
+                getChartData(value - 1);
+            }, 10000);
+        }
+
+        $(document).ready(function() {
+            setTimeout(function() {
+                getChartData();
+            }, 1);
         })
 
     </script>

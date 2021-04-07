@@ -64,6 +64,14 @@ Route::middleware(['auth'])->group(function () {
             'detail',
         ])->name('check.subsubkelompokbarang.detail');
     });
+
+    Route::prefix('chart')->group(function () {
+        Route::get('pengajuan-barang-stackedbar', [
+            DashboardController::class,
+            'pengajuanBarangStackedBar',
+        ])->name('chart.pengajuanbarangstackedbar');
+    });
+
     Route::prefix('administrator')
         ->middleware(['administrator'])
         ->group(function () {
