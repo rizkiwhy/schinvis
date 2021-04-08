@@ -114,7 +114,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                     <!-- STACKED BAR CHART -->
                     <div class="card card-primary">
                         <div class="card-header">
@@ -138,7 +138,7 @@
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                </div>
+                </div> --}}
                 <div class="col-md-6">
                     <!-- BAR CHART -->
                     <div class="card card-primary">
@@ -176,22 +176,32 @@
                 type: 'get',
                 url: '{!! URL::to('chart/pengajuan-barang-stackedbar') !!}',
                 success: function(data) {
-                    // console.log(data)
                     var areaChartData = {
                         labels: data.label,
                         datasets: [{
-                                label: 'Pengajuan Barang',
-                                backgroundColor: 'rgba(60,141,188,0.9)',
-                                borderColor: 'rgba(60,141,188,0.8)',
+                                label: 'Pengajuan Alat Kerja',
+                                backgroundColor: 'rgba(220, 53, 69,0.9)',
+                                borderColor: 'rgba(220, 53, 69,0.8)',
                                 pointRadius: false,
                                 pointColor: '#3b8bba',
-                                pointStrokeColor: 'rgba(60,141,188,1)',
+                                pointStrokeColor: 'rgba(220, 53, 69,1)',
                                 pointHighlightFill: '#fff',
-                                pointHighlightStroke: 'rgba(60,141,188,1)',
-                                data: data.dataPengajuan
+                                pointHighlightStroke: 'rgba(220, 53, 69,1)',
+                                data: data.dataPengajuanAlatKerja
                             },
                             {
-                                label: 'Distribusi Barang',
+                                label: 'Pengajuan Perminjaman',
+                                backgroundColor: 'rgba(255, 193, 7, 1)',
+                                borderColor: 'rgba(255, 193, 7, 1)',
+                                pointRadius: false,
+                                pointColor: 'rgba(255, 193, 7, 1)',
+                                pointStrokeColor: '#c1c7d1',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(255, 193, 7,1)',
+                                data: data.dataPengajuanPeminjaman
+                            },
+                            {
+                                label: 'Pengajuan Permintaan',
                                 backgroundColor: 'rgba(210, 214, 222, 1)',
                                 borderColor: 'rgba(210, 214, 222, 1)',
                                 pointRadius: false,
@@ -199,7 +209,7 @@
                                 pointStrokeColor: '#c1c7d1',
                                 pointHighlightFill: '#fff',
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                                data: data.dataDistribusi
+                                data: data.dataPengajuanPermintaan
                             },
                         ]
                     }
@@ -210,8 +220,11 @@
                     var barChartData = $.extend(true, {}, areaChartData)
                     var temp0 = areaChartData.datasets[0]
                     var temp1 = areaChartData.datasets[1]
-                    barChartData.datasets[0] = temp1
-                    barChartData.datasets[1] = temp0
+                    var temp2 = areaChartData.datasets[2]
+                    barChartData.datasets[0] = temp2
+                    barChartData.datasets[1] = temp1
+                    barChartData.datasets[2] = temp0
+
 
                     var barChartOptions = {
                         responsive: true,
@@ -225,30 +238,30 @@
                         options: barChartOptions
                     })
 
-                    //---------------------
-                    //- STACKED BAR CHART -
-                    //---------------------
-                    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-                    var stackedBarChartData = $.extend(true, {}, barChartData)
+                    // //---------------------
+                    // //- STACKED BAR CHART -
+                    // //---------------------
+                    // var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+                    // var stackedBarChartData = $.extend(true, {}, barChartData)
 
-                    var stackedBarChartOptions = {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            xAxes: [{
-                                stacked: true,
-                            }],
-                            yAxes: [{
-                                stacked: true
-                            }]
-                        }
-                    }
+                    // var stackedBarChartOptions = {
+                    //     responsive: true,
+                    //     maintainAspectRatio: false,
+                    //     scales: {
+                    //         xAxes: [{
+                    //             stacked: true,
+                    //         }],
+                    //         yAxes: [{
+                    //             stacked: true
+                    //         }]
+                    //     }
+                    // }
 
-                    var stackedBarChart = new Chart(stackedBarChartCanvas, {
-                        type: 'bar',
-                        data: stackedBarChartData,
-                        options: stackedBarChartOptions
-                    })
+                    // var stackedBarChart = new Chart(stackedBarChartCanvas, {
+                    //     type: 'bar',
+                    //     data: stackedBarChartData,
+                    //     options: stackedBarChartOptions
+                    // })
                 }
             })
             setTimeout(function() {

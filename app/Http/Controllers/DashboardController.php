@@ -34,40 +34,64 @@ class DashboardController extends Controller
     public function pengajuanBarangStackedBar()
     {
         $labels = [];
-        $dataPengajuan = [];
-        $dataDistribusi = [];
+        $dataPengajuanAlatKerja = [];
+        $dataPengajuanPeminjaman = [];
+        $dataPengajuanPermintaan = [];
+        // $dataDistribusi = [];
 
         for ($i = 0; $i < 7; $i++) {
             array_push($labels, date('j-M', strtotime('- ' . $i . ' days')));
             array_push(
-                $dataPengajuan,
+                $dataPengajuanAlatKerja,
                 DB::table('pengajuanbarang')
                     ->whereDate(
                         'created_at',
                         date('Y-m-d', strtotime('- ' . $i . ' days'))
                     )
+                    ->where('jenispengajuanbarang_id', 1)
                     ->sum('jumlahbarang')
             );
             array_push(
-                $dataDistribusi,
-                DB::table('inventarisdigunakan')
-                    // ->whereNotNull('nopengajuan')
+                $dataPengajuanPeminjaman,
+                DB::table('pengajuanbarang')
                     ->whereDate(
                         'created_at',
                         date('Y-m-d', strtotime('- ' . $i . ' days'))
                     )
-                    ->count('nopengajuan')
+                    ->where('jenispengajuanbarang_id', 2)
+                    ->sum('jumlahbarang')
             );
+            array_push(
+                $dataPengajuanPermintaan,
+                DB::table('pengajuanbarang')
+                    ->whereDate(
+                        'created_at',
+                        date('Y-m-d', strtotime('- ' . $i . ' days'))
+                    )
+                    ->where('jenispengajuanbarang_id', 3)
+                    ->sum('jumlahbarang')
+            );
+            // array_push(
+            //     $dataDistribusi,
+            //     DB::table('inventarisdigunakan')
+            //         // ->whereNotNull('nopengajuan')
+            //         ->whereDate(
+            //             'created_at',
+            //             date('Y-m-d', strtotime('- ' . $i . ' days'))
+            //         )
+            //         ->count('nopengajuan')
+            // );
         }
 
-        return response()->json(
-            [
-                'label' => array_reverse($labels),
-                'dataPengajuan' => array_reverse($dataPengajuan),
-                'dataDistribusi' => array_reverse($dataDistribusi),
-            ]
-            // ['dataPengajuan' => array_reverse($dataPengajuan)],
-            // ['dataDistribusi' => array_reverse($dataDistribusi)],
-        );
+        return response()->json([
+            'label' => array_reverse($labels),
+            'dataPengajuanAlatKerja' => array_reverse($dataPengajuanAlatKerja),
+            'dataPengajuanPeminjaman' => array_reverse(
+                $dataPengajuanPeminjaman
+            ),
+            'dataPengajuanPermintaan' => array_reverse(
+                $dataPengajuanPermintaan
+            ),
+        ]);
     }
 }
