@@ -114,6 +114,29 @@
             </div>
             <!-- /.row -->
             <div class="row">
+                <div class="col-md-6">
+                    <!-- DONUT CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Inventaris Barang</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="donutChart"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
                 {{-- <div class="col-md-6">
                     <!-- STACKED BAR CHART -->
                     <div class="card card-primary">
@@ -143,7 +166,7 @@
                     <!-- BAR CHART -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Bar Chart</h3>
+                            <h3 class="card-title">Pengajuan Barang</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -174,16 +197,45 @@
         var getChartData = function(value) {
             $.ajax({
                 type: 'get',
-                url: '{!! URL::to('chart/pengajuan-barang-stackedbar') !!}',
+                url: '{!! URL::to('chart/inventaris-barang-doughnut') !!}',
+                success: function(data) {
+                    var doughnutChartData = {
+                        labels: data.label,
+                        datasets: [{
+                            data: data.dataInventarisBarang,
+                            backgroundColor: ['#DC3545', '#FFC107', '#28a745'],
+                        }]
+                    }
+                    //-------------
+                    //- DONUT CHART -
+                    //-------------
+                    // Get context with jQuery - using jQuery's .get() method.
+                    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+                    var donutOptions = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                    }
+                    //Create pie or douhnut chart
+                    // You can switch between pie and douhnut using the method below.
+                    var donutChart = new Chart(donutChartCanvas, {
+                        type: 'doughnut',
+                        data: doughnutChartData,
+                        options: donutOptions
+                    })
+                }
+            })
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/pengajuan-barang-bar') !!}',
                 success: function(data) {
                     var areaChartData = {
                         labels: data.label,
                         datasets: [{
                                 label: 'Pengajuan Alat Kerja',
-                                backgroundColor: 'rgba(220, 53, 69,0.9)',
-                                borderColor: 'rgba(220, 53, 69,0.8)',
+                                backgroundColor: 'rgba(220, 53, 69,1)',
+                                borderColor: 'rgba(220, 53, 69,1)',
                                 pointRadius: false,
-                                pointColor: '#3b8bba',
+                                pointColor: '#DC3545',
                                 pointStrokeColor: 'rgba(220, 53, 69,1)',
                                 pointHighlightFill: '#fff',
                                 pointHighlightStroke: 'rgba(220, 53, 69,1)',
@@ -195,20 +247,20 @@
                                 borderColor: 'rgba(255, 193, 7, 1)',
                                 pointRadius: false,
                                 pointColor: 'rgba(255, 193, 7, 1)',
-                                pointStrokeColor: '#c1c7d1',
+                                pointStrokeColor: '#FFC107',
                                 pointHighlightFill: '#fff',
                                 pointHighlightStroke: 'rgba(255, 193, 7,1)',
                                 data: data.dataPengajuanPeminjaman
                             },
                             {
                                 label: 'Pengajuan Permintaan',
-                                backgroundColor: 'rgba(210, 214, 222, 1)',
-                                borderColor: 'rgba(210, 214, 222, 1)',
+                                backgroundColor: 'rgba(40,167,69, 1)',
+                                borderColor: 'rgba(40,167,69, 1)',
                                 pointRadius: false,
-                                pointColor: 'rgba(210, 214, 222, 1)',
-                                pointStrokeColor: '#c1c7d1',
+                                pointColor: 'rgba(40,167,69, 1)',
+                                pointStrokeColor: '#28a745',
                                 pointHighlightFill: '#fff',
-                                pointHighlightStroke: 'rgba(220,220,220,1)',
+                                pointHighlightStroke: 'rgba(40,167,69,1)',
                                 data: data.dataPengajuanPermintaan
                             },
                         ]

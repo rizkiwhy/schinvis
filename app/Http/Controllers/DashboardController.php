@@ -7,6 +7,7 @@ use App\Models\InventarisBarang;
 use App\Models\PengajuanBarang;
 use App\Models\InventarisDiperbaiki;
 use App\Models\User;
+use App\Models\StatusBarang;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -31,13 +32,32 @@ class DashboardController extends Controller
         return view('pages.welcome', compact('data'));
     }
 
-    public function pengajuanBarangStackedBar()
+    public function inventarisBarangDoughnut()
+    {
+        $labels = [];
+        $dataInventarisBarang = [];
+        $statusBarang = StatusBarang::all();
+        for ($i = 0; $i < count($statusBarang); $i++) {
+            array_push($labels, $statusBarang[$i]->nama);
+            array_push(
+                $dataInventarisBarang,
+                InventarisBarang::where(
+                    'statusbarang_id',
+                    $statusBarang[$i]->id
+                )->count()
+            );
+        }
+        return response()->json([
+            'label' => $labels,
+            'dataInventarisBarang' => $dataInventarisBarang,
+        ]);
+    }
+    public function pengajuanBarangBar()
     {
         $labels = [];
         $dataPengajuanAlatKerja = [];
         $dataPengajuanPeminjaman = [];
         $dataPengajuanPermintaan = [];
-        // $dataDistribusi = [];
 
         for ($i = 0; $i < 7; $i++) {
             array_push($labels, date('j-M', strtotime('- ' . $i . ' days')));
@@ -71,16 +91,6 @@ class DashboardController extends Controller
                     ->where('jenispengajuanbarang_id', 3)
                     ->sum('jumlahbarang')
             );
-            // array_push(
-            //     $dataDistribusi,
-            //     DB::table('inventarisdigunakan')
-            //         // ->whereNotNull('nopengajuan')
-            //         ->whereDate(
-            //             'created_at',
-            //             date('Y-m-d', strtotime('- ' . $i . ' days'))
-            //         )
-            //         ->count('nopengajuan')
-            // );
         }
 
         return response()->json([

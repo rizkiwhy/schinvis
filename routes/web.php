@@ -66,10 +66,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('chart')->group(function () {
-        Route::get('pengajuan-barang-stackedbar', [
+        Route::get('pengajuan-barang-bar', [
             DashboardController::class,
-            'pengajuanBarangStackedBar',
-        ])->name('chart.pengajuanbarangstackedbar');
+            'pengajuanBarangBar',
+        ])->name('chart.pengajuanbarangbar');
+        Route::get('inventaris-barang-doughnut', [
+            DashboardController::class,
+            'inventarisBarangDoughnut',
+        ])->name('chart.inventarisbarangdoughnut');
     });
 
     Route::prefix('administrator')
