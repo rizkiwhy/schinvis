@@ -236,11 +236,39 @@
                     <!-- /.card -->
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Inventaris Barang</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="inventarisBarangBarChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('src/plugins/chart.js/Chart.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> --}}
     <script>
         var getChartData = function(value) {
 
@@ -277,6 +305,15 @@
                                 return delay;
                             },
                         },
+                        plugins: {
+                            labels: [{
+                                render: 'label',
+                                position: 'outside',
+                                render: function(args) {
+                                    return `${args.label} (${args.percentage}%)`
+                                }
+                            }, ]
+                        }
                     }
                     //Create pie or douhnut chart
                     // You can switch between pie and douhnut using the method below.
@@ -294,7 +331,7 @@
                     var areaChartData = {
                         labels: data.label,
                         datasets: [{
-                                label: 'Pengajuan Alat Kerja',
+                                label: 'Alat Kerja',
                                 backgroundColor: 'rgba(220, 53, 69,1)',
                                 borderColor: 'rgba(220, 53, 69,1)',
                                 pointRadius: false,
@@ -305,7 +342,7 @@
                                 data: data.dataPengajuanAlatKerja
                             },
                             {
-                                label: 'Pengajuan Perminjaman',
+                                label: 'Perminjaman',
                                 backgroundColor: 'rgba(255, 193, 7, 1)',
                                 borderColor: 'rgba(255, 193, 7, 1)',
                                 pointRadius: false,
@@ -316,7 +353,7 @@
                                 data: data.dataPengajuanPeminjaman
                             },
                             {
-                                label: 'Pengajuan Permintaan',
+                                label: 'Permintaan',
                                 backgroundColor: 'rgba(40,167,69, 1)',
                                 borderColor: 'rgba(40,167,69, 1)',
                                 pointRadius: false,
@@ -475,6 +512,59 @@
                         type: 'doughnut',
                         data: doughnutChartData,
                         options: donutOptions
+                    })
+                }
+            })
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/inventaris-barang-bar') !!}',
+                success: function(data) {
+                    var areaChartData = {
+                        labels: data.label,
+                        datasets: [{
+                            label: 'Jumlah',
+                            backgroundColor: 'rgba(220, 53, 69,1)',
+                            borderColor: 'rgba(220, 53, 69,1)',
+                            pointRadius: false,
+                            pointColor: '#DC3545',
+                            pointStrokeColor: 'rgba(220, 53, 69,1)',
+                            pointHighlightFill: '#fff',
+                            pointHighlightStroke: 'rgba(220, 53, 69,1)',
+                            data: data.dataInventarisBarang
+                        }, ]
+                    }
+                    //-------------
+                    //- BAR CHART -
+                    //-------------
+                    var barChartCanvas = $('#inventarisBarangBarChart').get(0).getContext('2d')
+                    var barChartData = $.extend(true, {}, areaChartData)
+                    var temp = areaChartData.datasets
+                    barChartData.datasets = temp
+                    var delayed;
+
+                    var barChartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        datasetFill: false,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !
+                                    delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
+                    }
+
+                    var barChart = new Chart(barChartCanvas, {
+                        type: 'horizontalBar',
+                        data: barChartData,
+                        options: barChartOptions,
                     })
                 }
             })

@@ -34,6 +34,40 @@ class DashboardController extends Controller
         return view('pages.welcome', compact('data'));
     }
 
+    public function jenisInventarisBarangBar()
+    {
+        $labels = [];
+        $dataInventarisBarang = [];
+
+        $inventarisBarang = DB::table('inventarisbarang')
+            ->join(
+                'subsubkelompokbarang',
+                'inventarisbarang.subsubkelompokbarang_id',
+                '=',
+                'subsubkelompokbarang.id'
+            )
+            ->select(
+                DB::raw(
+                    'count(inventarisbarang.subsubkelompokbarang_id) as jumlah'
+                ),
+                'subsubkelompokbarang.nama'
+            )
+            ->orderByDesc('jumlah')
+            ->groupBy('subsubkelompokbarang.nama')
+            ->limit(5)
+            ->get();
+
+        for ($i = 0; $i < count($inventarisBarang); $i++) {
+            array_push($labels, $inventarisBarang[$i]->nama);
+            array_push($dataInventarisBarang, $inventarisBarang[$i]->jumlah);
+        }
+
+        return response()->json([
+            'label' => $labels,
+            'dataInventarisBarang' => $dataInventarisBarang,
+        ]);
+    }
+
     public function inventarisDiperbaikiDoughnut()
     {
         $labels = [];

@@ -82,6 +82,10 @@ Route::middleware(['auth'])->group(function () {
             DashboardController::class,
             'inventarisDiperbaikiDoughnut',
         ])->name('chart.inventarisdiperbaikidoughnut');
+        Route::get('inventaris-barang-bar', [
+            DashboardController::class,
+            'jenisInventarisBarangBar',
+        ])->name('chart.jenisinventarisbarangbar');
     });
 
     Route::prefix('administrator')
