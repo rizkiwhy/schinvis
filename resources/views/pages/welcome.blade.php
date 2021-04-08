@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <canvas id="donutChart"
+                            <canvas id="inventarisBarangDonutChart"
                                 style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                         </div>
                         <!-- /.card-body -->
@@ -179,9 +179,57 @@
                         </div>
                         <div class="card-body">
                             <div class="chart">
-                                <canvas id="barChart"
+                                <canvas id="pengajuanBarangBarChart"
                                     style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                             </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">User Terdaftar</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="userPieChart"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <div class="col-md-6">
+                    <!-- DONUT CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Inventaris Diperbaiki</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="inventarisDiperbaikiDonutChart"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -195,6 +243,7 @@
     <script src="{{ asset('src/plugins/chart.js/Chart.min.js') }}"></script>
     <script>
         var getChartData = function(value) {
+
             $.ajax({
                 type: 'get',
                 url: '{!! URL::to('chart/inventaris-barang-doughnut') !!}',
@@ -210,10 +259,24 @@
                     //- DONUT CHART -
                     //-------------
                     // Get context with jQuery - using jQuery's .get() method.
-                    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+                    var donutChartCanvas = $('#inventarisBarangDonutChart').get(0).getContext('2d')
+                    var delayed;
                     var donutOptions = {
                         maintainAspectRatio: false,
                         responsive: true,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !
+                                    delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
                     }
                     //Create pie or douhnut chart
                     // You can switch between pie and douhnut using the method below.
@@ -268,7 +331,7 @@
                     //-------------
                     //- BAR CHART -
                     //-------------
-                    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+                    var barChartCanvas = $('#pengajuanBarangBarChart').get(0).getContext('2d')
                     var barChartData = $.extend(true, {}, areaChartData)
                     var temp0 = areaChartData.datasets[0]
                     var temp1 = areaChartData.datasets[1]
@@ -276,12 +339,25 @@
                     barChartData.datasets[0] = temp2
                     barChartData.datasets[1] = temp1
                     barChartData.datasets[2] = temp0
-
+                    var delayed;
 
                     var barChartOptions = {
                         responsive: true,
                         maintainAspectRatio: false,
-                        datasetFill: false
+                        datasetFill: false,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !
+                                    delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
                     }
 
                     var barChart = new Chart(barChartCanvas, {
@@ -314,6 +390,92 @@
                     //     data: stackedBarChartData,
                     //     options: stackedBarChartOptions
                     // })
+                }
+            })
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/user-pie') !!}',
+                success: function(data) {
+                    var userPieChartData = {
+                        labels: data.label,
+                        datasets: [{
+                            data: data.dataUser,
+                            backgroundColor: ['#DC3545', '#FFC107', '#28a745'],
+                        }]
+                    }
+                    //-------------
+                    //- PIE CHART -
+                    //-------------
+                    // Get context with jQuery - using jQuery's .get() method.
+                    var pieChartCanvas = $('#userPieChart').get(0).getContext('2d')
+                    var pieData = userPieChartData;
+                    var pieOptions = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !
+                                    delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
+                    }
+                    //Create pie or douhnut chart
+                    // You can switch between pie and douhnut using the method below.
+                    var pieChart = new Chart(pieChartCanvas, {
+                        type: 'pie',
+                        data: pieData,
+                        options: pieOptions
+                    })
+                }
+            })
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/inventaris-diperbaiki-doughnut') !!}',
+                success: function(data) {
+                    var doughnutChartData = {
+                        labels: data.label,
+                        datasets: [{
+                            data: data.dataInventarisDiperbaiki,
+                            backgroundColor: ['#DC3545', '#FFC107', '#28a745'],
+                        }]
+                    }
+                    //-------------
+                    //- DONUT CHART -
+                    //-------------
+                    // Get context with jQuery - using jQuery's .get() method.
+                    var donutChartCanvas = $('#inventarisDiperbaikiDonutChart').get(0).getContext('2d')
+                    var delayed;
+                    var donutOptions = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !
+                                    delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
+                    }
+                    //Create pie or douhnut chart
+                    // You can switch between pie and douhnut using the method below.
+                    var donutChart = new Chart(donutChartCanvas, {
+                        type: 'doughnut',
+                        data: doughnutChartData,
+                        options: donutOptions
+                    })
                 }
             })
             setTimeout(function() {

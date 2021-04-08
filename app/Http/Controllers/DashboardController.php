@@ -7,7 +7,9 @@ use App\Models\InventarisBarang;
 use App\Models\PengajuanBarang;
 use App\Models\InventarisDiperbaiki;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\StatusBarang;
+use App\Models\StatusPengajuan;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -30,6 +32,45 @@ class DashboardController extends Controller
         )->count();
 
         return view('pages.welcome', compact('data'));
+    }
+
+    public function inventarisDiperbaikiDoughnut()
+    {
+        $labels = [];
+        $dataInventarisDiperbaiki = [];
+        $statusPengajuan = StatusPengajuan::all();
+        for ($i = 0; $i < count($statusPengajuan); $i++) {
+            array_push($labels, $statusPengajuan[$i]->namaperbaikan);
+            array_push(
+                $dataInventarisDiperbaiki,
+                InventarisDiperbaiki::where(
+                    'statuspengajuan_id',
+                    $statusPengajuan[$i]->id
+                )->count()
+            );
+        }
+        return response()->json([
+            'label' => $labels,
+            'dataInventarisDiperbaiki' => $dataInventarisDiperbaiki,
+        ]);
+    }
+
+    public function userPie()
+    {
+        $labels = [];
+        $dataUser = [];
+        $role = Role::all();
+        for ($i = 0; $i < count($role); $i++) {
+            array_push($labels, $role[$i]->nama);
+            array_push(
+                $dataUser,
+                User::where('role_id', $role[$i]->id)->count()
+            );
+        }
+        return response()->json([
+            'label' => $labels,
+            'dataUser' => $dataUser,
+        ]);
     }
 
     public function inventarisBarangDoughnut()

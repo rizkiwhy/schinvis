@@ -74,6 +74,14 @@ Route::middleware(['auth'])->group(function () {
             DashboardController::class,
             'inventarisBarangDoughnut',
         ])->name('chart.inventarisbarangdoughnut');
+        Route::get('user-pie', [
+            DashboardController::class,
+            'userPie',
+        ])->name('chart.userpie');
+        Route::get('inventaris-diperbaiki-doughnut', [
+            DashboardController::class,
+            'inventarisDiperbaikiDoughnut',
+        ])->name('chart.inventarisdiperbaikidoughnut');
     });
 
     Route::prefix('administrator')
