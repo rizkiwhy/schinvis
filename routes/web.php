@@ -1054,7 +1054,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::prefix('pengajuan')->group(function () {
                     Route::get('/', [
                         PengajuanBarangController::class,
-                        'indexAll',
+                        'indexAntrian',
                     ])->name('manajemen.gudang.pengajuan.index');
                 });
 
