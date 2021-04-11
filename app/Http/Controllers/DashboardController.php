@@ -22,9 +22,10 @@ class DashboardController extends Controller
         $data['app'] = 'Assek App';
 
         $data['totalInventarisBarang'] = InventarisBarang::count();
-        $data['totalPengajuanBarang'] =
-            PengajuanBarang::where('statuspengajuan_id', 1)->count() +
-            InventarisDiperbaiki::where('statuspengajuan_id', 1)->count();
+        $data[
+            'totalPengajuanBarang'
+        ] = PengajuanBarang::dalamantrian()->count();
+        // InventarisDiperbaiki::where('statuspengajuan_id', 1)->count();
         $data['totalUser'] = User::where('id', '<>', 1)->count();
         $data['totalInventarisRusak'] = InventarisBarang::where(
             'kondisibarang_id',
@@ -94,7 +95,9 @@ class DashboardController extends Controller
 
     public function pengajuanBarangPie()
     {
-        $labels = [];
+        $labels1 = [];
+        $labels2 = [];
+        $labels3 = [];
         $data = [];
         $dataPengajuanAlatKerja = [];
         $dataPengajuanPeminjaman = [];
@@ -109,12 +112,27 @@ class DashboardController extends Controller
 
         for ($i = 0; $i < count($jenisPengajuanBarang); $i++) {
             for ($j = 0; $j < count($statusPengajuan); $j++) {
-                array_push(
-                    $labels,
-                    $jenisPengajuanBarang[$i]->nama .
-                        ' ' .
+                if ($jenisPengajuanBarang[$i]->id === 1) {
+                    if ($statusPengajuan[$j]->id !== 2) {
+                        array_push(
+                            $labels1,
+                            ucwords($statusPengajuan[$j]->namapengajuan)
+                        );
+                    }
+                } elseif ($jenisPengajuanBarang[$i]->id === 2) {
+                    array_push(
+                        $labels2,
                         ucwords($statusPengajuan[$j]->namapeminjaman)
-                );
+                    );
+                } elseif ($jenisPengajuanBarang[$i]->id === 3) {
+                    if ($statusPengajuan[$j]->id !== 2) {
+                        array_push(
+                            $labels3,
+                            ucwords($statusPengajuan[$j]->namapengajuan)
+                        );
+                    }
+                }
+
                 array_push(
                     $data,
                     PengajuanBarang::where([
@@ -137,7 +155,9 @@ class DashboardController extends Controller
             }
         }
         return response()->json([
-            'label' => $labels,
+            'label' => $labels1,
+            'label' => $labels1,
+            'label' => $labels1,
             'dataPengajuanAlatKerja' => $dataPengajuanAlatKerja,
             'dataPengajuanPeminjaman' => $dataPengajuanPeminjaman,
             'dataPengajuanPermintaan' => $dataPengajuanPermintaan,

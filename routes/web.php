@@ -132,7 +132,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::prefix('pengajuan')->group(function () {
                     Route::get('/', [
                         PengajuanBarangController::class,
-                        'indexAll',
+                        'indexAntrian',
                     ])->name('admin.gudang.pengajuan.index');
                 });
 

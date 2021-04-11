@@ -15,7 +15,7 @@ use App\Models\InventarisDigunakan;
 
 class PengajuanBarangController extends Controller
 {
-    public function indexAll()
+    public function indexAntrian()
     {
         $data['layout'] = 'layouts.master';
         $data['subpage'] = 'Index';
@@ -27,7 +27,9 @@ class PengajuanBarangController extends Controller
             'jenispengajuanbarang',
             'subsubkelompokbarang',
             'statuspengajuan',
-        ])->get();
+        ])
+            ->dalamantrian()
+            ->get();
 
         $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
         $data['user'] = User::all();
@@ -93,7 +95,7 @@ class PengajuanBarangController extends Controller
                 'subsubkelompokbarang',
                 'statuspengajuan',
             ])
-            ->where('user_id', Auth::user()->id)
+            ->pribadi()
             ->get();
 
         $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
@@ -140,7 +142,7 @@ class PengajuanBarangController extends Controller
             'subsubkelompokbarang',
         ])
             ->pengajuanBarang()
-            ->where('user_id', Auth::user()->id)
+            ->pribadi()
             ->get();
 
         $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
@@ -156,18 +158,8 @@ class PengajuanBarangController extends Controller
         $data['page'] = 'Pengajuan Peminjaman';
         $data['app'] = 'Assek App';
 
-        $peminjamanBarang = InventarisDigunakan::where(
-            'user_id',
-            Auth::user()->id
-        )
-            ->pinjam()
-            ->get();
-
-        $data['pengajuanBarang'] = PengajuanBarang::where(
-            'user_id',
-            Auth::user()->id
-        )
-            ->pengajuanpinjam()
+        $data['pengajuanBarang'] = PengajuanBarang::pengajuanpinjam()
+            ->pribadi()
             ->with([
                 'user',
                 'jenispengajuanbarang',
