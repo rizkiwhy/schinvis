@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\StatusBarang;
 use App\Models\StatusPengajuan;
+use App\Models\JenisPengajuanBarang;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -34,7 +35,116 @@ class DashboardController extends Controller
         return view('pages.welcome', compact('data'));
     }
 
-    public function jenisInventarisBarangBar()
+    public function inventarisDiperbaikiBar()
+    {
+        $labels = [];
+        $dataInventarisDiperbaikiDalamAntrian = [];
+        $dataInventarisDiperbaikiSedangDiperbaiki = [];
+        $dataInventarisDiperbaikiSelesaiDiperbaiki = [];
+
+        $statusPengajuan = StatusPengajuan::all();
+
+        for ($i = 0; $i < 7; $i++) {
+            array_push($labels, date('j-M', strtotime('- ' . $i . ' days')));
+            array_push(
+                $dataInventarisDiperbaikiDalamAntrian,
+                DB::table('inventarisdiperbaiki')
+                    ->whereDate(
+                        'created_at',
+                        date('Y-m-d', strtotime('- ' . $i . ' days'))
+                    )
+                    ->where('statuspengajuan_id', 1)
+                    ->count()
+            );
+            array_push(
+                $dataInventarisDiperbaikiSedangDiperbaiki,
+                DB::table('inventarisdiperbaiki')
+                    ->whereDate(
+                        'created_at',
+                        date('Y-m-d', strtotime('- ' . $i . ' days'))
+                    )
+                    ->where('statuspengajuan_id', 2)
+                    ->count()
+            );
+            array_push(
+                $dataInventarisDiperbaikiSelesaiDiperbaiki,
+                DB::table('inventarisdiperbaiki')
+                    ->whereDate(
+                        'created_at',
+                        date('Y-m-d', strtotime('- ' . $i . ' days'))
+                    )
+                    ->where('statuspengajuan_id', 3)
+                    ->count()
+            );
+        }
+
+        return response()->json([
+            'label' => array_reverse($labels),
+            'dataInventarisDiperbaikiDalamAntrian' => array_reverse(
+                $dataInventarisDiperbaikiDalamAntrian
+            ),
+            'dataInventarisDiperbaikiSedangDiperbaiki' => array_reverse(
+                $dataInventarisDiperbaikiSedangDiperbaiki
+            ),
+            'dataInventarisDiperbaikiSelesaiDiperbaiki' => array_reverse(
+                $dataInventarisDiperbaikiSelesaiDiperbaiki
+            ),
+        ]);
+    }
+
+    public function pengajuanBarangPie()
+    {
+        $labels = [];
+        $data = [];
+        $dataPengajuanAlatKerja = [];
+        $dataPengajuanPeminjaman = [];
+        $dataPengajuanPermintaan = [];
+
+        $statusPengajuan = StatusPengajuan::all();
+        $jenisPengajuanBarang = JenisPengajuanBarang::where(
+            'id',
+            '<>',
+            4
+        )->get();
+
+        for ($i = 0; $i < count($jenisPengajuanBarang); $i++) {
+            for ($j = 0; $j < count($statusPengajuan); $j++) {
+                array_push(
+                    $labels,
+                    $jenisPengajuanBarang[$i]->nama .
+                        ' ' .
+                        ucwords($statusPengajuan[$j]->namapeminjaman)
+                );
+                array_push(
+                    $data,
+                    PengajuanBarang::where([
+                        [
+                            'jenispengajuanbarang_id',
+                            $jenisPengajuanBarang[$i]->id,
+                        ],
+                        ['statuspengajuan_id', $statusPengajuan[$j]->id],
+                    ])->count()
+                );
+            }
+        }
+        for ($k = 0; $k < count($data); $k++) {
+            if ($k <= 2) {
+                array_push($dataPengajuanAlatKerja, $data[$k]);
+            } elseif ($k <= 5) {
+                array_push($dataPengajuanPeminjaman, $data[$k]);
+            } elseif ($k <= 8) {
+                array_push($dataPengajuanPermintaan, $data[$k]);
+            }
+        }
+        return response()->json([
+            'label' => $labels,
+            'dataPengajuanAlatKerja' => $dataPengajuanAlatKerja,
+            'dataPengajuanPeminjaman' => $dataPengajuanPeminjaman,
+            'dataPengajuanPermintaan' => $dataPengajuanPermintaan,
+        ]);
+    }
+
+    public function inventarisBarangBar()
     {
         $labels = [];
         $dataInventarisBarang = [];

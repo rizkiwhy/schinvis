@@ -74,18 +74,25 @@ Route::middleware(['auth'])->group(function () {
             DashboardController::class,
             'inventarisBarangDoughnut',
         ])->name('chart.inventarisbarangdoughnut');
-        Route::get('user-pie', [
-            DashboardController::class,
-            'userPie',
-        ])->name('chart.userpie');
+        Route::get('user-pie', [DashboardController::class, 'userPie'])->name(
+            'chart.userpie'
+        );
         Route::get('inventaris-diperbaiki-doughnut', [
             DashboardController::class,
             'inventarisDiperbaikiDoughnut',
         ])->name('chart.inventarisdiperbaikidoughnut');
         Route::get('inventaris-barang-bar', [
             DashboardController::class,
-            'jenisInventarisBarangBar',
+            'inventarisBarangBar',
         ])->name('chart.jenisinventarisbarangbar');
+        Route::get('pengajuan-barang-pie', [
+            DashboardController::class,
+            'pengajuanBarangPie',
+        ])->name('chart.pengajuanbarangpie');
+        Route::get('inventaris-diperbaiki-bar', [
+            DashboardController::class,
+            'inventarisDiperbaikiBar',
+        ])->name('chart.inventarisdiperbaikibar');
     });
 
     Route::prefix('administrator')

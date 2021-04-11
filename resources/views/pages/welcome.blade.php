@@ -262,6 +262,31 @@
                     </div>
                     <!-- /.card -->
                 </div>
+                <div class="col-md-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Inventaris Diperbaiki</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="inventarisDiperbaikiStackedBarChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -565,6 +590,112 @@
                         type: 'horizontalBar',
                         data: barChartData,
                         options: barChartOptions,
+                    })
+                }
+            })
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/inventaris-diperbaiki-bar') !!}',
+                success: function(data) {
+                    var areaChartData = {
+                        labels: data.label,
+                        datasets: [{
+                                label: 'Dalam Antrian',
+                                backgroundColor: 'rgba(220, 53, 69,1)',
+                                borderColor: 'rgba(220, 53, 69,1)',
+                                pointRadius: false,
+                                pointColor: '#DC3545',
+                                pointStrokeColor: 'rgba(220, 53, 69,1)',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(220, 53, 69,1)',
+                                data: data.dataInventarisDiperbaikiDalamAntrian
+                            },
+                            {
+                                label: 'Sedang Diperbaiki',
+                                backgroundColor: 'rgba(255, 193, 7, 1)',
+                                borderColor: 'rgba(255, 193, 7, 1)',
+                                pointRadius: false,
+                                pointColor: 'rgba(255, 193, 7, 1)',
+                                pointStrokeColor: '#FFC107',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(255, 193, 7,1)',
+                                data: data.dataInventarisDiperbaikiSedangDiperbaiki
+                            },
+                            {
+                                label: 'Selesai',
+                                backgroundColor: 'rgba(40,167,69, 1)',
+                                borderColor: 'rgba(40,167,69, 1)',
+                                pointRadius: false,
+                                pointColor: 'rgba(40,167,69, 1)',
+                                pointStrokeColor: '#28a745',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(40,167,69,1)',
+                                data: data.dataInventarisDiperbaikiSelesaiDiperbaiki
+                            },
+                        ]
+                    }
+                    // //-------------
+                    // //- BAR CHART -
+                    // //-------------
+                    // var barChartCanvas = $('#pengajuanBarangBarChart').get(0).getContext('2d')
+                    var barChartData = $.extend(true, {}, areaChartData)
+                    // var temp0 = areaChartData.datasets[0]
+                    // var temp1 = areaChartData.datasets[1]
+                    // var temp2 = areaChartData.datasets[2]
+                    // barChartData.datasets[0] = temp2
+                    // barChartData.datasets[1] = temp1
+                    // barChartData.datasets[2] = temp0
+                    // var delayed;
+
+                    // var barChartOptions = {
+                    //     responsive: true,
+                    //     maintainAspectRatio: false,
+                    //     datasetFill: false,
+                    //     animation: {
+                    //         onComplete: () => {
+                    //             delayed = true;
+                    //         },
+                    //         delay: (context) => {
+                    //             let delay = 0;
+                    //             if (context.type === 'data' && context.mode === 'default' && !
+                    //                 delayed) {
+                    //                 delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                    //             }
+                    //             return delay;
+                    //         },
+                    //     },
+                    // }
+
+                    // var barChart = new Chart(barChartCanvas, {
+                    //     type: 'bar',
+                    //     data: barChartData,
+                    //     options: barChartOptions
+                    // })
+
+                    //---------------------
+                    //- STACKED BAR CHART -
+                    //---------------------
+                    var stackedBarChartCanvas = $('#inventarisDiperbaikiStackedBarChart').get(0).getContext(
+                        '2d')
+                    var stackedBarChartData = $.extend(true, {}, barChartData)
+
+                    var stackedBarChartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+
+                    var stackedBarChart = new Chart(stackedBarChartCanvas, {
+                        type: 'bar',
+                        data: stackedBarChartData,
+                        options: stackedBarChartOptions
                     })
                 }
             })
