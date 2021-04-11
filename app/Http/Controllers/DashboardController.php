@@ -104,7 +104,7 @@ class DashboardController extends Controller
         $dataPengajuanPermintaan = [];
 
         $statusPengajuan = StatusPengajuan::all();
-        dd($statusPengajuan);
+        // dd($statusPengajuan);
         $jenisPengajuanBarang = JenisPengajuanBarang::where(
             'id',
             '<>',

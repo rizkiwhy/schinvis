@@ -22,7 +22,7 @@ class StatusPengajuanSeeder extends Seeder
                 'namaperbaikan' => 'Dalam antrian',
             ],
             [
-                'namapengajuan' => '-',
+                'namapengajuan' => 'Sedang digunakan',
                 'namapeminjaman' => 'Sedang dipinjam',
                 'namaperbaikan' => 'Sedang diperbaiki',
             ],
