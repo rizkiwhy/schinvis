@@ -93,7 +93,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function pengajuanBarangPie()
+    public function pengajuanBarangDoughnut()
     {
         $labels1 = [];
         $labels2 = [];
@@ -104,6 +104,7 @@ class DashboardController extends Controller
         $dataPengajuanPermintaan = [];
 
         $statusPengajuan = StatusPengajuan::all();
+        dd($statusPengajuan);
         $jenisPengajuanBarang = JenisPengajuanBarang::where(
             'id',
             '<>',
@@ -113,12 +114,12 @@ class DashboardController extends Controller
         for ($i = 0; $i < count($jenisPengajuanBarang); $i++) {
             for ($j = 0; $j < count($statusPengajuan); $j++) {
                 if ($jenisPengajuanBarang[$i]->id === 1) {
-                    if ($statusPengajuan[$j]->id !== 2) {
-                        array_push(
-                            $labels1,
-                            ucwords($statusPengajuan[$j]->namapengajuan)
-                        );
-                    }
+                    // if ($statusPengajuan[$j]->id !== 2) {
+                    array_push(
+                        $labels1,
+                        ucwords($statusPengajuan[$j]->namapengajuan)
+                    );
+                    // }
                 } elseif ($jenisPengajuanBarang[$i]->id === 2) {
                     array_push(
                         $labels2,
@@ -155,9 +156,9 @@ class DashboardController extends Controller
             }
         }
         return response()->json([
-            'label' => $labels1,
-            'label' => $labels1,
-            'label' => $labels1,
+            'label1' => $labels1,
+            'label2' => $labels2,
+            'label3' => $labels3,
             'dataPengajuanAlatKerja' => $dataPengajuanAlatKerja,
             'dataPengajuanPeminjaman' => $dataPengajuanPeminjaman,
             'dataPengajuanPermintaan' => $dataPengajuanPermintaan,

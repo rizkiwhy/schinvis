@@ -85,10 +85,10 @@ Route::middleware(['auth'])->group(function () {
             DashboardController::class,
             'inventarisBarangBar',
         ])->name('chart.jenisinventarisbarangbar');
-        Route::get('pengajuan-barang-pie', [
+        Route::get('pengajuan-barang-doughnut', [
             DashboardController::class,
-            'pengajuanBarangPie',
-        ])->name('chart.pengajuanbarangpie');
+            'pengajuanBarangDoughnut',
+        ])->name('chart.pengajuanbarandougnut');
         Route::get('inventaris-diperbaiki-bar', [
             DashboardController::class,
             'inventarisDiperbaikiBar',

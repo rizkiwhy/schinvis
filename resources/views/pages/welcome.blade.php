@@ -288,6 +288,74 @@
                     <!-- /.card -->
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- DONUT CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Pengajuan Alat Kerja</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pengajuanBarangDonutChart1"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <div class="col-md-4">
+                    <!-- DONUT CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Pengajuan Peminjaman</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pengajuanBarangDonutChart2"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <div class="col-md-4">
+                    <!-- DONUT CHART -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Pengajuan Permintaan</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pengajuanBarangDonutChart3"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -696,6 +764,75 @@
                         type: 'bar',
                         data: stackedBarChartData,
                         options: stackedBarChartOptions
+                    })
+                }
+            })
+            $.ajax({
+                type: 'get',
+                url: '{!! URL::to('chart/pengajuan-barang-doughnut') !!}',
+                success: function(data) {
+                    var doughnutChartData1 = {
+                        labels: data.label1,
+                        datasets: [{
+                            data: data.dataPengajuanAlatKerja,
+                            backgroundColor: ['#DC3545', '#FFC107', '#28a745'],
+                        }]
+                    }
+                    var doughnutChartData2 = {
+                        labels: data.label2,
+                        datasets: [{
+                            data: data.dataPengajuanPeminjaman,
+                            backgroundColor: ['#DC3545', '#FFC107', '#28a745'],
+                        }]
+                    }
+                    var doughnutChartData3 = {
+                        labels: data.label3,
+                        datasets: [{
+                            data: data.dataPengajuanPermintaan,
+                            backgroundColor: ['#DC3545', '#FFC107', '#28a745'],
+                        }]
+                    }
+                    //-------------
+                    //- DONUT CHART -
+                    //-------------
+                    // Get context with jQuery - using jQuery's .get() method.
+                    var donutChartCanvas1 = $('#pengajuanBarangDonutChart1').get(0).getContext('2d')
+                    var donutChartCanvas2 = $('#pengajuanBarangDonutChart2').get(0).getContext('2d')
+                    var donutChartCanvas3 = $('#pengajuanBarangDonutChart3').get(0).getContext('2d')
+                    var delayed;
+                    var donutOptions = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !
+                                    delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
+                    }
+                    //Create pie or douhnut chart
+                    // You can switch between pie and douhnut using the method below.
+                    var donutChart1 = new Chart(donutChartCanvas1, {
+                        type: 'doughnut',
+                        data: doughnutChartData1,
+                        options: donutOptions
+                    })
+                    var donutChart2 = new Chart(donutChartCanvas2, {
+                        type: 'doughnut',
+                        data: doughnutChartData2,
+                        options: donutOptions
+                    })
+                    var donutChart3 = new Chart(donutChartCanvas3, {
+                        type: 'doughnut',
+                        data: doughnutChartData3,
+                        options: donutOptions
                     })
                 }
             })
