@@ -44,7 +44,7 @@
                                     <form action="{{ route('user.alat-kerja.pengajuan.storepribadi') }}" method="post"
                                         class="form-horizontal" id="form-tambah-pengajuan-alatkerja">
                                     @else
-                                        <form action="{{ route('manajemen.alat-kerja.pengajuan.storepribadi') }}"
+                                        <form action="{{ route('management.alat-kerja.pengajuan.storepribadi') }}"
                                             method="post" class="form-horizontal" id="form-tambah-pengajuan-alatkerja">
                             @endif
                             @csrf
@@ -161,7 +161,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @else
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.alat-kerja.pengajuan.editpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.alat-kerja.pengajuan.editpribadi', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -214,7 +214,7 @@
                             <form action="{{ route('user.alat-kerja.pengajuan.destroypribadi') }}" method="post"
                                 class="form-horizontal">
                             @else
-                                <form action="{{ route('manajemen.alat-kerja.pengajuan.destroypribadi') }}" method="post"
+                                <form action="{{ route('management.alat-kerja.pengajuan.destroypribadi') }}" method="post"
                                     class="form-horizontal">
                     @endif
                     @csrf

@@ -22,7 +22,7 @@
                             href="{{ route('admin.gudang.distribusi.pengajuan.index') }}">
                         @else
                             <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                href="{{ route('manajemen.gudang.distribusi.pengajuan.index') }}">
+                                href="{{ route('management.gudang.distribusi.pengajuan.index') }}">
                     @endif
                     <i class="fas fa-bell mr-2"></i>Pengajuan
                     </a>
@@ -48,7 +48,7 @@
                                 <form action="{{ route('admin.gudang.distribusi.store') }}" method="post"
                                     class="form-horizontal" id="form-tambah-distribusi">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.distribusi.store') }}" method="post"
+                                    <form action="{{ route('management.gudang.distribusi.store') }}" method="post"
                                         class="form-horizontal" id="form-tambah-distribusi">
                             @endif
                             @csrf
@@ -203,7 +203,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @elseif(Auth::user()->role_id === 3)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.gudang.distribusi.edit', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.gudang.distribusi.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-primary btn-sm"
@@ -261,7 +261,7 @@
                     @if (Auth::user()->role_id === 1)
                         <form action="{{ route('admin.gudang.distribusi.end') }}" method="post" class="form-horizontal">
                         @elseif(Auth::user()->role_id === 3)
-                            <form action="{{ route('manajemen.gudang.distribusi.end') }}" method="post"
+                            <form action="{{ route('management.gudang.distribusi.end') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

@@ -259,7 +259,7 @@ class UserController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 # code...
                 return redirect()
-                    ->route('manajemen.user-profile.edit', ['id' => $request->id])
+                    ->route('management.user-profile.edit', ['id' => $request->id])
                     ->with('error_message', 'Data User gagal diubah!');
             }
         }

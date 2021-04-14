@@ -25,7 +25,7 @@
                                 href="{{ route('user.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi') }}">
                             @else
                                 <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                    href="{{ route('manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi') }}">
+                                    href="{{ route('management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi') }}">
                     @endif
                     <i class="fas fa-bell mr-2"></i>Pengajuan
                     </a>
@@ -155,7 +155,7 @@
                             <form action="{{ route('user.transaksi.peminjaman.endpribadi') }}" method="post"
                                 class="form-horizontal">
                             @elseif (Auth::user()->role_id === 3)
-                                <form action="{{ route('manajemen.transaksi.peminjaman.endpribadi') }}" method="post"
+                                <form action="{{ route('management.transaksi.peminjaman.endpribadi') }}" method="post"
                                     class="form-horizontal">
                     @endif
                     @csrf

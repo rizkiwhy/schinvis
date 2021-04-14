@@ -15,6 +15,28 @@ use App\Models\InventarisDigunakan;
 
 class PengajuanBarangController extends Controller
 {
+    public function indexAntrianPribadi()
+    {
+        $data['layout'] = 'layouts.master';
+        $data['subpage'] = 'Index';
+        $data['page'] = 'Pengajuan';
+        $data['app'] = 'Assek App';
+
+        $data['pengajuanBarang'] = PengajuanBarang::with([
+            'user',
+            'jenispengajuanbarang',
+            'subsubkelompokbarang',
+            'statuspengajuan',
+        ])
+            ->pribadi()
+            ->dalamantrian()
+            ->get();
+
+        $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
+        $data['user'] = User::all();
+
+        return view('pages.pengajuan.index', compact('data'));
+    }
     public function indexAntrian()
     {
         $data['layout'] = 'layouts.master';
@@ -224,7 +246,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.pengajuan.index')
+                    ->route('management.gudang.peminjaman.pengajuan.index')
                     ->with(
                         'success_message',
                         'Data pengajuan berhasil ditambahkan!'
@@ -240,7 +262,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.pengajuan.index')
+                    ->route('management.gudang.peminjaman.pengajuan.index')
                     ->with(
                         'error_message',
                         'Data pengajuan gagal ditambahkan!'
@@ -309,7 +331,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
+                        'management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
                     )
                     ->with(
                         'success_message',
@@ -338,7 +360,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
+                        'management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
                     )
                     ->with(
                         'error_message',
@@ -395,7 +417,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.index')
+                    ->route('management.gudang.distribusi.pengajuan.index')
                     ->with(
                         'success_message',
                         'Data pengajuan berhasil ditambahkan!'
@@ -411,7 +433,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.index')
+                    ->route('management.gudang.distribusi.pengajuan.index')
                     ->with(
                         'error_message',
                         'Data pengajuan gagal ditambahkan!'
@@ -468,7 +490,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.gudang.permintaan.pengajuan.indexpermintaan'
+                        'management.gudang.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'success_message',
@@ -486,7 +508,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.gudang.permintaan.pengajuan.indexpermintaan'
+                        'management.gudang.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'error_message',
@@ -584,7 +606,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.permintaan.pengajuan.indexpermintaan'
+                        'management.transaksi.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'error_message',
@@ -645,7 +667,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.alat-kerja.pengajuan.indexpribadi')
+                    ->route('management.alat-kerja.pengajuan.indexpribadi')
                     ->with(
                         'success_message',
                         'Data pengajuan berhasil ditambahkan!'
@@ -668,7 +690,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.alat-kerja.pengajuan.indexpribadi')
+                    ->route('management.alat-kerja.pengajuan.indexpribadi')
                     ->with(
                         'error_message',
                         'Data pengajuan gagal ditambahkan!'
@@ -834,7 +856,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.index')
+                    ->route('management.gudang.distribusi.pengajuan.index')
                     ->with(
                         'success_message',
                         'Data pengajuan ' .
@@ -856,7 +878,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.edit', [
+                    ->route('management.gudang.distribusi.pengajuan.edit', [
                         'id' => $request->id,
                     ])
                     ->with(
@@ -918,7 +940,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.gudang.permintaan.pengajuan.indexpermintaan'
+                        'management.gudang.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'success_message',
@@ -945,7 +967,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.gudang.permintaan.pengajuan.editpermintaan',
+                        'management.gudang.permintaan.pengajuan.editpermintaan',
                         [
                             'id' => $request->id,
                         ]
@@ -1022,7 +1044,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.permintaan.pengajuan.indexpermintaan'
+                        'management.transaksi.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'success_message',
@@ -1063,7 +1085,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.permintaan.pengajuan.editpermintaan',
+                        'management.transaksi.permintaan.pengajuan.editpermintaan',
                         [
                             'id' => $request->id,
                         ]
@@ -1127,7 +1149,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.pengajuan.index')
+                    ->route('management.gudang.peminjaman.pengajuan.index')
                     ->with(
                         'success_message',
                         'Data pengajuan ' .
@@ -1149,7 +1171,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.pengajuan.edit', [
+                    ->route('management.gudang.peminjaman.pengajuan.edit', [
                         'id' => $request->id,
                     ])
                     ->with(
@@ -1227,7 +1249,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
+                        'management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
                     )
                     ->with(
                         'success_message',
@@ -1268,7 +1290,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.peminjaman.pengajuan.editpeminjamanpribadi',
+                        'management.transaksi.peminjaman.pengajuan.editpeminjamanpribadi',
                         [
                             'id' => $request->id,
                         ]
@@ -1322,7 +1344,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.alat-kerja.pengajuan.indexpribadi')
+                    ->route('management.alat-kerja.pengajuan.indexpribadi')
                     ->with(
                         'success_message',
                         'Data pengajuan ' .
@@ -1355,7 +1377,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.edit', [
+                    ->route('management.gudang.distribusi.pengajuan.edit', [
                         'id' => $request->id,
                     ])
                     ->with(
@@ -1385,7 +1407,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.index')
+                    ->route('management.gudang.distribusi.pengajuan.index')
                     ->with(
                         'success_message',
                         'Data pengajuan berhasil dihapus!'
@@ -1398,7 +1420,7 @@ class PengajuanBarangController extends Controller
                     ->with('error_message', 'Data pengajuan gagal dihapus!');
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.pengajuan.index')
+                    ->route('management.gudang.distribusi.pengajuan.index')
                     ->with('error_message', 'Data pengajuan gagal dihapus!');
             }
         }
@@ -1422,7 +1444,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.gudang.permintaan.pengajuan.indexpermintaan'
+                        'management.gudang.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'success_message',
@@ -1437,7 +1459,7 @@ class PengajuanBarangController extends Controller
             } else {
                 return redirect()
                     ->route(
-                        'manajemen.gudang.permintaan.pengajuan.indexpermintaan'
+                        'management.gudang.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with('error_message', 'Data pengajuan gagal dihapus!');
             }
@@ -1473,7 +1495,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.permintaan.pengajuan.indexpermintaan'
+                        'management.transaksi.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with(
                         'success_message',
@@ -1496,7 +1518,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.permintaan.pengajuan.indexpermintaan'
+                        'management.transaksi.permintaan.pengajuan.indexpermintaan'
                     )
                     ->with('error_message', 'Data pengajuan gagal dihapus!');
             }
@@ -1520,7 +1542,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.pengajuan.index')
+                    ->route('management.gudang.peminjaman.pengajuan.index')
                     ->with(
                         'success_message',
                         'Data pengajuan peminjaman berhasil dihapus!'
@@ -1536,7 +1558,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.pengajuan.index')
+                    ->route('management.gudang.peminjaman.pengajuan.index')
                     ->with(
                         'error_message',
                         'Data pengajuan peminjaman gagal dihapus!'
@@ -1574,7 +1596,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
+                        'management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
                     )
                     ->with(
                         'success_message',
@@ -1603,7 +1625,7 @@ class PengajuanBarangController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
                     ->route(
-                        'manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
+                        'management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
                     )
                     ->with(
                         'error_message',
@@ -1637,7 +1659,7 @@ class PengajuanBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.alat-kerja.pengajuan.indexpribadi')
+                    ->route('management.alat-kerja.pengajuan.indexpribadi')
                     ->with(
                         'success_message',
                         'Data pengajuan berhasil dihapus!'
@@ -1654,7 +1676,7 @@ class PengajuanBarangController extends Controller
                     ->with('error_message', 'Data pengajuan gagal dihapus!');
             } else {
                 return redirect()
-                    ->route('manajemen.alat-kerja.pengajuan.indexpribadi')
+                    ->route('management.alat-kerja.pengajuan.indexpribadi')
                     ->with('error_message', 'Data pengajuan gagal dihapus!');
             }
         }

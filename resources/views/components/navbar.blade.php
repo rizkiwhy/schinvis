@@ -141,7 +141,7 @@
                 @elseif (Auth::user()->role_id === 2)
                     <a href="{{ route('user.user-profile.edit') }}" class="nav-link" role="button">
                     @elseif (Auth::user()->role_id === 3)
-                        <a href="{{ route('manajemen.user-profile.edit') }}" class="nav-link" role="button">
+                        <a href="{{ route('management.user-profile.edit') }}" class="nav-link" role="button">
             @endif
             <i class="fas fa-user-cog"></i>
             </a>

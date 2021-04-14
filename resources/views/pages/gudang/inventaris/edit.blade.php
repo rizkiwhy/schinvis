@@ -48,7 +48,7 @@
                                 <form action="{{ route('admin.gudang.inventaris.update') }}" method="post"
                                     class="form-horizontal" id="form-edit-subsubkelompokbarang">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.inventaris.update') }}" method="post"
+                                    <form action="{{ route('management.gudang.inventaris.update') }}" method="post"
                                         class="form-horizontal" id="form-edit-subsubkelompokbarang">
                             @endif
                             @csrf

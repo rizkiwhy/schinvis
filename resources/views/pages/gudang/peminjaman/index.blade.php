@@ -22,7 +22,7 @@
                             href="{{ route('admin.gudang.peminjaman.pengajuan.index') }}">
                         @else
                             <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                href="{{ route('manajemen.gudang.peminjaman.pengajuan.index') }}">
+                                href="{{ route('management.gudang.peminjaman.pengajuan.index') }}">
                     @endif
                     <i class="fas fa-bell mr-2"></i>Pengajuan
                     </a>
@@ -48,7 +48,7 @@
                                 <form action="{{ route('admin.gudang.peminjaman.store') }}" method="post"
                                     class="form-horizontal" id="form-tambah-peminjaman">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.peminjaman.store') }}" method="post"
+                                    <form action="{{ route('management.gudang.peminjaman.store') }}" method="post"
                                         class="form-horizontal" id="form-tambah-peminjaman">
                             @endif
                             @csrf
@@ -204,7 +204,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @elseif (Auth::user()->role_id === 3)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.gudang.peminjaman.edit', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.gudang.peminjaman.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -261,7 +261,7 @@
                     @if (Auth::user()->role_id === 1)
                         <form action="{{ route('admin.gudang.peminjaman.end') }}" method="post" class="form-horizontal">
                         @else
-                            <form action="{{ route('manajemen.gudang.peminjaman.end') }}" method="post"
+                            <form action="{{ route('management.gudang.peminjaman.end') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

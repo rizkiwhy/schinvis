@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class InventarisDiperbaiki extends Model
 {
@@ -22,8 +23,12 @@ class InventarisDiperbaiki extends Model
         'mulaiperbaikan',
         'selesaiperbaikan',
         'solusi',
-
     ];
+
+    public function scopePribadi($query)
+    {
+        return $query->where('user_id', Auth::user()->id);
+    }
 
     public function jenisPengajuanBarang()
     {
@@ -52,10 +57,6 @@ class InventarisDiperbaiki extends Model
     }
     public function user()
     {
-        return $this->belongsTo(
-            User::class,
-            'user_id',
-            'id'
-        );
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

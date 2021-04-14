@@ -41,7 +41,7 @@
                                 <form action="{{ route('admin.gudang.peminjaman.pengajuan.storepeminjaman') }}"
                                     method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.peminjaman.pengajuan.storepeminjaman') }}"
+                                    <form action="{{ route('management.gudang.peminjaman.pengajuan.storepeminjaman') }}"
                                         method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman">
                             @endif
                             @csrf
@@ -183,7 +183,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @else
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.gudang.peminjaman.pengajuan.edit', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.gudang.peminjaman.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -235,7 +235,7 @@
                         <form action="{{ route('admin.gudang.peminjaman.pengajuan.destroy') }}" method="post"
                             class="form-horizontal" id="form-delete-pengajuan-peminjaman">
                         @else
-                            <form action="{{ route('manajemen.gudang.peminjaman.pengajuan.destroy') }}" method="post"
+                            <form action="{{ route('management.gudang.peminjaman.pengajuan.destroy') }}" method="post"
                                 class="form-horizontal" id="form-delete-pengajuan-peminjaman">
                     @endif
                     @csrf

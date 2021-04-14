@@ -22,7 +22,7 @@
                             href="{{ route('admin.gudang.permintaan.pengajuan.indexpermintaan') }}">
                         @elseif (Auth::user()->role_id === 3)
                             <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                href="{{ route('manajemen.gudang.permintaan.pengajuan.indexpermintaan') }}">
+                                href="{{ route('management.gudang.permintaan.pengajuan.indexpermintaan') }}">
                     @endif
                     <i class="fas fa-bell mr-2"></i>Pengajuan
                     </a>
@@ -48,7 +48,7 @@
                                 <form action="{{ route('admin.gudang.permintaan.store') }}" method="post"
                                     class="form-horizontal" id="form-tambah-distribusi">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.permintaan.store') }}" method="post"
+                                    <form action="{{ route('management.gudang.permintaan.store') }}" method="post"
                                         class="form-horizontal" id="form-tambah-distribusi">
                             @endif
                             @csrf
@@ -221,7 +221,7 @@
                     @if (Auth::user()->role_id === 1)
                         <form action="{{ route('admin.gudang.distribusi.end') }}" method="post" class="form-horizontal">
                         @elseif(Auth::user()->role_id === 3)
-                            <form action="{{ route('manajemen.gudang.distribusi.end') }}" method="post"
+                            <form action="{{ route('management.gudang.distribusi.end') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

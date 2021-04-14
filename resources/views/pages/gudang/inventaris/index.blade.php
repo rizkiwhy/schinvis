@@ -41,7 +41,7 @@
                                 <form action="{{ route('admin.gudang.inventaris.store') }}" method="post"
                                     class="form-horizontal" id="form-tambah-inventaris">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.inventaris.store') }}" method="post"
+                                    <form action="{{ route('management.gudang.inventaris.store') }}" method="post"
                                         class="form-horizontal" id="form-tambah-inventaris">
                             @endif
                             @csrf
@@ -281,7 +281,7 @@
                                                             class="fas fa-edit"></i></a>
                                                 @else
                                                     <a class="btn btn-warning btn-sm"
-                                                        href="{{ route('manajemen.gudang.inventaris.edit', ['id' => $item->id]) }}"><i
+                                                        href="{{ route('management.gudang.inventaris.edit', ['id' => $item->id]) }}"><i
                                                             class="fas fa-edit"></i></a>
                                                 @endif
                                                 <a class="btn btn-danger btn-sm"
@@ -337,7 +337,7 @@
                         <form action="{{ route('admin.gudang.inventaris.destroy') }}" method="post"
                             class="form-horizontal">
                         @else
-                            <form action="{{ route('manajemen.gudang.inventaris.destroy') }}" method="post"
+                            <form action="{{ route('management.gudang.inventaris.destroy') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

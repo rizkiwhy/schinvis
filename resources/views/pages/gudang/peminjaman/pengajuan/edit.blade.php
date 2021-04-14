@@ -48,7 +48,7 @@
                                 <form action="{{ route('admin.gudang.peminjaman.pengajuan.update') }}" method="post"
                                     class="form-horizontal" id="form-edit-pengajuan">
                                 @elseif(Auth::user()->role_id === 3)
-                                    <form action="{{ route('manajemen.gudang.peminjaman.pengajuan.update') }}"
+                                    <form action="{{ route('management.gudang.peminjaman.pengajuan.update') }}"
                                         method="post" class="form-horizontal" id="form-edit-pengajuan">
                             @endif
                             @csrf

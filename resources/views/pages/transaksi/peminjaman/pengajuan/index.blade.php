@@ -46,7 +46,7 @@
                                         method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
                                     @elseif (Auth::user()->role_id === 3)
                                         <form
-                                            action="{{ route('manajemen.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
+                                            action="{{ route('management.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
                                             method="post" class="form-horizontal"
                                             id="form-tambah-pengajuan-peminjaman-pribadi">
                             @endif
@@ -181,7 +181,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @else
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -237,7 +237,7 @@
                                 method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
                             @elseif (Auth::user()->role_id === 3)
                                 <form
-                                    action="{{ route('manajemen.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
+                                    action="{{ route('management.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
                                     method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
                     @endif
                     @csrf

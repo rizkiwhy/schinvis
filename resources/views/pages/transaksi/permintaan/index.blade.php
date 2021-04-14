@@ -25,7 +25,7 @@
                                 href="{{ route('user.transaksi.permintaan.pengajuan.indexpermintaan') }}">
                             @elseif (Auth::user()->role_id === 3)
                                 <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                    href="{{ route('manajemen.transaksi.permintaan.pengajuan.indexpermintaan') }}">
+                                    href="{{ route('management.transaksi.permintaan.pengajuan.indexpermintaan') }}">
                     @endif
                     <i class="fas fa-bell mr-2"></i>Pengajuan
                     </a>

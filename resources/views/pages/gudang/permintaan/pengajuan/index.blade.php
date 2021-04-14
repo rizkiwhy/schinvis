@@ -41,7 +41,7 @@
                                 <form action="{{ route('admin.gudang.permintaan.pengajuan.storepermintaan') }}" method="post"
                                     class="form-horizontal" id="form-tambah-pengajuan">
                                 @elseif(Auth::user()->role_id === 3)
-                                    <form action="{{ route('manajemen.gudang.permintaan.pengajuan.storepermintaan') }}"
+                                    <form action="{{ route('management.gudang.permintaan.pengajuan.storepermintaan') }}"
                                         method="post" class="form-horizontal" id="form-tambah-pengajuan">
                             @endif
                             @csrf
@@ -165,7 +165,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @else
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.gudang.permintaan.pengajuan.editpermintaan', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.gudang.permintaan.pengajuan.editpermintaan', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -215,7 +215,7 @@
                         <form action="{{ route('admin.gudang.permintaan.pengajuan.destroypermintaan') }}" method="post"
                             class="form-horizontal">
                         @else
-                            <form action="{{ route('manajemen.gudang.permintaan.pengajuan.destroypermintaan') }}" method="post"
+                            <form action="{{ route('management.gudang.permintaan.pengajuan.destroypermintaan') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

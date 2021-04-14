@@ -91,7 +91,7 @@ class AlatKerjaController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.alat-kerja.index')
+                    ->route('management.alat-kerja.index')
                     ->with(
                         'success_message',
                         'Data inventaris ' .
@@ -124,7 +124,7 @@ class AlatKerjaController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.alat-kerja.index', [
+                    ->route('management.alat-kerja.index', [
                         'id' => $request->id,
                     ])
                     ->with(

@@ -53,7 +53,7 @@
                                         method="post" class="form-horizontal" id="form-edit-pengajuan">
                                     @elseif (Auth::user()->role_id === 3)
                                         <form
-                                            action="{{ route('manajemen.transaksi.peminjaman.pengajuan.updatepeminjamanpribadi') }}"
+                                            action="{{ route('management.transaksi.peminjaman.pengajuan.updatepeminjamanpribadi') }}"
                                             method="post" class="form-horizontal" id="form-edit-pengajuan">
                             @endif
                             @csrf

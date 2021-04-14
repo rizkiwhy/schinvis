@@ -70,7 +70,7 @@
                                 @if (Auth::user()->role_id === 1)
                                     <a href="{{ route('admin.gudang.inventaris.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.gudang.inventaris.index') }}" class="nav-link">
+                                        <a href="{{ route('management.gudang.inventaris.index') }}" class="nav-link">
                                 @endif
                                 <i class="nav-icon fas fa-book-open"></i>
                                 <p>
@@ -82,7 +82,7 @@
                                 @if (Auth::user()->role_id === 1)
                                     <a href="{{ route('admin.gudang.pengajuan.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.gudang.pengajuan.index') }}" class="nav-link">
+                                        <a href="{{ route('management.gudang.pengajuan.index') }}" class="nav-link">
                                 @endif
                                 <i class="nav-icon fas fa-bell"></i>
                                 <p>
@@ -94,7 +94,7 @@
                                 @if (Auth::user()->role_id === 1)
                                     <a href="{{ route('admin.gudang.distribusi.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.gudang.distribusi.index') }}" class="nav-link">
+                                        <a href="{{ route('management.gudang.distribusi.index') }}" class="nav-link">
                                 @endif
                                 <i class="nav-icon fas fa-truck-loading"></i>
                                 <p>
@@ -106,7 +106,7 @@
                                 @if (Auth::user()->role_id === 1)
                                     <a href="{{ route('admin.gudang.peminjaman.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.gudang.peminjaman.index') }}" class="nav-link">
+                                        <a href="{{ route('management.gudang.peminjaman.index') }}" class="nav-link">
                                 @endif
                                 <i class="nav-icon fas fa-exchange-alt"></i>
                                 <p>
@@ -118,7 +118,7 @@
                                 @if (Auth::user()->role_id === 1)
                                     <a href="{{ route('admin.gudang.permintaan.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.gudang.permintaan.index') }}" class="nav-link">
+                                        <a href="{{ route('management.gudang.permintaan.index') }}" class="nav-link">
                                 @endif
                                 <i class="nav-icon fas fa-external-link-alt"></i>
                                 <p>
@@ -130,7 +130,7 @@
                                 @if (Auth::user()->role_id === 1)
                                     <a href="{{ route('admin.gudang.perbaikan.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.gudang.perbaikan.index') }}" class="nav-link">
+                                        <a href="{{ route('management.gudang.perbaikan.index') }}" class="nav-link">
                                 @endif
                                 <i class="nav-icon fas fa-tools"></i>
                                 <p>
@@ -158,7 +158,7 @@
                         @elseif(Auth::user()->role_id === 2)
                             <a href="{{ route('user.alat-kerja.index') }}" class="nav-link">
                             @else
-                                <a href="{{ route('manajemen.alat-kerja.index') }}" class="nav-link">
+                                <a href="{{ route('management.alat-kerja.index') }}" class="nav-link">
                     @endif
                     <i class="nav-icon fas fa-laptop"></i>
                     <p>
@@ -181,7 +181,7 @@
                                 @elseif(Auth::user()->role_id === 2)
                                     <a href="{{ route('user.transaksi.peminjaman.indexpribadi') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.transaksi.peminjaman.indexpribadi') }}"
+                                        <a href="{{ route('management.transaksi.peminjaman.indexpribadi') }}"
                                             class="nav-link">
                             @endif
                             <i class="nav-icon fas fa-exchange-alt"></i>
@@ -196,7 +196,7 @@
                                 @elseif(Auth::user()->role_id === 2)
                                     <a href="{{ route('user.transaksi.permintaan.index') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.transaksi.permintaan.index') }}"
+                                        <a href="{{ route('management.transaksi.permintaan.index') }}"
                                             class="nav-link">
                             @endif
                             <i class="nav-icon fas fa-external-link-alt"></i>
@@ -211,7 +211,7 @@
                                 @elseif(Auth::user()->role_id === 2)
                                     <a href="{{ route('user.transaksi.perbaikan.indexpribadi') }}" class="nav-link">
                                     @else
-                                        <a href="{{ route('manajemen.transaksi.perbaikan.indexpribadi') }}"
+                                        <a href="{{ route('management.transaksi.perbaikan.indexpribadi') }}"
                                             class="nav-link">
                             @endif
                             <i class="nav-icon fas fa-tools"></i>

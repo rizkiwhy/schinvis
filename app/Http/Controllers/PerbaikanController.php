@@ -28,11 +28,9 @@ class PerbaikanController extends Controller
             'user',
         ])->get();
 
-        $data['inventarisTidakDiperbaiki'] = InventarisBarang::where(
-            'statusbarang_id',
-            '<>',
-            3
-        )->get();
+        $data[
+            'inventarisTidakDiperbaiki'
+        ] = InventarisBarang::whereNotIn('statusbarang_id', [3])->get();
 
         $data['kondisiBarang'] = KondisiBarang::whereNotIn('id', [1])->get();
 
@@ -149,7 +147,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'success_message',
                         'Data perbaikan berhasil ditambahkan!'
@@ -165,7 +163,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'error_message',
                         'Data perbaikan gagal ditambahkan!'
@@ -237,7 +235,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.transaksi.perbaikan.indexpribadi')
+                    ->route('management.transaksi.perbaikan.indexpribadi')
                     ->with(
                         'success_message',
                         'Data perbaikan berhasil ditambahkan!'
@@ -260,7 +258,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.transaksi.perbaikan.indexpribadi')
+                    ->route('management.transaksi.perbaikan.indexpribadi')
                     ->with(
                         'error_message',
                         'Data perbaikan gagal ditambahkan!'
@@ -330,7 +328,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'success_message',
                         'Data perbaikan berhasil diubah!'
@@ -345,7 +343,7 @@ class PerbaikanController extends Controller
                     ->with('error_message', 'Data perbaikan gagal diubah!');
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.edit', [
+                    ->route('management.gudang.perbaikan.edit', [
                         'id' => $request->id,
                     ])
                     ->with('error_message', 'Data perbaikan gagal diubah!');
@@ -390,7 +388,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.transaksi.perbaikan.indexpribadi')
+                    ->route('management.transaksi.perbaikan.indexpribadi')
                     ->with(
                         'success_message',
                         'Data perbaikan berhasil diubah!'
@@ -407,7 +405,7 @@ class PerbaikanController extends Controller
                     ->with('error_message', 'Data perbaikan gagal diubah!');
             } else {
                 return redirect()
-                    ->route('manajemen.transaksi.perbaikan.indexpribadi')
+                    ->route('management.transaksi.perbaikan.indexpribadi')
                     ->with('error_message', 'Data perbaikan gagal diubah!');
             }
         }
@@ -469,7 +467,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'success_message',
                         'Data perbaikan berhasil dihapus!'
@@ -482,7 +480,7 @@ class PerbaikanController extends Controller
                     ->with('error_message', 'Data perbaikan gagal dihapus!');
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with('error_message', 'Data perbaikan gagal dihapus!');
             }
         }
@@ -523,7 +521,7 @@ class PerbaikanController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.transaksi.perbaikan.indexpribadi')
+                    ->route('management.transaksi.perbaikan.indexpribadi')
                     ->with(
                         'success_message',
                         'Data perbaikan berhasil dihapus!'
@@ -540,7 +538,7 @@ class PerbaikanController extends Controller
                     ->with('error_message', 'Data perbaikan gagal dihapus!');
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.transaksi.perbaikan.indexpribadi')
+                    ->route('management.transaksi.perbaikan.indexpribadi')
                     ->with('error_message', 'Data perbaikan gagal dihapus!');
             }
         }
@@ -570,7 +568,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'success_message',
                         'Data perbaikan ' .
@@ -590,7 +588,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'error_message',
                         'Data perbaikan ' .
@@ -652,7 +650,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'success_message',
                         'Data perbaikan ' .
@@ -672,7 +670,7 @@ class PerbaikanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'error_message',
                         'Data perbaikan ' .

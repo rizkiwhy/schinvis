@@ -45,7 +45,7 @@
                                         method="post" class="form-horizontal" id="form-tambah-pengajuan">
                                     @elseif(Auth::user()->role_id === 3)
                                         <form
-                                            action="{{ route('manajemen.transaksi.permintaan.pengajuan.storepermintaan') }}"
+                                            action="{{ route('management.transaksi.permintaan.pengajuan.storepermintaan') }}"
                                             method="post" class="form-horizontal" id="form-tambah-pengajuan">
                             @endif
                             @csrf
@@ -173,7 +173,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @elseif (Auth::user()->role_id === 3)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.transaksi.permintaan.pengajuan.editpermintaan', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.transaksi.permintaan.pengajuan.editpermintaan', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -226,7 +226,7 @@
                             <form action="{{ route('user.transaksi.permintaan.pengajuan.destroypermintaan') }}"
                                 method="post" class="form-horizontal">
                             @elseif (Auth::user()->role_id === 3)
-                                <form action="{{ route('manajemen.transaksi.permintaan.pengajuan.destroypermintaan') }}"
+                                <form action="{{ route('management.transaksi.permintaan.pengajuan.destroypermintaan') }}"
                                     method="post" class="form-horizontal">
                     @endif
                     @csrf

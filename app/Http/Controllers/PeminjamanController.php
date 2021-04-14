@@ -129,7 +129,7 @@ class PeminjamanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.index')
+                    ->route('management.gudang.peminjaman.index')
                     ->with(
                         'error_message',
                         'Jumlah inventaris tersedia tidak mencukupi jumlah permintaan!'
@@ -200,7 +200,7 @@ class PeminjamanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.index')
+                    ->route('management.gudang.peminjaman.index')
                     ->with(
                         'success_message',
                         'Data inventaris berhasil dipinjamkan!'
@@ -216,7 +216,7 @@ class PeminjamanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.index')
+                    ->route('management.gudang.peminjaman.index')
                     ->with(
                         'error_message',
                         'Data inventaris gagal dipinjamkan!'
@@ -273,7 +273,7 @@ class PeminjamanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.peminjaman.index')
+                    ->route('management.gudang.peminjaman.index')
                     ->with(
                         'success_message',
                         'Data inventaris ' .
@@ -293,7 +293,7 @@ class PeminjamanController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.index')
+                    ->route('management.gudang.perbaikan.index')
                     ->with(
                         'error_message',
                         'Data perbaikan ' .
@@ -361,7 +361,7 @@ class PeminjamanController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.transaksi.peminjaman.indexpribadi')
+                    ->route('management.transaksi.peminjaman.indexpribadi')
                     ->with(
                         'success_message',
                         'Data inventaris ' .
@@ -390,7 +390,7 @@ class PeminjamanController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.gudang.perbaikan.indexpribadi')
+                    ->route('management.gudang.perbaikan.indexpribadi')
                     ->with(
                         'error_message',
                         'Data perbaikan ' .

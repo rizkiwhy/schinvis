@@ -51,7 +51,7 @@
                                     <form action="{{ route('user.alat-kerja.pengajuan.updatepribadi') }}" method="post"
                                         class="form-horizontal" id="form-edit-pengajuan">
                                     @else
-                                        <form action="{{ route('manajemen.alat-kerja.pengajuan.updatepribadi') }}"
+                                        <form action="{{ route('management.alat-kerja.pengajuan.updatepribadi') }}"
                                             method="post" class="form-horizontal" id="form-edit-pengajuan">
                             @endif
                             @csrf

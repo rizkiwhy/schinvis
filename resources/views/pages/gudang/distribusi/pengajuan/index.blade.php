@@ -41,7 +41,7 @@
                                 <form action="{{ route('admin.gudang.distribusi.pengajuan.store') }}" method="post"
                                     class="form-horizontal" id="form-tambah-pengajuan">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.distribusi.pengajuan.store') }}"
+                                    <form action="{{ route('management.gudang.distribusi.pengajuan.store') }}"
                                         method="post" class="form-horizontal" id="form-tambah-pengajuan">
                             @endif
                             @csrf
@@ -165,7 +165,7 @@
                                                                 class="fas fa-edit"></i></a>
                                                     @else
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('manajemen.gudang.distribusi.pengajuan.edit', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.gudang.distribusi.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
@@ -215,7 +215,7 @@
                         <form action="{{ route('admin.gudang.distribusi.pengajuan.destroy') }}" method="post"
                             class="form-horizontal">
                         @else
-                            <form action="{{ route('manajemen.gudang.distribusi.pengajuan.destroy') }}" method="post"
+                            <form action="{{ route('management.gudang.distribusi.pengajuan.destroy') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

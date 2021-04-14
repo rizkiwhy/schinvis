@@ -54,7 +54,7 @@
                                     <form action="{{ route('user.user-profile.update') }}" method="post" class="form-horizontal"
                                         id="form-edit-user">
                                     @elseif (Auth::user()->role_id === 3)
-                                        <form action="{{ route('manajemen.user-profile.update') }}" method="post"
+                                        <form action="{{ route('management.user-profile.update') }}" method="post"
                                             class="form-horizontal" id="form-edit-user">
                             @endif
                             @csrf

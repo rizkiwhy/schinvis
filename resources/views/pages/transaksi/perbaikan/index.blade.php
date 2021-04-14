@@ -44,7 +44,7 @@
                                     <form action="{{ route('user.transaksi.perbaikan.storepribadi') }}" method="post"
                                         class="form-horizontal" id="form-tambah-perbaikan">
                                     @else
-                                        <form action="{{ route('manajemen.transaksi.perbaikan.storepribadi') }}"
+                                        <form action="{{ route('management.transaksi.perbaikan.storepribadi') }}"
                                             method="post" class="form-horizontal" id="form-tambah-perbaikan">
                             @endif
                             @csrf
@@ -171,7 +171,7 @@
                                                             class="fas fa-edit"></i></a>
                                                 @else
                                                     <a class="btn btn-warning btn-sm"
-                                                        href="{{ route('manajemen.transaksi.perbaikan.editpribadi', ['id' => $item->id]) }}"><i
+                                                        href="{{ route('management.transaksi.perbaikan.editpribadi', ['id' => $item->id]) }}"><i
                                                             class="fas fa-edit"></i></a>
                                                 @endif
                                                 <a class="btn btn-danger btn-sm"
@@ -242,7 +242,7 @@
                             <form action="{{ route('user.transaksi.perbaikan.destroypribadi') }}" method="post"
                                 class="form-horizontal">
                             @else
-                                <form action="{{ route('manajemen.transaksi.perbaikan.destroypribadi') }}" method="post"
+                                <form action="{{ route('management.transaksi.perbaikan.destroypribadi') }}" method="post"
                                     class="form-horizontal">
                     @endif
                     @csrf
@@ -272,7 +272,7 @@
                     @if (Auth::user()->role_id === 1)
                         <form action="{{ route('admin.gudang.perbaikan.start') }}" method="post" class="form-horizontal">
                         @else
-                            <form action="{{ route('manajemen.gudang.perbaikan.start') }}" method="post"
+                            <form action="{{ route('management.gudang.perbaikan.start') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf
@@ -310,7 +310,7 @@
                         <form action="{{ route('admin.gudang.perbaikan.end') }}" method="post" class="form-horizontal"
                             id="form-">
                         @else
-                            <form action="{{ route('manajemen.gudang.perbaikan.end') }}" method="post"
+                            <form action="{{ route('management.gudang.perbaikan.end') }}" method="post"
                                 class="form-horizontal">
                     @endif
                     @csrf

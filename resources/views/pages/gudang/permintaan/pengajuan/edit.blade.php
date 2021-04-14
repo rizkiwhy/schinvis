@@ -48,7 +48,7 @@
                                 <form action="{{ route('admin.gudang.permintaan.pengajuan.updatepermintaan') }}" method="post"
                                     class="form-horizontal" id="form-edit-pengajuan">
                                 @else
-                                    <form action="{{ route('manajemen.gudang.permintaan.pengajuan.updatepermintaan') }}"
+                                    <form action="{{ route('management.gudang.permintaan.pengajuan.updatepermintaan') }}"
                                         method="post" class="form-horizontal" id="form-edit-pengajuan">
                             @endif
                             @csrf

@@ -130,7 +130,7 @@ class PermintaanController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.gudang.permintaan.index')
+                    ->route('management.gudang.permintaan.index')
                     ->with(
                         'error_message',
                         'Jumlah inventaris tersedia tidak mencukupi jumlah permintaan!'
@@ -206,7 +206,7 @@ class PermintaanController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.gudang.permintaan.index')
+                    ->route('management.gudang.permintaan.index')
                     ->with(
                         'success_message',
                         'Data inventaris berhasil didistribusikan!'
@@ -222,7 +222,7 @@ class PermintaanController extends Controller
                     );
             } elseif (Auth::user()->role_id === 3) {
                 return redirect()
-                    ->route('manajemen.gudang.permintaan.index')
+                    ->route('management.gudang.permintaan.index')
                     ->with(
                         'error_message',
                         'Data inventaris gagal didistribusikan!'

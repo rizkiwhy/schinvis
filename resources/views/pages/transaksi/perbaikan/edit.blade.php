@@ -51,7 +51,7 @@
                                     <form action="{{ route('user.transaksi.perbaikan.updatepribadi') }}" method="post"
                                         class="form-horizontal">
                                     @else
-                                        <form action="{{ route('manajemen.transaksi.perbaikan.updatepribadi') }}"
+                                        <form action="{{ route('management.transaksi.perbaikan.updatepribadi') }}"
                                             method="post" class="form-horizontal">
                             @endif
                             @csrf

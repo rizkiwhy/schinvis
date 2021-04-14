@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\InventarisBarang;
+use App\Models\InventarisDigunakan;
 use App\Models\PengajuanBarang;
 use App\Models\InventarisDiperbaiki;
 use App\Models\User;
@@ -23,15 +24,29 @@ class DashboardController extends Controller
 
         $data['totalInventarisBarang'] = InventarisBarang::count();
         $data[
+            'totalInventarisDigunakanPribadi'
+        ] = InventarisDigunakan::whereNotIn('jenispenggunaanbarang_id', [3])
+            ->pribadi()
+            ->count();
+        $data[
             'totalPengajuanBarang'
         ] = PengajuanBarang::dalamantrian()->count();
-        // InventarisDiperbaiki::where('statuspengajuan_id', 1)->count();
-        $data['totalUser'] = User::where('id', '<>', 1)->count();
-        $data['totalInventarisRusak'] = InventarisBarang::where(
-            'kondisibarang_id',
-            '<>',
-            1
-        )->count();
+        $data['totalPengajuanBarangPribadi'] = PengajuanBarang::pribadi()
+            ->dalamantrian()
+            ->count();
+        $data['totalUser'] = User::whereNotIn('id', [1])->count();
+        $data['totalBarangHabisPakaiPribadi'] = InventarisDigunakan::where(
+            'jenispenggunaanbarang_id',
+            3
+        )
+            ->pribadi()
+            ->count();
+        $data[
+            'totalInventarisRusak'
+        ] = InventarisBarang::whereNotIn('kondisibarang_id', [1])->count();
+        $data[
+            'totalInventarisRusakPribadi'
+        ] = InventarisDiperbaiki::pribadi()->count();
 
         return view('pages.welcome', compact('data'));
     }
@@ -105,11 +120,9 @@ class DashboardController extends Controller
 
         $statusPengajuan = StatusPengajuan::all();
         // dd($statusPengajuan);
-        $jenisPengajuanBarang = JenisPengajuanBarang::where(
-            'id',
-            '<>',
-            4
-        )->get();
+        $jenisPengajuanBarang = JenisPengajuanBarang::whereNotIn('id', [
+            4,
+        ])->get();
 
         for ($i = 0; $i < count($jenisPengajuanBarang); $i++) {
             for ($j = 0; $j < count($statusPengajuan); $j++) {

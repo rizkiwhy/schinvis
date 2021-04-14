@@ -85,7 +85,7 @@ class DistribusiBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.index')
+                    ->route('management.gudang.distribusi.index')
                     ->with(
                         'error_message',
                         'Jumlah inventaris tersedia tidak mencukupi jumlah permintaan!'
@@ -157,7 +157,7 @@ class DistribusiBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.index')
+                    ->route('management.gudang.distribusi.index')
                     ->with(
                         'success_message',
                         'Data inventaris berhasil didistribusikan!'
@@ -173,7 +173,7 @@ class DistribusiBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.index')
+                    ->route('management.gudang.distribusi.index')
                     ->with(
                         'error_message',
                         'Data inventaris gagal didistribusikan!'
@@ -229,7 +229,7 @@ class DistribusiBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.index')
+                    ->route('management.gudang.distribusi.index')
                     ->with(
                         'success_message',
                         'Data inventaris berhasil diubah!'
@@ -244,7 +244,7 @@ class DistribusiBarangController extends Controller
                     ->with('error_message', 'Data inventaris gagal diubah!');
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.edit', [
+                    ->route('management.gudang.distribusi.edit', [
                         'id' => $request->id,
                     ])
                     ->with('error_message', 'Data inventaris gagal diubah!');
@@ -278,7 +278,7 @@ class DistribusiBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.index')
+                    ->route('management.gudang.distribusi.index')
                     ->with(
                         'success_message',
                         'Data inventaris ' .
@@ -300,7 +300,7 @@ class DistribusiBarangController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.distribusi.edit', [
+                    ->route('management.gudang.distribusi.edit', [
                         'id' => $request->id,
                     ])
                     ->with(

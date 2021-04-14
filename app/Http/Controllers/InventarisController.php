@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\InventarisDigunakan;
 use App\Models\InventarisBarang;
-use App\Models\InventarisTersedia;
 use App\Models\SubSubKelompokBarang;
 use App\Models\UkuranBarang;
 use App\Models\BahanBarang;
@@ -37,6 +36,26 @@ class InventarisController extends Controller
         $data['statusBarang'] = StatusBarang::first();
 
         return view('pages.gudang.inventaris.index', compact('data'));
+    }
+
+    public function indexDigunakanPribadi()
+    {
+        $data['layout'] = 'layouts.master';
+        $data['subpage'] = 'Index';
+        $data['page'] = 'Inventaris Digunakan';
+        $data['app'] = 'Assek App';
+
+        $data['inventarisDigunakan'] = InventarisDigunakan::with([
+            'inventarisBarang',
+            'jenisPenggunaanBarang',
+            'ruangan',
+            'user',
+        ])
+            ->pribadi()
+            ->whereNotIn('jenispenggunaanbarang_id', [3])
+            ->get();
+
+        return view('pages.inventaris.index', compact('data'));
     }
 
     public function checkNoRegister(Request $request)
@@ -79,7 +98,7 @@ class InventarisController extends Controller
                 'id' =>
                     $request->subsubkelompokbarang_id .
                     sprintf('%03s', $noRegister),
-                    // $noRegister,
+                // $noRegister,
                 'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
                 'noregister' => $noRegister,
                 'merekmodel' => $request->merekmodel,
@@ -112,7 +131,7 @@ class InventarisController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.inventaris.index')
+                    ->route('management.gudang.inventaris.index')
                     ->with(
                         'success_message',
                         'Data inventaris berhasil ditambahkan!'
@@ -128,7 +147,7 @@ class InventarisController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.inventaris.index')
+                    ->route('management.gudang.inventaris.index')
                     ->with(
                         'error_message',
                         'Data inventaris gagal ditambahkan!'
@@ -154,7 +173,7 @@ class InventarisController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.inventaris.index')
+                    ->route('management.gudang.inventaris.index')
                     ->with(
                         'success_message',
                         'Data inventaris berhasil dihapus!'
@@ -167,7 +186,7 @@ class InventarisController extends Controller
                     ->with('error_message', 'Data inventaris gagal dihapus!');
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.inventaris.index')
+                    ->route('management.gudang.inventaris.index')
                     ->with('error_message', 'Data inventaris gagal dihapus!');
             }
         }
@@ -239,7 +258,7 @@ class InventarisController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.inventaris.index')
+                    ->route('management.gudang.inventaris.index')
                     ->with(
                         'success_message',
                         'Data inventaris ' .
@@ -259,7 +278,7 @@ class InventarisController extends Controller
                     );
             } else {
                 return redirect()
-                    ->route('manajemen.gudang.inventaris.edit', [
+                    ->route('management.gudang.inventaris.edit', [
                         'id' => $request->id,
                     ])
                     ->with(

@@ -101,6 +101,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name(
                 'admin.dashboard'
             );
+            Route::prefix('pengajuan')->group(function () {
+                Route::get('/', [
+                    PengajuanBarangController::class,
+                    'indexAntrianPribadi',
+                ])->name('admin.pengajuan.index');
+            });
             Route::prefix('gudang')->group(function () {
                 Route::prefix('inventaris')->group(function () {
                     Route::get('/', [
@@ -341,6 +347,14 @@ Route::middleware(['auth'])->group(function () {
                         PerbaikanController::class,
                         'end',
                     ])->name('admin.gudang.perbaikan.end');
+                });
+            });
+            Route::prefix('inventaris')->group(function () {
+                Route::prefix('digunakan')->group(function () {
+                    Route::get('/', [
+                        InventarisController::class,
+                        'indexDigunakanPribadi',
+                    ])->name('admin.inventaris.digunakan.index');
                 });
             });
             Route::prefix('alat-kerja')->group(function () {
@@ -803,6 +817,15 @@ Route::middleware(['auth'])->group(function () {
             'user.dashboard'
         );
 
+        Route::prefix('inventaris')->group(function () {
+            Route::prefix('digunakan')->group(function () {
+                Route::get('/', [
+                    InventarisController::class,
+                    'indexDigunakanPribadi',
+                ])->name('user.inventaris.digunakan.index');
+            });
+        });
+
         Route::prefix('alat-kerja')->group(function () {
             Route::get('/', [AlatKerjaController::class, 'index'])->name(
                 'user.alat-kerja.index'
@@ -1023,94 +1046,100 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name(
                 'management.dashboard'
             );
+            Route::prefix('pengajuan')->group(function () {
+                Route::get('/', [
+                    PengajuanBarangController::class,
+                    'indexAntrianPribadi',
+                ])->name('management.pengajuan.index');
+            });
             Route::prefix('gudang')->group(function () {
                 Route::prefix('inventaris')->group(function () {
                     Route::get('/', [
                         InventarisController::class,
                         'index',
-                    ])->name('manajemen.gudang.inventaris.index');
+                    ])->name('management.gudang.inventaris.index');
                     Route::get('{id}', [
                         InventarisController::class,
                         'show',
-                    ])->name('manajemen.gudang.inventaris.get');
+                    ])->name('management.gudang.inventaris.get');
                     Route::get('edit/{id}', [
                         InventarisController::class,
                         'edit',
-                    ])->name('manajemen.gudang.inventaris.edit');
+                    ])->name('management.gudang.inventaris.edit');
                     Route::post('update', [
                         InventarisController::class,
                         'update',
-                    ])->name('manajemen.gudang.inventaris.update');
+                    ])->name('management.gudang.inventaris.update');
                     Route::post('store', [
                         InventarisController::class,
                         'store',
-                    ])->name('manajemen.gudang.inventaris.store');
+                    ])->name('management.gudang.inventaris.store');
                     Route::post('destroy', [
                         InventarisController::class,
                         'destroy',
-                    ])->name('manajemen.gudang.inventaris.destroy');
+                    ])->name('management.gudang.inventaris.destroy');
                 });
 
                 Route::prefix('pengajuan')->group(function () {
                     Route::get('/', [
                         PengajuanBarangController::class,
                         'indexAntrian',
-                    ])->name('manajemen.gudang.pengajuan.index');
+                    ])->name('management.gudang.pengajuan.index');
                 });
 
                 Route::prefix('distribusi')->group(function () {
                     Route::get('/', [
                         DistribusiBarangController::class,
                         'index',
-                    ])->name('manajemen.gudang.distribusi.index');
+                    ])->name('management.gudang.distribusi.index');
                     // Route::get('{id}', [
                     //     DistribusiBarangController::class,
                     //     'show',
-                    // ])->name('manajemen.gudang.distribusi.get');
+                    // ])->name('management.gudang.distribusi.get');
                     Route::get('edit/{id}', [
                         DistribusiBarangController::class,
                         'edit',
-                    ])->name('manajemen.gudang.distribusi.edit');
+                    ])->name('management.gudang.distribusi.edit');
                     Route::post('update', [
                         DistribusiBarangController::class,
                         'update',
-                    ])->name('manajemen.gudang.distribusi.update');
+                    ])->name('management.gudang.distribusi.update');
                     Route::post('store', [
                         DistribusiBarangController::class,
                         'store',
-                    ])->name('manajemen.gudang.distribusi.store');
+                    ])->name('management.gudang.distribusi.store');
                     Route::post('end', [
                         DistribusiBarangController::class,
                         'end',
-                    ])->name('manajemen.gudang.distribusi.end');
+                    ])->name('management.gudang.distribusi.end');
                     Route::prefix('pengajuan')->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'index',
-                        ])->name('manajemen.gudang.distribusi.pengajuan.index');
+                        ])->name('management.gudang.distribusi.pengajuan.index');
                         Route::get('{id}', [
                             PengajuanBarangController::class,
                             'show',
-                        ])->name('manajemen.gudang.distribusi.pengajuan.get');
+                        ])->name('management.gudang.distribusi.pengajuan.get');
                         Route::get('edit/{id}', [
                             PengajuanBarangController::class,
                             'edit',
-                        ])->name('manajemen.gudang.distribusi.pengajuan.edit');
+                        ])->name('management.gudang.distribusi.pengajuan.edit');
                         Route::post('update', [
                             PengajuanBarangController::class,
                             'update',
                         ])->name(
-                            'manajemen.gudang.distribusi.pengajuan.update'
+                            'management.gudang.distribusi.pengajuan.update'
                         );
                         Route::post('store', [
                             PengajuanBarangController::class,
                             'store',
-                        ])->name('manajemen.gudang.distribusi.pengajuan.store');
+                        ])->name('management.gudang.distribusi.pengajuan.store');
                         Route::post('destroy', [
                             PengajuanBarangController::class,
                             'destroy',
                         ])->name(
-                            'manajemen.gudang.distribusi.pengajuan.destroy'
+                            'management.gudang.distribusi.pengajuan.destroy'
                         );
                     });
                 });
@@ -1118,61 +1147,61 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', [
                         PeminjamanController::class,
                         'index',
-                    ])->name('manajemen.gudang.peminjaman.index');
+                    ])->name('management.gudang.peminjaman.index');
                     // Route::get('{id}', [
                     //     PeminjamanController::class,
                     //     'show',
-                    // ])->name('manajemen.gudang.peminjaman.get');
+                    // ])->name('management.gudang.peminjaman.get');
                     Route::get('edit/{id}', [
                         PeminjamanController::class,
                         'edit',
-                    ])->name('manajemen.gudang.peminjaman.edit');
+                    ])->name('management.gudang.peminjaman.edit');
                     Route::post('update', [
                         PeminjamanController::class,
                         'update',
-                    ])->name('manajemen.gudang.peminjaman.update');
+                    ])->name('management.gudang.peminjaman.update');
                     Route::post('store', [
                         PeminjamanController::class,
                         'store',
-                    ])->name('manajemen.gudang.peminjaman.store');
+                    ])->name('management.gudang.peminjaman.store');
                     Route::post('destroy', [
                         PeminjamanController::class,
                         'destroy',
-                    ])->name('manajemen.gudang.peminjaman.destroy');
+                    ])->name('management.gudang.peminjaman.destroy');
                     Route::post('end', [
                         PeminjamanController::class,
                         'end',
-                    ])->name('manajemen.gudang.peminjaman.end');
+                    ])->name('management.gudang.peminjaman.end');
                     Route::prefix('pengajuan')->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'indexPeminjaman',
-                        ])->name('manajemen.gudang.peminjaman.pengajuan.index');
+                        ])->name('management.gudang.peminjaman.pengajuan.index');
                         Route::get('{id}', [
                             PengajuanBarangController::class,
                             'showPeminjaman',
-                        ])->name('manajemen.gudang.peminjaman.pengajuan.get');
+                        ])->name('management.gudang.peminjaman.pengajuan.get');
                         Route::get('edit/{id}', [
                             PengajuanBarangController::class,
                             'editPeminjaman',
-                        ])->name('manajemen.gudang.peminjaman.pengajuan.edit');
+                        ])->name('management.gudang.peminjaman.pengajuan.edit');
                         Route::post('update', [
                             PengajuanBarangController::class,
                             'updatePeminjaman',
                         ])->name(
-                            'manajemen.gudang.peminjaman.pengajuan.update'
+                            'management.gudang.peminjaman.pengajuan.update'
                         );
                         Route::post('store', [
                             PengajuanBarangController::class,
                             'storePeminjaman',
                         ])->name(
-                            'manajemen.gudang.peminjaman.pengajuan.storepeminjaman'
+                            'management.gudang.peminjaman.pengajuan.storepeminjaman'
                         );
                         Route::post('destroy', [
                             PengajuanBarangController::class,
                             'destroyPeminjaman',
                         ])->name(
-                            'manajemen.gudang.peminjaman.pengajuan.destroy'
+                            'management.gudang.peminjaman.pengajuan.destroy'
                         );
                     });
                 });
@@ -1180,33 +1209,33 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', [
                         PermintaanController::class,
                         'index',
-                    ])->name('manajemen.gudang.permintaan.index');
+                    ])->name('management.gudang.permintaan.index');
                     // Route::get('{id}', [
                     //     PermintaanController::class,
                     //     'show',
-                    // ])->name('manajemen.gudang.permintaan.get');
+                    // ])->name('management.gudang.permintaan.get');
                     Route::get('edit/{id}', [
                         PermintaanController::class,
                         'edit',
-                    ])->name('manajemen.gudang.permintaan.edit');
+                    ])->name('management.gudang.permintaan.edit');
                     Route::post('update', [
                         PermintaanController::class,
                         'update',
-                    ])->name('manajemen.gudang.permintaan.update');
+                    ])->name('management.gudang.permintaan.update');
                     Route::post('store', [
                         PermintaanController::class,
                         'store',
-                    ])->name('manajemen.gudang.permintaan.store');
+                    ])->name('management.gudang.permintaan.store');
                     Route::post('destroy', [
                         PermintaanController::class,
                         'destroy',
-                    ])->name('manajemen.gudang.permintaan.destroy');
+                    ])->name('management.gudang.permintaan.destroy');
                     Route::prefix('pengajuan')->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'indexPermintaan',
                         ])->name(
-                            'manajemen.gudang.permintaan.pengajuan.indexpermintaan'
+                            'management.gudang.permintaan.pengajuan.indexpermintaan'
                         );
                         // Route::get('{id}', [
                         //     PengajuanBarangController::class,
@@ -1216,25 +1245,25 @@ Route::middleware(['auth'])->group(function () {
                             PengajuanBarangController::class,
                             'editPermintaan',
                         ])->name(
-                            'manajemen.gudang.permintaan.pengajuan.editpermintaan'
+                            'management.gudang.permintaan.pengajuan.editpermintaan'
                         );
                         Route::post('update', [
                             PengajuanBarangController::class,
                             'updatePermintaan',
                         ])->name(
-                            'manajemen.gudang.permintaan.pengajuan.updatepermintaan'
+                            'management.gudang.permintaan.pengajuan.updatepermintaan'
                         );
                         Route::post('store-permintaan', [
                             PengajuanBarangController::class,
                             'storePermintaan',
                         ])->name(
-                            'manajemen.gudang.permintaan.pengajuan.storepermintaan'
+                            'management.gudang.permintaan.pengajuan.storepermintaan'
                         );
                         Route::post('destroy', [
                             PengajuanBarangController::class,
                             'destroyPermintaan',
                         ])->name(
-                            'manajemen.gudang.permintaan.pengajuan.destroypermintaan'
+                            'management.gudang.permintaan.pengajuan.destroypermintaan'
                         );
                     });
                 });
@@ -1242,88 +1271,96 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', [
                         PerbaikanController::class,
                         'index',
-                    ])->name('manajemen.gudang.perbaikan.index');
+                    ])->name('management.gudang.perbaikan.index');
                     Route::get('{id}', [
                         PerbaikanController::class,
                         'show',
-                    ])->name('manajemen.gudang.perbaikan.get');
+                    ])->name('management.gudang.perbaikan.get');
                     Route::get('edit/{id}', [
                         PerbaikanController::class,
                         'edit',
-                    ])->name('manajemen.gudang.perbaikan.edit');
+                    ])->name('management.gudang.perbaikan.edit');
                     Route::post('update', [
                         PerbaikanController::class,
                         'update',
-                    ])->name('manajemen.gudang.perbaikan.update');
+                    ])->name('management.gudang.perbaikan.update');
                     Route::post('store', [
                         PerbaikanController::class,
                         'store',
-                    ])->name('manajemen.gudang.perbaikan.store');
+                    ])->name('management.gudang.perbaikan.store');
                     Route::post('destroy', [
                         PerbaikanController::class,
                         'destroy',
-                    ])->name('manajemen.gudang.perbaikan.destroy');
+                    ])->name('management.gudang.perbaikan.destroy');
                     Route::post('start', [
                         PerbaikanController::class,
                         'start',
-                    ])->name('manajemen.gudang.perbaikan.start');
+                    ])->name('management.gudang.perbaikan.start');
                     Route::post('end', [
                         PerbaikanController::class,
                         'end',
-                    ])->name('manajemen.gudang.perbaikan.end');
+                    ])->name('management.gudang.perbaikan.end');
+                });
+            });
+            Route::prefix('inventaris')->group(function () {
+                Route::prefix('digunakan')->group(function () {
+                    Route::get('/', [
+                        InventarisController::class,
+                        'indexDigunakanPribadi',
+                    ])->name('management.inventaris.digunakan.index');
                 });
             });
             Route::prefix('alat-kerja')->group(function () {
                 Route::get('/', [AlatKerjaController::class, 'index'])->name(
-                    'manajemen.alat-kerja.index'
+                    'management.alat-kerja.index'
                 );
                 // Route::get('{id}', [AlatKerjaController::class, 'show'])->name(
-                //     'manajemen.alat-kerja.get'
+                //     'management.alat-kerja.get'
                 // );
                 Route::get('edit/{id}', [
                     AlatKerjaController::class,
                     'edit',
-                ])->name('manajemen.alat-kerja.edit');
+                ])->name('management.alat-kerja.edit');
                 Route::post('update', [
                     AlatKerjaController::class,
                     'update',
-                ])->name('manajemen.alat-kerja.update');
+                ])->name('management.alat-kerja.update');
                 Route::post('store', [
                     AlatKerjaController::class,
                     'store',
-                ])->name('manajemen.alat-kerja.store');
+                ])->name('management.alat-kerja.store');
                 Route::post('destroy', [
                     AlatKerjaController::class,
                     'destroy',
-                ])->name('manajemen.alat-kerja.destroy');
+                ])->name('management.alat-kerja.destroy');
                 Route::post('end', [AlatKerjaController::class, 'end'])->name(
-                    'manajemen.alat-kerja.end'
+                    'management.alat-kerja.end'
                 );
                 Route::prefix('pengajuan')->group(function () {
                     Route::get('/', [
                         PengajuanBarangController::class,
                         'indexPribadi',
-                    ])->name('manajemen.alat-kerja.pengajuan.indexpribadi');
+                    ])->name('management.alat-kerja.pengajuan.indexpribadi');
                     Route::get('{id}', [
                         PengajuanBarangController::class,
                         'show',
-                    ])->name('manajemen.alat-kerja.pengajuan.get');
+                    ])->name('management.alat-kerja.pengajuan.get');
                     Route::get('edit/{id}', [
                         PengajuanBarangController::class,
                         'editPribadi',
-                    ])->name('manajemen.alat-kerja.pengajuan.editpribadi');
+                    ])->name('management.alat-kerja.pengajuan.editpribadi');
                     Route::post('update', [
                         PengajuanBarangController::class,
                         'updatePribadi',
-                    ])->name('manajemen.alat-kerja.pengajuan.updatepribadi');
+                    ])->name('management.alat-kerja.pengajuan.updatepribadi');
                     Route::post('store', [
                         PengajuanBarangController::class,
                         'storePribadi',
-                    ])->name('manajemen.alat-kerja.pengajuan.storepribadi');
+                    ])->name('management.alat-kerja.pengajuan.storepribadi');
                     Route::post('destroy', [
                         PengajuanBarangController::class,
                         'destroyPribadi',
-                    ])->name('manajemen.alat-kerja.pengajuan.destroypribadi');
+                    ])->name('management.alat-kerja.pengajuan.destroypribadi');
                 });
             });
             Route::prefix('transaksi')->group(function () {
@@ -1331,67 +1368,67 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', [
                         PeminjamanController::class,
                         'indexPribadi',
-                    ])->name('manajemen.transaksi.peminjaman.indexpribadi');
+                    ])->name('management.transaksi.peminjaman.indexpribadi');
                     // Route::get('{id}', [
                     //     PeminjamanController::class,
                     //     'show',
-                    // ])->name('manajemen.transaksi.peminjaman.get');
+                    // ])->name('management.transaksi.peminjaman.get');
                     Route::get('edit/{id}', [
                         PeminjamanController::class,
                         'edit',
-                    ])->name('manajemen.transaksi.peminjaman.edit');
+                    ])->name('management.transaksi.peminjaman.edit');
                     Route::post('update', [
                         PeminjamanController::class,
                         'update',
-                    ])->name('manajemen.transaksi.peminjaman.update');
+                    ])->name('management.transaksi.peminjaman.update');
                     Route::post('store', [
                         PeminjamanController::class,
                         'store',
-                    ])->name('manajemen.transaksi.peminjaman.store');
+                    ])->name('management.transaksi.peminjaman.store');
                     Route::post('destroy', [
                         PeminjamanController::class,
                         'destroy',
-                    ])->name('manajemen.transaksi.peminjaman.destroy');
+                    ])->name('management.transaksi.peminjaman.destroy');
                     Route::post('end', [
                         PeminjamanController::class,
                         'endPribadi',
-                    ])->name('manajemen.transaksi.peminjaman.endpribadi');
+                    ])->name('management.transaksi.peminjaman.endpribadi');
                     Route::prefix('pengajuan')->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'indexPeminjamanPribadi',
                         ])->name(
-                            'manajemen.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
+                            'management.transaksi.peminjaman.pengajuan.indexpeminjamanpribadi'
                         );
                         Route::get('{id}', [
                             PengajuanBarangController::class,
                             'showPeminjaman',
                         ])->name(
-                            'manajemen.transaksi.peminjaman.pengajuan.get'
+                            'management.transaksi.peminjaman.pengajuan.get'
                         );
                         Route::get('edit/{id}', [
                             PengajuanBarangController::class,
                             'editPeminjamanPribadi',
                         ])->name(
-                            'manajemen.transaksi.peminjaman.pengajuan.editpeminjamanpribadi'
+                            'management.transaksi.peminjaman.pengajuan.editpeminjamanpribadi'
                         );
                         Route::post('update', [
                             PengajuanBarangController::class,
                             'updatePeminjamanPribadi',
                         ])->name(
-                            'manajemen.transaksi.peminjaman.pengajuan.updatepeminjamanpribadi'
+                            'management.transaksi.peminjaman.pengajuan.updatepeminjamanpribadi'
                         );
                         Route::post('store', [
                             PengajuanBarangController::class,
                             'storePeminjamanPribadi',
                         ])->name(
-                            'manajemen.transaksi.peminjaman.pengajuan.storepeminjamanpribadi'
+                            'management.transaksi.peminjaman.pengajuan.storepeminjamanpribadi'
                         );
                         Route::post('destroy', [
                             PengajuanBarangController::class,
                             'destroyPeminjamanPribadi',
                         ])->name(
-                            'manajemen.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi'
+                            'management.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi'
                         );
                     });
                 });
@@ -1399,33 +1436,33 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', [
                         PermintaanController::class,
                         'indexPribadi',
-                    ])->name('manajemen.transaksi.permintaan.index');
+                    ])->name('management.transaksi.permintaan.index');
                     // Route::get('{id}', [
                     //     PermintaanController::class,
                     //     'show',
-                    // ])->name('manajemen.transaksi.permintaan.get');
+                    // ])->name('management.transaksi.permintaan.get');
                     Route::get('edit/{id}', [
                         PermintaanController::class,
                         'edit',
-                    ])->name('manajemen.transaksi.permintaan.edit');
+                    ])->name('management.transaksi.permintaan.edit');
                     Route::post('update', [
                         PermintaanController::class,
                         'update',
-                    ])->name('manajemen.transaksi.permintaan.update');
+                    ])->name('management.transaksi.permintaan.update');
                     Route::post('store', [
                         PermintaanController::class,
                         'store',
-                    ])->name('manajemen.transaksi.permintaan.store');
+                    ])->name('management.transaksi.permintaan.store');
                     Route::post('destroy', [
                         PermintaanController::class,
                         'destroy',
-                    ])->name('manajemen.transaksi.permintaan.destroy');
+                    ])->name('management.transaksi.permintaan.destroy');
                     Route::prefix('pengajuan')->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'indexPermintaanPribadi',
                         ])->name(
-                            'manajemen.transaksi.permintaan.pengajuan.indexpermintaan'
+                            'management.transaksi.permintaan.pengajuan.indexpermintaan'
                         );
                         // Route::get('{id}', [
                         //     PengajuanBarangController::class,
@@ -1435,25 +1472,25 @@ Route::middleware(['auth'])->group(function () {
                             PengajuanBarangController::class,
                             'editPermintaanPribadi',
                         ])->name(
-                            'manajemen.transaksi.permintaan.pengajuan.editpermintaan'
+                            'management.transaksi.permintaan.pengajuan.editpermintaan'
                         );
                         Route::post('update', [
                             PengajuanBarangController::class,
                             'updatePermintaanPribadi',
                         ])->name(
-                            'manajemen.transaksi.permintaan.pengajuan.updatepermintaan'
+                            'management.transaksi.permintaan.pengajuan.updatepermintaan'
                         );
                         Route::post('store', [
                             PengajuanBarangController::class,
                             'storePermintaanPribadi',
                         ])->name(
-                            'manajemen.transaksi.permintaan.pengajuan.storepermintaan'
+                            'management.transaksi.permintaan.pengajuan.storepermintaan'
                         );
                         Route::post('destroy', [
                             PengajuanBarangController::class,
                             'destroyPermintaanPribadi',
                         ])->name(
-                            'manajemen.transaksi.permintaan.pengajuan.destroypermintaan'
+                            'management.transaksi.permintaan.pengajuan.destroypermintaan'
                         );
                     });
                 });
@@ -1461,27 +1498,27 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', [
                         PerbaikanController::class,
                         'indexPribadi',
-                    ])->name('manajemen.transaksi.perbaikan.indexpribadi');
+                    ])->name('management.transaksi.perbaikan.indexpribadi');
                     Route::get('{id}', [
                         PerbaikanController::class,
                         'show',
-                    ])->name('manajemen.transaksi.perbaikan.get');
+                    ])->name('management.transaksi.perbaikan.get');
                     Route::get('edit/{id}', [
                         PerbaikanController::class,
                         'editPribadi',
-                    ])->name('manajemen.transaksi.perbaikan.editpribadi');
+                    ])->name('management.transaksi.perbaikan.editpribadi');
                     Route::post('update', [
                         PerbaikanController::class,
                         'updatePribadi',
-                    ])->name('manajemen.transaksi.perbaikan.updatepribadi');
+                    ])->name('management.transaksi.perbaikan.updatepribadi');
                     Route::post('store', [
                         PerbaikanController::class,
                         'storePribadi',
-                    ])->name('manajemen.transaksi.perbaikan.storepribadi');
+                    ])->name('management.transaksi.perbaikan.storepribadi');
                     Route::post('destroy', [
                         PerbaikanController::class,
                         'destroyPribadi',
-                    ])->name('manajemen.transaksi.perbaikan.destroypribadi');
+                    ])->name('management.transaksi.perbaikan.destroypribadi');
                 });
             });
             Route::prefix('master')->group(function () {
@@ -1490,53 +1527,53 @@ Route::middleware(['auth'])->group(function () {
                         Route::get('/', [
                             GedungController::class,
                             'index',
-                        ])->name('manajemen.master.lokasi.gedung.index');
+                        ])->name('management.master.lokasi.gedung.index');
                         Route::get('{id}', [
                             GedungController::class,
                             'show',
-                        ])->name('manajemen.master.lokasi.gedung.get');
+                        ])->name('management.master.lokasi.gedung.get');
                         Route::get('edit/{id}', [
                             GedungController::class,
                             'edit',
-                        ])->name('manajemen.master.lokasi.gedung.edit');
+                        ])->name('management.master.lokasi.gedung.edit');
                         Route::post('update', [
                             GedungController::class,
                             'update',
-                        ])->name('manajemen.master.lokasi.gedung.update');
+                        ])->name('management.master.lokasi.gedung.update');
                         Route::post('store', [
                             GedungController::class,
                             'store',
-                        ])->name('manajemen.master.lokasi.gedung.store');
+                        ])->name('management.master.lokasi.gedung.store');
                         Route::post('destroy', [
                             GedungController::class,
                             'destroy',
-                        ])->name('manajemen.master.lokasi.gedung.destroy');
+                        ])->name('management.master.lokasi.gedung.destroy');
                     });
                     Route::prefix('ruangan')->group(function () {
                         Route::get('/', [
                             RuanganController::class,
                             'index',
-                        ])->name('manajemen.master.lokasi.ruangan.index');
+                        ])->name('management.master.lokasi.ruangan.index');
                         Route::get('{id}', [
                             RuanganController::class,
                             'show',
-                        ])->name('manajemen.master.lokasi.ruangan.get');
+                        ])->name('management.master.lokasi.ruangan.get');
                         Route::get('edit/{id}', [
                             RuanganController::class,
                             'edit',
-                        ])->name('manajemen.master.lokasi.ruangan.edit');
+                        ])->name('management.master.lokasi.ruangan.edit');
                         Route::post('update', [
                             RuanganController::class,
                             'update',
-                        ])->name('manajemen.master.lokasi.ruangan.update');
+                        ])->name('management.master.lokasi.ruangan.update');
                         Route::post('store', [
                             RuanganController::class,
                             'store',
-                        ])->name('manajemen.master.lokasi.ruangan.store');
+                        ])->name('management.master.lokasi.ruangan.store');
                         Route::post('destroy', [
                             RuanganController::class,
                             'destroy',
-                        ])->name('manajemen.master.lokasi.ruangan.destroy');
+                        ])->name('management.master.lokasi.ruangan.destroy');
                     });
                 });
                 Route::prefix('barang')->group(function () {
@@ -1544,182 +1581,182 @@ Route::middleware(['auth'])->group(function () {
                         Route::get('/', [
                             GolonganBarangController::class,
                             'index',
-                        ])->name('manajemen.master.barang.golongan.index');
+                        ])->name('management.master.barang.golongan.index');
                         Route::get('{id}', [
                             GolonganBarangController::class,
                             'show',
-                        ])->name('manajemen.master.barang.golongan.get');
+                        ])->name('management.master.barang.golongan.get');
                         Route::get('edit/{id}', [
                             GolonganBarangController::class,
                             'edit',
-                        ])->name('manajemen.master.barang.golongan.edit');
+                        ])->name('management.master.barang.golongan.edit');
                         Route::post('update', [
                             GolonganBarangController::class,
                             'update',
-                        ])->name('manajemen.master.barang.golongan.update');
+                        ])->name('management.master.barang.golongan.update');
                         Route::post('store', [
                             GolonganBarangController::class,
                             'store',
-                        ])->name('manajemen.master.barang.golongan.store');
+                        ])->name('management.master.barang.golongan.store');
                         Route::post('destroy', [
                             GolonganBarangController::class,
                             'destroy',
-                        ])->name('manajemen.master.barang.golongan.destroy');
+                        ])->name('management.master.barang.golongan.destroy');
                     });
                     Route::prefix('bidang')->group(function () {
                         Route::get('/', [
                             BidangBarangController::class,
                             'index',
-                        ])->name('manajemen.master.barang.bidang.index');
+                        ])->name('management.master.barang.bidang.index');
                         Route::get('{id}', [
                             BidangBarangController::class,
                             'show',
-                        ])->name('manajemen.master.barang.bidang.get');
+                        ])->name('management.master.barang.bidang.get');
                         Route::get('edit/{id}', [
                             BidangBarangController::class,
                             'edit',
-                        ])->name('manajemen.master.barang.bidang.edit');
+                        ])->name('management.master.barang.bidang.edit');
                         Route::post('update', [
                             BidangBarangController::class,
                             'update',
-                        ])->name('manajemen.master.barang.bidang.update');
+                        ])->name('management.master.barang.bidang.update');
                         Route::post('store', [
                             BidangBarangController::class,
                             'store',
-                        ])->name('manajemen.master.barang.bidang.store');
+                        ])->name('management.master.barang.bidang.store');
                         Route::post('destroy', [
                             BidangBarangController::class,
                             'destroy',
-                        ])->name('manajemen.master.barang.bidang.destroy');
+                        ])->name('management.master.barang.bidang.destroy');
                     });
                     Route::prefix('kelompok')->group(function () {
                         Route::get('/', [
                             KelompokBarangController::class,
                             'index',
-                        ])->name('manajemen.master.barang.kelompok.index');
+                        ])->name('management.master.barang.kelompok.index');
                         Route::get('{id}', [
                             KelompokBarangController::class,
                             'show',
-                        ])->name('manajemen.master.barang.kelompok.get');
+                        ])->name('management.master.barang.kelompok.get');
                         Route::get('edit/{id}', [
                             KelompokBarangController::class,
                             'edit',
-                        ])->name('manajemen.master.barang.kelompok.edit');
+                        ])->name('management.master.barang.kelompok.edit');
                         Route::post('update', [
                             KelompokBarangController::class,
                             'update',
-                        ])->name('manajemen.master.barang.kelompok.update');
+                        ])->name('management.master.barang.kelompok.update');
                         Route::post('store', [
                             KelompokBarangController::class,
                             'store',
-                        ])->name('manajemen.master.barang.kelompok.store');
+                        ])->name('management.master.barang.kelompok.store');
                         Route::post('destroy', [
                             KelompokBarangController::class,
                             'destroy',
-                        ])->name('manajemen.master.barang.kelompok.destroy');
+                        ])->name('management.master.barang.kelompok.destroy');
                     });
                     Route::prefix('subkelompok')->group(function () {
                         Route::get('/', [
                             SubKelompokBarangController::class,
                             'index',
-                        ])->name('manajemen.master.barang.subkelompok.index');
+                        ])->name('management.master.barang.subkelompok.index');
                         Route::get('{id}', [
                             SubKelompokBarangController::class,
                             'show',
-                        ])->name('manajemen.master.barang.subkelompok.get');
+                        ])->name('management.master.barang.subkelompok.get');
                         Route::get('edit/{id}', [
                             SubKelompokBarangController::class,
                             'edit',
-                        ])->name('manajemen.master.barang.subkelompok.edit');
+                        ])->name('management.master.barang.subkelompok.edit');
                         Route::post('update', [
                             SubKelompokBarangController::class,
                             'update',
-                        ])->name('manajemen.master.barang.subkelompok.update');
+                        ])->name('management.master.barang.subkelompok.update');
                         Route::post('store', [
                             SubKelompokBarangController::class,
                             'store',
-                        ])->name('manajemen.master.barang.subkelompok.store');
+                        ])->name('management.master.barang.subkelompok.store');
                         Route::post('destroy', [
                             SubKelompokBarangController::class,
                             'destroy',
-                        ])->name('manajemen.master.barang.subkelompok.destroy');
+                        ])->name('management.master.barang.subkelompok.destroy');
                     });
                     Route::prefix('subsubkelompok')->group(function () {
                         Route::get('/', [
                             SubSubKelompokBarangController::class,
                             'index',
                         ])->name(
-                            'manajemen.master.barang.subsubkelompok.index'
+                            'management.master.barang.subsubkelompok.index'
                         );
                         Route::get('{id}', [
                             SubSubKelompokBarangController::class,
                             'show',
-                        ])->name('manajemen.master.barang.subsubkelompok.get');
+                        ])->name('management.master.barang.subsubkelompok.get');
                         Route::get('edit/{id}', [
                             SubSubKelompokBarangController::class,
                             'edit',
-                        ])->name('manajemen.master.barang.subsubkelompok.edit');
+                        ])->name('management.master.barang.subsubkelompok.edit');
 
                         Route::post('update', [
                             SubSubKelompokBarangController::class,
                             'update',
                         ])->name(
-                            'manajemen.master.barang.subsubkelompok.update'
+                            'management.master.barang.subsubkelompok.update'
                         );
                         Route::post('store', [
                             SubSubKelompokBarangController::class,
                             'store',
                         ])->name(
-                            'manajemen.master.barang.subsubkelompok.store'
+                            'management.master.barang.subsubkelompok.store'
                         );
                         Route::post('destroy', [
                             SubSubKelompokBarangController::class,
                             'destroy',
                         ])->name(
-                            'manajemen.master.barang.subsubkelompok.destroy'
+                            'management.master.barang.subsubkelompok.destroy'
                         );
                     });
                 });
                 Route::prefix('title')->group(function () {
                     Route::get('/', [TitleController::class, 'index'])->name(
-                        'manajemen.master.title.index'
+                        'management.master.title.index'
                     );
                     Route::get('{id}', [TitleController::class, 'show'])->name(
-                        'manajemen.master.title.get'
+                        'management.master.title.get'
                     );
                     Route::get('edit/{id}', [
                         TitleController::class,
                         'edit',
-                    ])->name('manajemen.master.title.edit');
+                    ])->name('management.master.title.edit');
                     Route::post('update', [
                         TitleController::class,
                         'update',
-                    ])->name('manajemen.master.title.update');
+                    ])->name('management.master.title.update');
                     Route::post('store', [
                         TitleController::class,
                         'store',
-                    ])->name('manajemen.master.title.store');
+                    ])->name('management.master.title.store');
                     Route::post('destroy', [
                         TitleController::class,
                         'destroy',
-                    ])->name('manajemen.master.title.destroy');
+                    ])->name('management.master.title.destroy');
                 });
             });
             Route::prefix('user')->group(function () {
                 Route::get('/', [UserController::class, 'index'])->name(
-                    'manajemen.user.index'
+                    'management.user.index'
                 );
                 Route::get('{id}', [UserController::class, 'show'])->name(
-                    'manajemen.user.get'
+                    'management.user.get'
                 );
                 Route::get('edit/{id}', [UserController::class, 'edit'])->name(
-                    'manajemen.user.edit'
+                    'management.user.edit'
                 );
                 Route::post('update', [UserController::class, 'update'])->name(
-                    'manajemen.user.update'
+                    'management.user.update'
                 );
                 Route::post('store', [UserController::class, 'store'])->name(
-                    'manajemen.user.store'
+                    'management.user.store'
                 );
                 Route::post('destroy', [
                     UserController::class,
@@ -1730,11 +1767,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('edit', [
                     UserController::class,
                     'editPribadi',
-                ])->name('manajemen.user-profile.edit');
+                ])->name('management.user-profile.edit');
                 Route::post('update', [
                     UserController::class,
                     'updatePribadi',
-                ])->name('manajemen.user-profile.update');
+                ])->name('management.user-profile.update');
             });
         });
 });
