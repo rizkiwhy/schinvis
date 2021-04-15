@@ -60,6 +60,7 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th class="text-center">No. Pengajuan</th>
+                                            <th class="text-center">Jenis Penggunaan</th>
                                             <th class="text-center">Kode Inventaris</th>
                                             <th class="text-center">Nama Barang</th>
                                             <th class="text-center">Ruangan</th>
@@ -84,6 +85,7 @@
                                                         {{ $item->nopengajuan }}
                                                     @endif
                                                 </td>
+                                                <td>{{ $item->jenisPenggunaanBarang->nama }}</td>
                                                 <td>{{ $item->inventarisbarang_id }}</td>
                                                 <td>{{ $item->inventarisBarang->subsubkelompokbarang->nama }}</td>
                                                 <td>{{ $item->ruangan->nama }}</td>
@@ -120,6 +122,7 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th class="text-center">No. Pengajuan</th>
+                                            <th class="text-center">Jenis Penggunaan</th>
                                             <th class="text-center">Kode Inventaris</th>
                                             <th class="text-center">Nama Barang</th>
                                             <th class="text-center">Ruangan</th>
