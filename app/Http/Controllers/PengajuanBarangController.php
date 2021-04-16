@@ -66,6 +66,10 @@ class PengajuanBarangController extends Controller
 
         $id = substr($id, -3);
 
+        $request->jenispengajuanbarang_id == 2
+            ? ($estimasi = $request->estimasipenggunaan)
+            : ($estimasi = null);
+
         // dd($request->all());
 
         $pengajuanBarang = PengajuanBarang::create([
@@ -79,6 +83,7 @@ class PengajuanBarangController extends Controller
             'jumlahbarang' => $request->jumlahbarang,
             'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
             'statuspengajuan_id' => 1,
+            'estimasipenggunaan' => $estimasi,
         ]);
 
         if ($pengajuanBarang) {
