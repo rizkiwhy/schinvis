@@ -26,6 +26,7 @@ class DashboardController extends Controller
         $data[
             'totalInventarisDigunakanPribadi'
         ] = InventarisDigunakan::whereNotIn('jenispenggunaanbarang_id', [3])
+            ->whereNull('selesaidigunakan')
             ->pribadi()
             ->count();
         $data[

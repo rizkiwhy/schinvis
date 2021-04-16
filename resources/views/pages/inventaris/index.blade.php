@@ -153,11 +153,13 @@
                     </div>
                     <div class="modal-body">
                         @if (Auth::user()->role_id === 1)
-                            <form action="{{ route('admin.alat-kerja.end') }}" method="post" class="form-horizontal">
+                            <form action="{{ route('admin.inventaris.digunakan.end') }}" method="post"
+                                class="form-horizontal">
                             @elseif(Auth::user()->role_id === 2)
-                                <form action="{{ route('user.alat-kerja.end') }}" method="post" class="form-horizontal">
+                                <form action="{{ route('user.inventaris.digunakan.end') }}" method="post"
+                                    class="form-horizontal">
                                 @elseif(Auth::user()->role_id === 3)
-                                    <form action="{{ route('management.alat-kerja.end') }}" method="post"
+                                    <form action="{{ route('management.inventaris.digunakan.end') }}" method="post"
                                         class="form-horizontal">
                         @endif
                         @csrf

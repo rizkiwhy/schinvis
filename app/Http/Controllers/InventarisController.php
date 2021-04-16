@@ -51,11 +51,92 @@ class InventarisController extends Controller
             'ruangan',
             'user',
         ])
+            ->whereNull('selesaidigunakan')
             ->pribadi()
             ->whereNotIn('jenispenggunaanbarang_id', [3])
             ->get();
 
         return view('pages.inventaris.index', compact('data'));
+    }
+
+    public function endDigunakanPribadi(Request $request)
+    {
+        $inventarisBarang = InventarisBarang::find(
+            $request->end_inventarisbarang_id
+        );
+        $inventarisBarang->update([
+            'statusbarang_id' => 1,
+        ]);
+        $inventarisDigunakan = InventarisDigunakan::find($request->end_id);
+        $inventarisDigunakan->update([
+            'selesaidigunakan' => date('Ymd'),
+        ]);
+
+        if ($inventarisDigunakan) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.inventaris.digunakan.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $request->end_inventarisbarang_id .
+                            ' berhasil disimpan!'
+                    );
+            } elseif (Auth::user()->role_id === 2) {
+                return redirect()
+                    ->route('user.inventaris.digunakan.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $request->end_inventarisbarang_id .
+                            ' berhasil disimpan!'
+                    );
+            } elseif (Auth::user()->role_id === 3) {
+                return redirect()
+                    ->route('management.inventaris.digunakan.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $request->end_inventarisbarang_id .
+                            ' berhasil disimpan!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.inventaris.digunakan.index', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data inventaris ' .
+                            $request->end_inventarisbarang_id .
+                            ' gagal disimpan!'
+                    );
+            } elseif (Auth::user()->role_id === 2) {
+                return redirect()
+                    ->route('user.inventaris.digunakan.index', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data inventaris ' .
+                            $request->end_inventarisbarang_id .
+                            ' gagal disimpan!'
+                    );
+            } elseif (Auth::user()->role_id === 3) {
+                return redirect()
+                    ->route('management.inventaris.digunakan.index', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data inventaris ' .
+                            $request->end_inventarisbarang_id .
+                            ' gagal disimpan!'
+                    );
+            }
+        }
     }
 
     public function checkNoRegister(Request $request)

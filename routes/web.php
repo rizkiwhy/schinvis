@@ -371,6 +371,10 @@ Route::middleware(['auth'])->group(function () {
                         InventarisController::class,
                         'indexDigunakanPribadi',
                     ])->name('admin.inventaris.digunakan.index');
+                    Route::post('end', [
+                        InventarisController::class,
+                        'endDigunakanPribadi',
+                    ])->name('admin.inventaris.digunakan.end');
                 });
             });
             Route::prefix('alat-kerja')->group(function () {
