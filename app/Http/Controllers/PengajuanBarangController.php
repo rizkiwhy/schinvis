@@ -53,6 +53,9 @@ class PengajuanBarangController extends Controller
             ->dalamantrian()
             ->get();
 
+        $data['jenisPengajuanBarang'] = JenisPengajuanBarang::whereNotIn('id', [
+            4,
+        ])->get();
         $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
         $data['user'] = User::all();
 

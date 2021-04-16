@@ -51,6 +51,19 @@
                                             id="form-tambah-pengajuan-peminjaman-pribadi">
                             @endif
                             @csrf
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Jenis Pengajuan</label>
+                                <div class="input-group">
+                                    <select class="form-control select2" id="jenispengajuanbarang_id"
+                                        name="jenispengajuanbarang_id" style="width: 100%">
+                                        <option value="" disabled selected>Pilih Jenis Pengajuan</option>
+                                        @foreach ($data['jenisPengajuanBarang'] as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="exampleInputEmail1">Jumlah Barang</label>
