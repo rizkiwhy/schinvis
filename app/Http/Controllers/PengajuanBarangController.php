@@ -70,8 +70,6 @@ class PengajuanBarangController extends Controller
             ? ($estimasi = $request->estimasipenggunaan)
             : ($estimasi = null);
 
-        // dd($request->all());
-
         $pengajuanBarang = PengajuanBarang::create([
             'id' =>
                 substr(date('Ymd'), 2) .
@@ -84,6 +82,7 @@ class PengajuanBarangController extends Controller
             'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
             'statuspengajuan_id' => 1,
             'estimasipenggunaan' => $estimasi,
+            'keterangan' => $request->keterangan,
         ]);
 
         if ($pengajuanBarang) {
@@ -144,6 +143,169 @@ class PengajuanBarangController extends Controller
         $data['user'] = User::all();
 
         return view('pages.gudang.pengajuan.index', compact('data'));
+    }
+
+    public function editAntrian($id)
+    {
+        $data['layout'] = 'layouts.master';
+        $data['subpage'] = 'Index';
+        $data['page'] = 'Pengajuan';
+        $data['app'] = 'Assek App';
+
+        $data['pengajuanBarang'] = PengajuanBarang::find($id);
+
+        $data['jenisPengajuanBarang'] = JenisPengajuanBarang::whereNotIn('id', [
+            4,
+        ])->get();
+        $data['statusPengajuan'] = StatusPengajuan::all();
+        $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
+        $data['user'] = User::all();
+
+        return view('pages.gudang.pengajuan.edit', compact('data'));
+    }
+
+    public function updateAntrian(Request $request)
+    {
+        $validatedData = $request->validate([
+            'jenispengajuanbarang_id' => 'required',
+            'jumlahbarang' => 'required',
+            'user_id' => 'required',
+            'estimasipenggunaan' => 'required',
+            'subsubkelompokbarang_id' => 'required',
+        ]);
+
+        $request->jenispengajuanbarang_id == 2
+            ? ($estimasi = $request->estimasipenggunaan)
+            : ($estimasi = null);
+
+        $id = DB::table('pengajuanbarang')
+            ->where(
+                'jenispengajuanbarang_id',
+                $request->jenispengajuanbarang_id
+            )
+            ->whereDate('created_at', date('Y-m-d'))
+            // ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            ->max(DB::raw('substring(id::text, 11)')); // pgsql
+
+        if ($id === null) {
+            $id = 1;
+        } else {
+            $id = ++$id;
+        }
+
+        $id = substr($id, -3);
+
+        $pengajuanBarang = PengajuanBarang::find($request->id);
+        $pengajuanBarang->update([
+            'user_id' => $request->user_id,
+            'jenispengajuanbarang_id' => $request->jenispengajuanbarang_id,
+            'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
+            'statuspengajuan_id' => $request->statuspengajuan_id,
+            'jumlahbarang' => $request->jumlahbarang,
+            'keterangan' => $request->keterangan,
+            'estimasipenggunaan' => $estimasi,
+        ]);
+        $pengajuanBarang->update([
+            'id' => substr_replace(
+                $pengajuanBarang->id,
+                $request->jenispengajuanbarang_id .
+                    sprintf('%03s', $request->user_id) .
+                    sprintf('%03s', $id),
+                6
+            ),
+            // 'id' => substr_replace(
+            //     $inventarisDigunakan->id,
+            //     sprintf('%03s', $request->user_id) .
+            //         substr($inventarisDigunakan->id, -3),
+            //     7
+            // ),
+            // substr(date('Ymd'), 2) .
+            //     1 .
+            //     sprintf('%03s', Auth::user()->id) .
+            //     sprintf('%03s', $id),
+        ]);
+
+        if ($pengajuanBarang) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' berhasil diubah!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' berhasil diubah!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.pengajuan.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' gagal diubah!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.pengajuan.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' gagal diubah!'
+                    );
+            }
+        }
+    }
+
+    public function destroyAntrian(Request $request)
+    {
+        $pengajuanBarang = PengajuanBarang::where(
+            'id',
+            $request->delete_id
+        )->delete();
+
+        if ($pengajuanBarang) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan berhasil dihapus!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan berhasil dihapus!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.pengajuan.index')
+                    ->with('error_message', 'Data pengajuan gagal dihapus!');
+            } else {
+                return redirect()
+                    ->route('management.gudang.pengajuan.index')
+                    ->with('error_message', 'Data pengajuan gagal dihapus!');
+            }
+        }
     }
 
     public function index()

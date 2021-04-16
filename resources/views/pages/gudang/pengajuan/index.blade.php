@@ -200,21 +200,16 @@
                                                 @if ($item->statuspengajuan_id === 1)
                                                     @if (Auth::user()->role_id === 1)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('admin.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('admin.gudang.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
-                                                    @elseif (Auth::user()->role_id === 2)
+                                                    @elseif(Auth::user()->role_id === 3)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('user.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
-                                                                class="fas fa-edit"></i></a>
-                                                    @else
-                                                        <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('management.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.gudang.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
                                                         onclick="deletePengajuanBarang({{ $item }})"
-                                                        data-toggle="modal"
-                                                        data-target="#modal-delete-pengajuanpeminjamanbarang">
+                                                        data-toggle="modal" data-target="#modal-delete-pengajuanbarang">
                                                         <i class="fas fa-trash"></i></a>
                                                 @endif
                                             </td>
@@ -247,7 +242,7 @@
             </div>
         </div>
     </section>
-    <div class="modal fade" id="modal-delete-pengajuanpeminjamanbarang">
+    <div class="modal fade" id="modal-delete-pengajuanbarang">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -258,15 +253,11 @@
                 </div>
                 <div class="modal-body">
                     @if (Auth::user()->role_id === 1)
-                        <form action="{{ route('admin.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
-                            method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
-                        @elseif (Auth::user()->role_id === 2)
-                            <form action="{{ route('user.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
-                                method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
-                            @elseif (Auth::user()->role_id === 3)
-                                <form
-                                    action="{{ route('management.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
-                                    method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
+                        <form action="{{ route('admin.gudang.pengajuan.destroy') }}" method="post"
+                            class="form-horizontal" id="form-delete-pengajuan">
+                        @elseif (Auth::user()->role_id === 3)
+                            <form action="{{ route('management.gudang.pengajuan.destroy') }}" method="post"
+                                class="form-horizontal" id="form-delete-pengajuan">
                     @endif
                     @csrf
                     <input type="hidden" name="delete_id" id="delete_id" value="" />
