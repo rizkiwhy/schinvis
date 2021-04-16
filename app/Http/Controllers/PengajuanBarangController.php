@@ -37,6 +37,85 @@ class PengajuanBarangController extends Controller
 
         return view('pages.pengajuan.index', compact('data'));
     }
+
+    public function storeAntrian(Request $request)
+    {
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'jenispengajuanbarang_id' => 'required',
+            'jumlahbarang' => 'required',
+            'user_id' => 'required',
+            'estimasipenggunaan' => 'required',
+            'subsubkelompokbarang_id' => 'required',
+        ]);
+
+        $id = DB::table('pengajuanbarang')
+            ->where(
+                'jenispengajuanbarang_id',
+                $request->jenispengajuanbarang_id
+            )
+            ->whereDate('created_at', date('Y-m-d'))
+            // ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            ->max(DB::raw('substring(id::text, 11)')); // pgsql
+
+        if ($id === null) {
+            $id = 1;
+        } else {
+            $id = ++$id;
+        }
+
+        $id = substr($id, -3);
+
+        // dd($request->all());
+
+        $pengajuanBarang = PengajuanBarang::create([
+            'id' =>
+                substr(date('Ymd'), 2) .
+                $request->jenispengajuanbarang_id .
+                sprintf('%03s', $request->user_id) .
+                sprintf('%03s', $id),
+            'user_id' => $request->user_id,
+            'jenispengajuanbarang_id' => $request->jenispengajuanbarang_id,
+            'jumlahbarang' => $request->jumlahbarang,
+            'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
+            'statuspengajuan_id' => 1,
+        ]);
+
+        if ($pengajuanBarang) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan berhasil ditambahkan!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan berhasil ditambahkan!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.pengajuan.index')
+                    ->with(
+                        'error_message',
+                        'Data pengajuan gagal ditambahkan!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.pengajuan.index')
+                    ->with(
+                        'error_message',
+                        'Data pengajuan gagal ditambahkan!'
+                    );
+            }
+        }
+    }
+
     public function indexAntrian()
     {
         $data['layout'] = 'layouts.master';

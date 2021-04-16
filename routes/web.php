@@ -140,6 +140,22 @@ Route::middleware(['auth'])->group(function () {
                         PengajuanBarangController::class,
                         'indexAntrian',
                     ])->name('admin.gudang.pengajuan.index');
+                    Route::get('edit/{id}', [
+                        PengajuanBarangController::class,
+                        'editAntrian',
+                    ])->name('admin.gudang.pengajuan.edit');
+                    Route::post('update', [
+                        PengajuanBarangController::class,
+                        'updateAntrian',
+                    ])->name('admin.gudang.pengajuan.update');
+                    Route::post('store', [
+                        PengajuanBarangController::class,
+                        'storeAntrian',
+                    ])->name('admin.gudang.pengajuan.store');
+                    Route::post('destroy', [
+                        PengajuanBarangController::class,
+                        'destroy',
+                    ])->name('admin.gudang.pengajuan.destroy');
                 });
 
                 Route::prefix('distribusi')->group(function () {
@@ -1116,7 +1132,9 @@ Route::middleware(['auth'])->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'index',
-                        ])->name('management.gudang.distribusi.pengajuan.index');
+                        ])->name(
+                            'management.gudang.distribusi.pengajuan.index'
+                        );
                         Route::get('{id}', [
                             PengajuanBarangController::class,
                             'show',
@@ -1134,7 +1152,9 @@ Route::middleware(['auth'])->group(function () {
                         Route::post('store', [
                             PengajuanBarangController::class,
                             'store',
-                        ])->name('management.gudang.distribusi.pengajuan.store');
+                        ])->name(
+                            'management.gudang.distribusi.pengajuan.store'
+                        );
                         Route::post('destroy', [
                             PengajuanBarangController::class,
                             'destroy',
@@ -1176,7 +1196,9 @@ Route::middleware(['auth'])->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,
                             'indexPeminjaman',
-                        ])->name('management.gudang.peminjaman.pengajuan.index');
+                        ])->name(
+                            'management.gudang.peminjaman.pengajuan.index'
+                        );
                         Route::get('{id}', [
                             PengajuanBarangController::class,
                             'showPeminjaman',
@@ -1679,7 +1701,9 @@ Route::middleware(['auth'])->group(function () {
                         Route::post('destroy', [
                             SubKelompokBarangController::class,
                             'destroy',
-                        ])->name('management.master.barang.subkelompok.destroy');
+                        ])->name(
+                            'management.master.barang.subkelompok.destroy'
+                        );
                     });
                     Route::prefix('subsubkelompok')->group(function () {
                         Route::get('/', [
@@ -1695,7 +1719,9 @@ Route::middleware(['auth'])->group(function () {
                         Route::get('edit/{id}', [
                             SubSubKelompokBarangController::class,
                             'edit',
-                        ])->name('management.master.barang.subsubkelompok.edit');
+                        ])->name(
+                            'management.master.barang.subsubkelompok.edit'
+                        );
 
                         Route::post('update', [
                             SubSubKelompokBarangController::class,

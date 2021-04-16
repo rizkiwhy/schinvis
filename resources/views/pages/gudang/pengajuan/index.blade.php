@@ -38,17 +38,11 @@
                         </div>
                         <div class="modal-body">
                             @if (Auth::user()->role_id === 1)
-                                <form action="{{ route('admin.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
-                                    method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
-                                @elseif (Auth::user()->role_id === 2)
-                                    <form
-                                        action="{{ route('user.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
-                                        method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
-                                    @elseif (Auth::user()->role_id === 3)
-                                        <form
-                                            action="{{ route('management.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
-                                            method="post" class="form-horizontal"
-                                            id="form-tambah-pengajuan-peminjaman-pribadi">
+                                <form action="{{ route('admin.gudang.pengajuan.store') }}" method="post"
+                                    class="form-horizontal" id="form-tambah-pengajuan">
+                                @elseif (Auth::user()->role_id === 3)
+                                    <form action="{{ route('management.gudang.pengajuan.store') }}" method="post"
+                                        class="form-horizontal" id="form-tambah-pengajuan">
                             @endif
                             @csrf
                             <div class="form-group">
@@ -92,6 +86,18 @@
                                         name="subsubkelompokbarang_id" style="width: 100%">
                                         <option value="" disabled selected>Pilih Jenis Barang</option>
                                         @foreach ($data['subSubKelompokBarang'] as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Pengguna</label>
+                                <div class="input-group">
+                                    <select class="form-control select2" id="user_id" name="user_id" style="width: 100%">
+                                        <option value="" disabled selected>Pilih Pengguna</option>
+                                        @foreach ($data['user'] as $item)
                                             <option value="{{ $item->id }}">
                                                 {{ $item->nama }}</option>
                                         @endforeach
@@ -279,26 +285,38 @@
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('src/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script>
-        $('#form-tambah-pengajuan-peminjaman-pribadi').validate({
+        $('#form-tambah-pengajuan').validate({
             rules: {
+                user_id: {
+                    required: true,
+                },
+                jenispengajuanbarang_id: {
+                    required: true,
+                },
                 subsubkelompokbarang_id: {
                     required: true,
                 },
                 jumlahbarang: {
                     required: true,
                 },
-                estimasipeminjaman: {
+                estimasipenggunaan: {
                     required: true,
                 },
             },
             messages: {
+                user_id: {
+                    required: "Silahkan pilih pengguna",
+                },
+                jenispengajuanbarang_id: {
+                    required: "Silahkan pilih jenis pengajuan",
+                },
                 subsubkelompokbarang_id: {
                     required: "Silahkan pilih barang",
                 },
                 jumlahbarang: {
                     required: "Silahkan masukkan jumlah barang",
                 },
-                estimasipeminjaman: {
+                estimasipenggunaan: {
                     required: "Silahkan masukkan estimasi",
                 },
             },
