@@ -38,15 +38,15 @@
                         </div>
                         <div class="modal-body">
                             @if (Auth::user()->role_id === 1)
-                                <form action="{{ route('admin.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
+                                <form action="{{ route('admin.pengajuan.store') }}"
                                     method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
                                 @elseif (Auth::user()->role_id === 2)
                                     <form
-                                        action="{{ route('user.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
+                                        action="{{ route('user.pengajuan.store') }}"
                                         method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
                                     @elseif (Auth::user()->role_id === 3)
                                         <form
-                                            action="{{ route('management.transaksi.peminjaman.pengajuan.storepeminjamanpribadi') }}"
+                                            action="{{ route('management.pengajuan.store') }}"
                                             method="post" class="form-horizontal"
                                             id="form-tambah-pengajuan-peminjaman-pribadi">
                             @endif

@@ -106,6 +106,22 @@ Route::middleware(['auth'])->group(function () {
                     PengajuanBarangController::class,
                     'indexAntrianPribadi',
                 ])->name('admin.pengajuan.index');
+                Route::get('edit/{id}', [
+                    PengajuanBarangController::class,
+                    'editAntrianPribadi',
+                ])->name('admin.pengajuan.edit');
+                Route::post('update', [
+                    PengajuanBarangController::class,
+                    'updateAntrianPribadi',
+                ])->name('admin.pengajuan.update');
+                Route::post('store', [
+                    PengajuanBarangController::class,
+                    'storeAntrianPribadi',
+                ])->name('admin.pengajuan.store');
+                Route::post('destroy', [
+                    PengajuanBarangController::class,
+                    'destroyAntrianPribadi',
+                ])->name('admin.pengajuan.destroy');
             });
             Route::prefix('gudang')->group(function () {
                 Route::prefix('inventaris')->group(function () {
