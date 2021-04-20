@@ -136,6 +136,153 @@ class PengajuanBarangController extends Controller
         }
     }
 
+    public function editAntrianPribadi($id)
+    {
+        $data['layout'] = 'layouts.master';
+        $data['subpage'] = 'Index';
+        $data['page'] = 'Pengajuan';
+        $data['app'] = 'Assek App';
+
+        $data['pengajuanBarang'] = PengajuanBarang::find($id);
+
+        $data['jenisPengajuanBarang'] = JenisPengajuanBarang::whereNotIn('id', [
+            4,
+        ])->get();
+        $data['statusPengajuan'] = StatusPengajuan::all();
+        $data['subSubKelompokBarang'] = SubSubKelompokBarang::all();
+        $data['user'] = User::all();
+
+        return view('pages.pengajuan.edit', compact('data'));
+    }
+
+    public function updateAntrianPribadi(Request $request)
+    {
+        $validatedData = $request->validate([
+            'jenispengajuanbarang_id' => 'required',
+            'jumlahbarang' => 'required',
+            'user_id' => 'required',
+            'estimasipenggunaan' => 'required',
+            'subsubkelompokbarang_id' => 'required',
+        ]);
+
+        $request->jenispengajuanbarang_id == 2
+            ? ($estimasi = $request->estimasipenggunaan)
+            : ($estimasi = null);
+
+        $id = DB::table('pengajuanbarang')
+            ->where(
+                'jenispengajuanbarang_id',
+                $request->jenispengajuanbarang_id
+            )
+            ->whereDate('created_at', date('Y-m-d'))
+            // ->max(DB::raw('substring(id, -3, 3)')); // mysql
+            ->max(DB::raw('substring(id::text, 11)')); // pgsql
+
+        if ($id === null) {
+            $id = 1;
+        } else {
+            $id = ++$id;
+        }
+
+        $id = substr($id, -3);
+
+        $pengajuanBarang = PengajuanBarang::find($request->id);
+        $pengajuanBarang->update([
+            'user_id' => $request->user_id,
+            'jenispengajuanbarang_id' => $request->jenispengajuanbarang_id,
+            'subsubkelompokbarang_id' => $request->subsubkelompokbarang_id,
+            'statuspengajuan_id' => $request->statuspengajuan_id,
+            'jumlahbarang' => $request->jumlahbarang,
+            'keterangan' => $request->keterangan,
+            'estimasipenggunaan' => $estimasi,
+        ]);
+        $pengajuanBarang->update([
+            'id' => substr_replace(
+                $pengajuanBarang->id,
+                $request->jenispengajuanbarang_id .
+                    sprintf('%03s', $request->user_id) .
+                    sprintf('%03s', $id),
+                6
+            ),
+            // 'id' => substr_replace(
+            //     $inventarisDigunakan->id,
+            //     sprintf('%03s', $request->user_id) .
+            //         substr($inventarisDigunakan->id, -3),
+            //     7
+            // ),
+            // substr(date('Ymd'), 2) .
+            //     1 .
+            //     sprintf('%03s', Auth::user()->id) .
+            //     sprintf('%03s', $id),
+        ]);
+
+        if ($pengajuanBarang) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' berhasil diubah!'
+                    );
+            } elseif (Auth::user()->role_id === 2) {
+                return redirect()
+                    ->route('user.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' berhasil diubah!'
+                    );
+            } elseif (Auth::user()->role_id === 3) {
+                return redirect()
+                    ->route('management.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' berhasil diubah!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.pengajuan.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' gagal diubah!'
+                    );
+            } elseif (Auth::user()->role_id === 2) {
+                return redirect()
+                    ->route('user.pengajuan.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' gagal diubah!'
+                    );
+            } elseif (Auth::user()->role_id === 3) {
+                return redirect()
+                    ->route('management.pengajuan.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data pengajuan ' .
+                            $pengajuanBarang->id .
+                            ' gagal diubah!'
+                    );
+            }
+        }
+    }
+
     public function storeAntrian(Request $request)
     {
         // dd($request->all());

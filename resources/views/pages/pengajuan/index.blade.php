@@ -194,15 +194,15 @@
                                                 @if ($item->statuspengajuan_id === 1)
                                                     @if (Auth::user()->role_id === 1)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('admin.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('admin.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @elseif (Auth::user()->role_id === 2)
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('user.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('user.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @else
                                                         <a class="btn btn-warning btn-sm"
-                                                            href="{{ route('management.transaksi.peminjaman.pengajuan.editpeminjamanpribadi', ['id' => $item->id]) }}"><i
+                                                            href="{{ route('management.pengajuan.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
                                                     <a class="btn btn-danger btn-sm"
