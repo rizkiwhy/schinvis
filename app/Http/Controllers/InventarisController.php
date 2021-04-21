@@ -152,10 +152,12 @@ class InventarisController extends Controller
             'ruangan',
             'user',
         ])
-            ->whereNull('selesaidigunakan')
+            // ->whereNull('selesaidigunakan')
             ->pribadi()
             ->where('jenispenggunaanbarang_id', 3)
             ->get();
+
+        // dd($data['inventarisDigunakan']);
 
         return view('pages.inventaris.baranghabispakai.index', compact('data'));
     }

@@ -21,13 +21,13 @@
                 <div class="col-sm-6">
                     @if (Auth::user()->role_id === 1)
                         <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                            href="{{ route('admin.alat-kerja.pengajuan.indexpribadi') }}">
+                            href="{{ route('admin.transaksi.permintaan.pengajuan.indexpermintaan') }}">
                         @elseif(Auth::user()->role_id === 2)
                             <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                href="{{ route('user.alat-kerja.pengajuan.indexpribadi') }}">
+                                href="{{ route('user.transaksi.permintaan.pengajuan.indexpermintaan') }}">
                             @else
                                 <a class="btn btn-primary btn-sm mr-2 float-sm-right"
-                                    href="{{ route('management.alat-kerja.pengajuan.indexpribadi') }}">
+                                    href="{{ route('management.transaksi.permintaan.pengajuan.indexpermintaan') }}">
                     @endif
                     <i class="fas fa-bell mr-2"></i>Pengajuan
                     </a>
@@ -60,15 +60,11 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th class="text-center">No. Pengajuan</th>
-                                            <th class="text-center">Jenis Penggunaan</th>
                                             <th class="text-center">Kode Inventaris</th>
                                             <th class="text-center">Nama Barang</th>
                                             <th class="text-center">Ruangan</th>
                                             <th class="text-center">Pengguna</th>
-                                            <th class="text-center">Mulai Digunakan</th>
-                                            <th class="text-center">Status Penggunaan</th>
-                                            <th class="text-center">Aksi</th>
-                                            <th class="text-center">Selesai Digunakan</th>
+                                            <th class="text-center">Tanggal Permintaan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,33 +81,11 @@
                                                         {{ $item->nopengajuan }}
                                                     @endif
                                                 </td>
-                                                <td>{{ $item->jenisPenggunaanBarang->nama }}</td>
                                                 <td>{{ $item->inventarisbarang_id }}</td>
                                                 <td>{{ $item->inventarisBarang->subsubkelompokbarang->nama }}</td>
                                                 <td>{{ $item->ruangan->nama }}</td>
                                                 <td>{{ $item->user->nama }}</td>
                                                 <td class="text-center">{{ $item->mulaidigunakan }}</td>
-                                                <td>
-                                                    @if (empty($item->selesaidigunakan))
-                                                        <span class="badge badge-warning">
-                                                            Sedang digunakan
-                                                        @else
-                                                            <span class="badge badge-success">
-                                                                Sudah dikembalikan
-                                                    @endif
-                                                    </span>
-                                                </td>
-                                                <td class="text-center">
-                                                    @if (empty($item->selesaidigunakan))
-                                                        <a class="btn btn-primary btn-sm"
-                                                            onclick="endDistribusiBarang({{ $item }})"
-                                                            data-toggle="modal" data-target="#modal-end-distribusibarang">
-                                                            <i class="fas fa-check"></i></a>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    {{ $item->selesaidigunakan }}
-                                                </td>
                                             </tr>
                                             @php
                                                 $i++;
@@ -122,15 +96,11 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th class="text-center">No. Pengajuan</th>
-                                            <th class="text-center">Jenis Penggunaan</th>
                                             <th class="text-center">Kode Inventaris</th>
                                             <th class="text-center">Nama Barang</th>
                                             <th class="text-center">Ruangan</th>
                                             <th class="text-center">Pengguna</th>
-                                            <th class="text-center">Mulai Digunakan</th>
-                                            <th class="text-center">Status Penggunaan</th>
-                                            <th class="text-center">Aksi</th>
-                                            <th class="text-center">Selesai Digunakan</th>
+                                            <th class="text-center">Tanggal Permintaan</th>
                                         </tr>
                                     </tfoot>
                                 </table>

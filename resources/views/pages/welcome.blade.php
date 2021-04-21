@@ -468,11 +468,15 @@
                                                     <i class="ion ion-pie-graph"></i>
                                                 </div>
                                                 @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.gudang.perbaikan.index') }}"
+                                                    <a href="{{ route('admin.transaksi.perbaikan.indexpribadi') }}"
                                                         class="small-box-footer">More info <i
                                                             class="fas fa-arrow-circle-right"></i></a>
+                                                @elseif (Auth::user()->role_id === 2)
+                                                    <a href="{{ route('user.transaksi.perbaikan.indexpribadi') }}"
+                                                        class="small-box-footer">More info
+                                                        <i class="fas fa-arrow-circle-right"></i></a>
                                                 @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.gudang.perbaikan.index') }}"
+                                                    <a href="{{ route('management.transaksi.perbaikan.indexpribadi') }}"
                                                         class="small-box-footer">More info
                                                         <i class="fas fa-arrow-circle-right"></i></a>
                                                 @endif
