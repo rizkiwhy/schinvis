@@ -441,11 +441,15 @@
                                                     <i class="ion ion-person-add"></i>
                                                 </div>
                                                 @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.user.index') }}"
+                                                    <a href="{{ route('admin.inventaris.baranghabispakai.index') }}"
+                                                        class="small-box-footer">More info <i
+                                                            class="fas fa-arrow-circle-right"></i></a>
+                                                @elseif (Auth::user()->role_id === 2)
+                                                    <a href="{{ route('user.inventaris.baranghabispakai.index') }}"
                                                         class="small-box-footer">More info <i
                                                             class="fas fa-arrow-circle-right"></i></a>
                                                 @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.user.index') }}"
+                                                    <a href="{{ route('management.inventaris.baranghabispakai.index') }}"
                                                         class="small-box-footer">More info <i
                                                             class="fas fa-arrow-circle-right"></i></a>
                                                 @endif
