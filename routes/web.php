@@ -862,13 +862,48 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name(
             'user.dashboard'
         );
-
+        Route::prefix('pengajuan')->group(function () {
+            Route::get('/', [
+                PengajuanBarangController::class,
+                'indexAntrianPribadi',
+            ])->name('user.pengajuan.index');
+            Route::get('edit/{id}', [
+                PengajuanBarangController::class,
+                'editAntrianPribadi',
+            ])->name('user.pengajuan.edit');
+            Route::post('update', [
+                PengajuanBarangController::class,
+                'updateAntrianPribadi',
+            ])->name('user.pengajuan.update');
+            Route::post('store', [
+                PengajuanBarangController::class,
+                'storeAntrianPribadi',
+            ])->name('user.pengajuan.store');
+            Route::post('destroy', [
+                PengajuanBarangController::class,
+                'destroyAntrianPribadi',
+            ])->name('user.pengajuan.destroy');
+        });
         Route::prefix('inventaris')->group(function () {
             Route::prefix('digunakan')->group(function () {
                 Route::get('/', [
                     InventarisController::class,
                     'indexDigunakanPribadi',
                 ])->name('user.inventaris.digunakan.index');
+                Route::post('end', [
+                    InventarisController::class,
+                    'endDigunakanPribadi',
+                ])->name('user.inventaris.digunakan.end');
+            });
+            Route::prefix('barang-habis-pakai')->group(function () {
+                Route::get('/', [
+                    InventarisController::class,
+                    'indexBarangHabisPakaiPribadi',
+                ])->name('user.inventaris.baranghabispakai.index');
+                Route::post('end', [
+                    InventarisController::class,
+                    'endDigunakanPribadi',
+                ])->name('user.inventaris.digunakan.end');
             });
         });
 

@@ -31,467 +31,579 @@
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="custom-tabs-one-keseluruhan-tab" data-toggle="pill"
-                                        href="#custom-tabs-one-keseluruhan" role="tab"
-                                        aria-controls="custom-tabs-one-keseluruhan" aria-selected="false">Keseluruhan</a>
+                                    @if (Auth::user()->role_id !== 2)
+                                        <a class="nav-link active" id="custom-tabs-one-keseluruhan-tab" data-toggle="pill"
+                                            href="#custom-tabs-one-keseluruhan" role="tab"
+                                            aria-controls="custom-tabs-one-keseluruhan"
+                                            aria-selected="false">Keseluruhan</a>
+                                    @endif
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-pribadi-tab" data-toggle="pill"
-                                        href="#custom-tabs-one-pribadi" role="tab" aria-controls="custom-tabs-one-pribadi"
-                                        aria-selected="false">Pribadi</a>
+                                    @if (Auth::user()->role_id !== 2)
+                                        <a class="nav-link" id="custom-tabs-one-pribadi-tab" data-toggle="pill"
+                                            href="#custom-tabs-one-pribadi" role="tab"
+                                            aria-controls="custom-tabs-one-pribadi" aria-selected="false">
+                                        @elseif(Auth::user()->role_id === 2)
+                                            <a class="nav-link active" id="custom-tabs-one-pribadi-tab" data-toggle="pill"
+                                                href="#custom-tabs-one-pribadi" role="tab"
+                                                aria-controls="custom-tabs-one-pribadi" aria-selected="false">
+                                    @endif
+                                    Pribadi
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="card-body">
                             <div class="tab-content" id="custom-tabs-one-tabContent">
-                                <div class="tab-pane fade show active" id="custom-tabs-one-keseluruhan" role="tabpanel"
-                                    aria-labelledby="custom-tabs-one-keseluruhan-tab">
-                                    <!-- Small boxes (Stat box) -->
-                                    <div class="row">
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-info">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalInventarisBarang'] }}</h3>
+                                @if (Auth::user()->role_id !== 2)
+                                    <div class="tab-pane fade show active" id="custom-tabs-one-keseluruhan" role="tabpanel"
+                                        aria-labelledby="custom-tabs-one-keseluruhan-tab">
+                                        <!-- Small boxes (Stat box) -->
+                                        <div class="row">
+                                            <div class="col-lg-3 col-6">
+                                                <!-- small box -->
+                                                <div class="small-box bg-info">
+                                                    <div class="inner">
+                                                        <h3>{{ $data['totalInventarisBarang'] }}</h3>
 
-                                                    <p>Inventaris Barang</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-bag"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.gudang.inventaris.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.gudang.inventaris.index') }}"
-                                                        class="small-box-footer">More info
-                                                        <i class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- ./col -->
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-success">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalPengajuanBarang'] }}</h3>
-
-                                                    <p>Pengajuan Barang</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-stats-bars"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.gudang.pengajuan.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.gudang.pengajuan.index') }}"
-                                                        class="small-box-footer">More info
-                                                        <i class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- ./col -->
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-warning">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalUser'] }}</h3>
-
-                                                    <p>User Terdaftar</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-person-add"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.user.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.user.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- ./col -->
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-danger">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalInventarisRusak'] }}</h3>
-
-                                                    <p>Inventaris Rusak</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-pie-graph"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.gudang.perbaikan.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.gudang.perbaikan.index') }}"
-                                                        class="small-box-footer">More info
-                                                        <i class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- ./col -->
-                                    </div>
-                                    <!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <!-- DONUT CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Inventaris Barang</h3>
-
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
+                                                        <p>Inventaris Barang</p>
                                                     </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <canvas id="inventarisBarangDonutChart"
-                                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                                </div>
-                                                <!-- /.card-body -->
-                                            </div>
-                                            <!-- /.card -->
-                                        </div>
-                                        <div class="col-md-6">
-                                            <!-- BAR CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Pengajuan Barang</h3>
-
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
+                                                    <div class="icon">
+                                                        <i class="ion ion-bag"></i>
                                                     </div>
+                                                    @if (Auth::user()->role_id === 1)
+                                                        <a href="{{ route('admin.gudang.inventaris.index') }}"
+                                                            class="small-box-footer">More info <i
+                                                                class="fas fa-arrow-circle-right"></i></a>
+                                                    @elseif (Auth::user()->role_id === 3)
+                                                        <a href="{{ route('management.gudang.inventaris.index') }}"
+                                                            class="small-box-footer">More info
+                                                            <i class="fas fa-arrow-circle-right"></i></a>
+                                                    @endif
                                                 </div>
-                                                <div class="card-body">
-                                                    <div class="chart">
-                                                        <canvas id="pengajuanBarangBarChart"
+                                            </div>
+                                            <!-- ./col -->
+                                            <div class="col-lg-3 col-6">
+                                                <!-- small box -->
+                                                <div class="small-box bg-success">
+                                                    <div class="inner">
+                                                        <h3>{{ $data['totalPengajuanBarang'] }}</h3>
+
+                                                        <p>Pengajuan Barang</p>
+                                                    </div>
+                                                    <div class="icon">
+                                                        <i class="ion ion-stats-bars"></i>
+                                                    </div>
+                                                    @if (Auth::user()->role_id === 1)
+                                                        <a href="{{ route('admin.gudang.pengajuan.index') }}"
+                                                            class="small-box-footer">More info <i
+                                                                class="fas fa-arrow-circle-right"></i></a>
+                                                    @elseif (Auth::user()->role_id === 3)
+                                                        <a href="{{ route('management.gudang.pengajuan.index') }}"
+                                                            class="small-box-footer">More info
+                                                            <i class="fas fa-arrow-circle-right"></i></a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <!-- ./col -->
+                                            <div class="col-lg-3 col-6">
+                                                <!-- small box -->
+                                                <div class="small-box bg-warning">
+                                                    <div class="inner">
+                                                        <h3>{{ $data['totalUser'] }}</h3>
+
+                                                        <p>User Terdaftar</p>
+                                                    </div>
+                                                    <div class="icon">
+                                                        <i class="ion ion-person-add"></i>
+                                                    </div>
+                                                    @if (Auth::user()->role_id === 1)
+                                                        <a href="{{ route('admin.user.index') }}"
+                                                            class="small-box-footer">More info <i
+                                                                class="fas fa-arrow-circle-right"></i></a>
+                                                    @elseif (Auth::user()->role_id === 3)
+                                                        <a href="{{ route('management.user.index') }}"
+                                                            class="small-box-footer">More info <i
+                                                                class="fas fa-arrow-circle-right"></i></a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <!-- ./col -->
+                                            <div class="col-lg-3 col-6">
+                                                <!-- small box -->
+                                                <div class="small-box bg-danger">
+                                                    <div class="inner">
+                                                        <h3>{{ $data['totalInventarisRusak'] }}</h3>
+
+                                                        <p>Inventaris Rusak</p>
+                                                    </div>
+                                                    <div class="icon">
+                                                        <i class="ion ion-pie-graph"></i>
+                                                    </div>
+                                                    @if (Auth::user()->role_id === 1)
+                                                        <a href="{{ route('admin.gudang.perbaikan.index') }}"
+                                                            class="small-box-footer">More info <i
+                                                                class="fas fa-arrow-circle-right"></i></a>
+                                                    @elseif (Auth::user()->role_id === 3)
+                                                        <a href="{{ route('management.gudang.perbaikan.index') }}"
+                                                            class="small-box-footer">More info
+                                                            <i class="fas fa-arrow-circle-right"></i></a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <!-- ./col -->
+                                        </div>
+                                        <!-- /.row -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- DONUT CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Inventaris Barang</h3>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="inventarisBarangDonutChart"
                                                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                                     </div>
+                                                    <!-- /.card-body -->
                                                 </div>
-                                                <!-- /.card-body -->
+                                                <!-- /.card -->
                                             </div>
-                                            <!-- /.card -->
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <!-- PIE CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">User Terdaftar</h3>
+                                            <div class="col-md-6">
+                                                <!-- BAR CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Pengajuan Barang</h3>
 
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
+                                                    <div class="card-body">
+                                                        <div class="chart">
+                                                            <canvas id="pengajuanBarangBarChart"
+                                                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
                                                 </div>
-                                                <div class="card-body">
-                                                    <canvas id="userPieChart"
-                                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                                </div>
-                                                <!-- /.card-body -->
+                                                <!-- /.card -->
                                             </div>
-                                            <!-- /.card -->
                                         </div>
-                                        <div class="col-md-6">
-                                            <!-- DONUT CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Inventaris Diperbaiki</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- PIE CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">User Terdaftar</h3>
 
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <canvas id="inventarisDiperbaikiDonutChart"
-                                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                                </div>
-                                                <!-- /.card-body -->
-                                            </div>
-                                            <!-- /.card -->
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <!-- BAR CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Inventaris Barang</h3>
-
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="chart">
-                                                        <canvas id="inventarisBarangBarChart"
+                                                    <div class="card-body">
+                                                        <canvas id="userPieChart"
                                                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                                     </div>
+                                                    <!-- /.card-body -->
                                                 </div>
-                                                <!-- /.card-body -->
+                                                <!-- /.card -->
                                             </div>
-                                            <!-- /.card -->
-                                        </div>
-                                        <div class="col-md-6">
-                                            <!-- BAR CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Inventaris Diperbaiki</h3>
+                                            <div class="col-md-6">
+                                                <!-- DONUT CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Inventaris Diperbaiki</h3>
 
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="chart">
-                                                        <canvas id="inventarisDiperbaikiStackedBarChart"
+                                                    <div class="card-body">
+                                                        <canvas id="inventarisDiperbaikiDonutChart"
                                                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                                     </div>
+                                                    <!-- /.card-body -->
                                                 </div>
-                                                <!-- /.card-body -->
+                                                <!-- /.card -->
                                             </div>
-                                            <!-- /.card -->
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- BAR CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Inventaris Barang</h3>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="chart">
+                                                            <canvas id="inventarisBarangBarChart"
+                                                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                            <div class="col-md-6">
+                                                <!-- BAR CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Inventaris Diperbaiki</h3>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="chart">
+                                                            <canvas id="inventarisDiperbaikiStackedBarChart"
+                                                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <!-- DONUT CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Pengajuan Alat Kerja</h3>
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="pengajuanBarangDonutChart1"
+                                                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- DONUT CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Pengajuan Peminjaman</h3>
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="pengajuanBarangDonutChart2"
+                                                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- DONUT CHART -->
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Pengajuan Permintaan</h3>
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="remove">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="pengajuanBarangDonutChart3"
+                                                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <!-- DONUT CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Pengajuan Alat Kerja</h3>
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <canvas id="pengajuanBarangDonutChart1"
-                                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                                </div>
-                                                <!-- /.card-body -->
+                                    <div class="tab-pane fade" id="custom-tabs-one-pribadi" role="tabpanel"
+                                        aria-labelledby="custom-tabs-one-pribadi-tab">
+                                    @elseif (Auth::user()->role_id === 2)
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-pribadi" role="tabpanel"
+                                            aria-labelledby="custom-tabs-one-pribadi-tab">
+                                @endif
+                                <!-- Small boxes (Stat box) -->
+                                <div class="row">
+                                    <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-info">
+                                            <div class="inner">
+                                                <h3>{{ $data['totalInventarisDigunakanPribadi'] }}</h3>
+
+                                                <p>Inventaris Digunakan</p>
                                             </div>
-                                            <!-- /.card -->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- DONUT CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Pengajuan Peminjaman</h3>
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <canvas id="pengajuanBarangDonutChart2"
-                                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                                </div>
-                                                <!-- /.card-body -->
+                                            <div class="icon">
+                                                <i class="ion ion-bag"></i>
                                             </div>
-                                            <!-- /.card -->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- DONUT CHART -->
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Pengajuan Permintaan</h3>
-                                                    <div class="card-tools">
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="collapse">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-tool"
-                                                            data-card-widget="remove">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <canvas id="pengajuanBarangDonutChart3"
-                                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                                </div>
-                                                <!-- /.card-body -->
-                                            </div>
-                                            <!-- /.card -->
+                                            @if (Auth::user()->role_id === 1)
+                                                <a href="{{ route('admin.inventaris.digunakan.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 2)
+                                                <a href="{{ route('user.inventaris.digunakan.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif(Auth::user()->role_id === 3)
+                                                <a href="{{ route('management.inventaris.digunakan.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @endif
                                         </div>
                                     </div>
+                                    <!-- ./col -->
+                                    <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-success">
+                                            <div class="inner">
+                                                <h3>{{ $data['totalPengajuanBarangPribadi'] }}</h3>
+
+                                                <p>Pengajuan Barang</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="ion ion-stats-bars"></i>
+                                            </div>
+                                            @if (Auth::user()->role_id === 1)
+                                                <a href="{{ route('admin.pengajuan.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 2)
+                                                <a href="{{ route('user.pengajuan.index') }}"
+                                                    class="small-box-footer">More info
+                                                    <i class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 3)
+                                                <a href="{{ route('management.pengajuan.index') }}"
+                                                    class="small-box-footer">More info
+                                                    <i class="fas fa-arrow-circle-right"></i></a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-warning">
+                                            <div class="inner">
+                                                <h3>{{ $data['totalBarangHabisPakaiPribadi'] }}</h3>
+
+                                                <p>Barang Habis Pakai</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="ion ion-person-add"></i>
+                                            </div>
+                                            @if (Auth::user()->role_id === 1)
+                                                <a href="{{ route('admin.inventaris.baranghabispakai.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 2)
+                                                <a href="{{ route('user.inventaris.baranghabispakai.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 3)
+                                                <a href="{{ route('management.inventaris.baranghabispakai.index') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-danger">
+                                            <div class="inner">
+                                                <h3>{{ $data['totalInventarisRusakPribadi'] }}</h3>
+
+                                                <p>Inventaris Rusak</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="ion ion-pie-graph"></i>
+                                            </div>
+                                            @if (Auth::user()->role_id === 1)
+                                                <a href="{{ route('admin.transaksi.perbaikan.indexpribadi') }}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 2)
+                                                <a href="{{ route('user.transaksi.perbaikan.indexpribadi') }}"
+                                                    class="small-box-footer">More info
+                                                    <i class="fas fa-arrow-circle-right"></i></a>
+                                            @elseif (Auth::user()->role_id === 3)
+                                                <a href="{{ route('management.transaksi.perbaikan.indexpribadi') }}"
+                                                    class="small-box-footer">More info
+                                                    <i class="fas fa-arrow-circle-right"></i></a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
                                 </div>
-                                <div class="tab-pane fade" id="custom-tabs-one-pribadi" role="tabpanel"
-                                    aria-labelledby="custom-tabs-one-pribadi-tab">
-                                    <!-- Small boxes (Stat box) -->
-                                    <div class="row">
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-info">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalInventarisDigunakanPribadi'] }}</h3>
+                                <!-- /.row -->
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="card card-primary collapsed-card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Expandable</h3>
 
-                                                    <p>Inventaris Digunakan</p>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                    </button>
                                                 </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-bag"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.inventaris.digunakan.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.inventaris.digunakan.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
+                                                <!-- /.card-tools -->
                                             </div>
-                                        </div>
-                                        <!-- ./col -->
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-success">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalPengajuanBarangPribadi'] }}</h3>
-
-                                                    <p>Pengajuan Barang</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-stats-bars"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.pengajuan.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.pengajuan.index') }}"
-                                                        class="small-box-footer">More info
-                                                        <i class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                The body of the card
                                             </div>
+                                            <!-- /.card-body -->
                                         </div>
-                                        <!-- ./col -->
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-warning">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalBarangHabisPakaiPribadi'] }}</h3>
-
-                                                    <p>Barang Habis Pakai</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-person-add"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.inventaris.baranghabispakai.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 2)
-                                                    <a href="{{ route('user.inventaris.baranghabispakai.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.inventaris.baranghabispakai.index') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- ./col -->
-                                        <div class="col-lg-3 col-6">
-                                            <!-- small box -->
-                                            <div class="small-box bg-danger">
-                                                <div class="inner">
-                                                    <h3>{{ $data['totalInventarisRusakPribadi'] }}</h3>
-
-                                                    <p>Inventaris Rusak</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="ion ion-pie-graph"></i>
-                                                </div>
-                                                @if (Auth::user()->role_id === 1)
-                                                    <a href="{{ route('admin.transaksi.perbaikan.indexpribadi') }}"
-                                                        class="small-box-footer">More info <i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 2)
-                                                    <a href="{{ route('user.transaksi.perbaikan.indexpribadi') }}"
-                                                        class="small-box-footer">More info
-                                                        <i class="fas fa-arrow-circle-right"></i></a>
-                                                @elseif (Auth::user()->role_id === 3)
-                                                    <a href="{{ route('management.transaksi.perbaikan.indexpribadi') }}"
-                                                        class="small-box-footer">More info
-                                                        <i class="fas fa-arrow-circle-right"></i></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- ./col -->
+                                        <!-- /.card -->
                                     </div>
-                                    <!-- /.row -->
+                                    <!-- /.col -->
+                                    <div class="col-md-3">
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Collapsable</h3>
+
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.card-tools -->
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                The body of the card
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-3">
+                                        <div class="card card-warning">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Removable</h3>
+
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                                            class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.card-tools -->
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                The body of the card
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-3">
+                                        <div class="card card-danger">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Maximizable</h3>
+
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.card-tools -->
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                The body of the card
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                    <!-- /.col -->
                                 </div>
+                                <!-- /.row -->
                             </div>
+
                         </div>
-                        <!-- /.card -->
                     </div>
+                    <!-- /.card -->
                 </div>
             </div>
+        </div>
 
         </div><!-- /.container-fluid -->
     </section>
