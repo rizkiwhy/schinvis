@@ -56,7 +56,7 @@ class InventarisController extends Controller
             ->whereNotIn('jenispenggunaanbarang_id', [3])
             ->get();
 
-        return view('pages.inventaris.index', compact('data'));
+        return view('pages.inventaris.digunakan..index', compact('data'));
     }
 
     public function endDigunakanPribadi(Request $request)
@@ -137,6 +137,27 @@ class InventarisController extends Controller
                     );
             }
         }
+    }
+
+    public function indexBarangHabisPakaiPribadi()
+    {
+        $data['layout'] = 'layouts.master';
+        $data['subpage'] = 'Index';
+        $data['page'] = 'Inventaris Barang Habis Pakai';
+        $data['app'] = 'Assek App';
+
+        $data['inventarisDigunakan'] = InventarisDigunakan::with([
+            'inventarisBarang',
+            'jenisPenggunaanBarang',
+            'ruangan',
+            'user',
+        ])
+            ->whereNull('selesaidigunakan')
+            ->pribadi()
+            ->where('jenispenggunaanbarang_id', 3)
+            ->get();
+
+        return view('pages.inventaris.baranghabispakai.index', compact('data'));
     }
 
     public function checkNoRegister(Request $request)

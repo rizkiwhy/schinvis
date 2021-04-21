@@ -392,6 +392,16 @@ Route::middleware(['auth'])->group(function () {
                         'endDigunakanPribadi',
                     ])->name('admin.inventaris.digunakan.end');
                 });
+                Route::prefix('barang-habis-pakai')->group(function () {
+                    Route::get('/', [
+                        InventarisController::class,
+                        'indexBarangHabisPakaiPribadi',
+                    ])->name('admin.inventaris.baranghabispakai.index');
+                    Route::post('end', [
+                        InventarisController::class,
+                        'endDigunakanPribadi',
+                    ])->name('admin.inventaris.digunakan.end');
+                });
             });
             Route::prefix('alat-kerja')->group(function () {
                 Route::get('/', [AlatKerjaController::class, 'index'])->name(
