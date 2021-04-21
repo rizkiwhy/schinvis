@@ -283,6 +283,50 @@ class PengajuanBarangController extends Controller
         }
     }
 
+    public function destroyAntrianPribadi(Request $request)
+    {
+        $pengajuanBarang = PengajuanBarang::where(
+            'id',
+            $request->delete_id
+        )->delete();
+
+        if ($pengajuanBarang) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan berhasil dihapus!'
+                    );
+            } elseif (Auth::user()->role_id === 2) {
+                return redirect()
+                    ->route('user.pengajuan.index')
+                    ->with('error_message', 'Data pengajuan gagal dihapus!');
+            } elseif (Auth::user()->role_id === 3) {
+                return redirect()
+                    ->route('management.pengajuan.index')
+                    ->with(
+                        'success_message',
+                        'Data pengajuan berhasil dihapus!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.pengajuan.index')
+                    ->with('error_message', 'Data pengajuan gagal dihapus!');
+            } elseif (Auth::user()->role_id === 2) {
+                return redirect()
+                    ->route('user.pengajuan.index')
+                    ->with('error_message', 'Data pengajuan gagal dihapus!');
+            } elseif (Auth::user()->role_id === 3) {
+                return redirect()
+                    ->route('management.pengajuan.index')
+                    ->with('error_message', 'Data pengajuan gagal dihapus!');
+            }
+        }
+    }
+
     public function storeAntrian(Request $request)
     {
         // dd($request->all());

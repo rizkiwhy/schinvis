@@ -38,17 +38,14 @@
                         </div>
                         <div class="modal-body">
                             @if (Auth::user()->role_id === 1)
-                                <form action="{{ route('admin.pengajuan.store') }}"
-                                    method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
+                                <form action="{{ route('admin.pengajuan.store') }}" method="post" class="form-horizontal"
+                                    id="form-tambah-pengajuan-peminjaman-pribadi">
                                 @elseif (Auth::user()->role_id === 2)
-                                    <form
-                                        action="{{ route('user.pengajuan.store') }}"
-                                        method="post" class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
+                                    <form action="{{ route('user.pengajuan.store') }}" method="post"
+                                        class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
                                     @elseif (Auth::user()->role_id === 3)
-                                        <form
-                                            action="{{ route('management.pengajuan.store') }}"
-                                            method="post" class="form-horizontal"
-                                            id="form-tambah-pengajuan-peminjaman-pribadi">
+                                        <form action="{{ route('management.pengajuan.store') }}" method="post"
+                                            class="form-horizontal" id="form-tambah-pengajuan-peminjaman-pribadi">
                             @endif
                             @csrf
                             <div class="form-group">
@@ -252,15 +249,14 @@
                 </div>
                 <div class="modal-body">
                     @if (Auth::user()->role_id === 1)
-                        <form action="{{ route('admin.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
-                            method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
+                        <form action="{{ route('admin.pengajuan.destroy') }}" method="post" class="form-horizontal"
+                            id="form-delete-pengajuan-peminjaman">
                         @elseif (Auth::user()->role_id === 2)
-                            <form action="{{ route('user.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
-                                method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
+                            <form action="{{ route('user.pengajuan.destroy') }}" method="post" class="form-horizontal"
+                                id="form-delete-pengajuan-peminjaman">
                             @elseif (Auth::user()->role_id === 3)
-                                <form
-                                    action="{{ route('management.transaksi.peminjaman.pengajuan.destroypeminjamanpribadi') }}"
-                                    method="post" class="form-horizontal" id="form-delete-pengajuan-peminjaman">
+                                <form action="{{ route('management.pengajuan.destroy') }}" method="post"
+                                    class="form-horizontal" id="form-delete-pengajuan-peminjaman">
                     @endif
                     @csrf
                     <input type="hidden" name="delete_id" id="delete_id" value="" />
