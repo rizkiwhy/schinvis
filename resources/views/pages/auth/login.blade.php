@@ -72,6 +72,10 @@
                     </div> --}}
                     <div class="row">
                         <div class="col-8">
+                            <p class="mb-1">
+                                <a href="#" data-toggle="modal" data-target="#modal-sm" data-backdrop="static">I forgot
+                                    my password</a>
+                            </p>
                             {{-- <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
                                 <label for="remember">
@@ -109,6 +113,47 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User Credentials</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>administrator
+                            <ul>
+                                <li>email : admin@assek.com</li>
+                                <li>password : assek</li>
+                            </ul>
+                        </li>
+                        <li>staff sarana prasarana (management)
+                            <ul>
+                                <li>email : management@assek.com</li>
+                                <li>password : assek</li>
+                            </ul>
+                        </li>
+                        <li>user
+                            <ul>
+                                <li>email : aiki@assek.com</li>
+                                <li>password : assek</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
     <!-- jQuery -->
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
@@ -126,9 +171,10 @@
 
     @if (Session::has('error_message'))
         <script>
-            toastr.error('{!!  Session::get('error_message') !!}', {
+            toastr.error('{!! Session::get('error_message') !!}', {
                 "progressBar": true,
             })
+
         </script>
     @endif
 
@@ -149,7 +195,7 @@
                     email: {
                         required: "Silahkan masukkan alamat email",
                         email: "Silahkan masukkan alamat email yang valid"
-                },
+                    },
                     password: {
                         required: "Silahkan masukkan password",
                         minlength: "Password harus terdiri dari minimal 5 karakter"
