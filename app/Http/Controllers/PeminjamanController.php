@@ -304,6 +304,88 @@ class PeminjamanController extends Controller
         }
     }
 
+    public function destroy(Request $request)
+    {
+        $inventarisDigunakan = InventarisDigunakan::find($request->delete_id);
+        // $inventarisDigunakan->update([
+        //     'selesaidigunakan' => date('Ymd'),
+        // ]);
+
+        $inventarisBarang = $inventarisDigunakan->inventarisBarang;
+        // dd($inventarisBarang);
+        // InventarisBarang::find(
+        //     $inventarisDigunakan->inventarisbarang_id
+        // );
+        $inventarisBarang->update([
+            'statusbarang_id' => 1,
+        ]);
+
+        if (!empty($inventarisDigunakan->nopengajuan)) {
+            $jumlahBarangSelesaiDigunakan = InventarisDigunakan::where(
+                'nopengajuan',
+                $inventarisDigunakan->nopengajuan
+            )
+                ->whereNotNull('selesaidigunakan')
+                ->count();
+
+            $pengajuanPeminjaman = PengajuanBarang::find(
+                $inventarisDigunakan->nopengajuan
+            );
+
+            if (
+                $jumlahBarangSelesaiDigunakan ===
+                $pengajuanPeminjaman->jumlahbarang
+            ) {
+                $pengajuanPeminjaman->update([
+                    'statuspengajuan_id' => 3,
+                ]);
+            }
+        }
+
+        $inventarisDigunakan->delete();
+        if ($inventarisDigunakan) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.peminjaman.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $inventarisDigunakan->id .
+                            ' berhasil dihapus!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.peminjaman.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $inventarisDigunakan->id .
+                            ' berhasil dihapus!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.perbaikan.index')
+                    ->with(
+                        'error_message',
+                        'Data perbaikan ' .
+                            $inventarisDigunakan->id .
+                            ' gagal untuk selesai diperbaikan!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.perbaikan.index')
+                    ->with(
+                        'error_message',
+                        'Data perbaikan ' .
+                            $inventarisDigunakan->id .
+                            ' gagal untuk selesai diperbaikan!'
+                    );
+            }
+        }
+    }
+
     public function endPribadi(Request $request)
     {
         $inventarisDigunakan = InventarisDigunakan::find($request->end_id);

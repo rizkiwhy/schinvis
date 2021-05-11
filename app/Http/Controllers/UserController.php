@@ -14,6 +14,10 @@ use App\Models\Title;
 
 class UserController extends Controller
 {
+    public function count()
+    {
+        return User::count();
+    }
     public function index()
     {
         $data['layout'] = 'layouts.master';
@@ -259,7 +263,9 @@ class UserController extends Controller
             } elseif (Auth::user()->role_id === 3) {
                 # code...
                 return redirect()
-                    ->route('management.user-profile.edit', ['id' => $request->id])
+                    ->route('management.user-profile.edit', [
+                        'id' => $request->id,
+                    ])
                     ->with('error_message', 'Data User gagal diubah!');
             }
         }

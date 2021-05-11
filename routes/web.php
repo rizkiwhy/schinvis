@@ -95,6 +95,10 @@ Route::middleware(['auth'])->group(function () {
         ])->name('chart.inventarisdiperbaikibar');
     });
 
+    Route::get('count-user', [UserController::class, 'count'])->name(
+        'count.user'
+    );
+
     Route::prefix('administrator')
         ->middleware(['administrator'])
         ->group(function () {
@@ -199,6 +203,10 @@ Route::middleware(['auth'])->group(function () {
                         DistribusiBarangController::class,
                         'end',
                     ])->name('admin.gudang.distribusi.end');
+                    Route::post('destroy', [
+                        DistribusiBarangController::class,
+                        'destroy',
+                    ])->name('admin.gudang.distribusi.destroy');
                     Route::prefix('pengajuan')->group(function () {
                         Route::get('/', [
                             PengajuanBarangController::class,

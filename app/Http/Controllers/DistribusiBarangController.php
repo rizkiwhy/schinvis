@@ -312,4 +312,63 @@ class DistribusiBarangController extends Controller
             }
         }
     }
+
+    public function destroy(Request $request)
+    {
+        $inventarisBarang = InventarisBarang::find(
+            $request->delete_inventarisbarang_id
+        );
+        $inventarisBarang->update([
+            'statusbarang_id' => 1,
+        ]);
+        $inventarisDigunakan = InventarisDigunakan::find(
+            $request->delete_id
+        )->delete();
+
+        if ($inventarisDigunakan) {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.distribusi.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $request->delete_inventarisbarang_id .
+                            ' berhasil dihapus!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.distribusi.index')
+                    ->with(
+                        'success_message',
+                        'Data inventaris ' .
+                            $request->delete_inventarisbarang_id .
+                            ' berhasil dihapus!'
+                    );
+            }
+        } else {
+            if (Auth::user()->role_id === 1) {
+                return redirect()
+                    ->route('admin.gudang.distribusi.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data inventaris ' .
+                            $request->delete_inventarisbarang_id .
+                            ' gagal dihapus!'
+                    );
+            } else {
+                return redirect()
+                    ->route('management.gudang.distribusi.edit', [
+                        'id' => $request->id,
+                    ])
+                    ->with(
+                        'error_message',
+                        'Data inventaris ' .
+                            $request->delete_inventarisbarang_id .
+                            ' gagal dihapus!'
+                    );
+            }
+        }
+    }
 }

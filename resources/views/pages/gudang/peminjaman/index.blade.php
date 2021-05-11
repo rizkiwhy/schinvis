@@ -207,15 +207,15 @@
                                                             href="{{ route('management.gudang.peminjaman.edit', ['id' => $item->id]) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                     @endif
-                                                    <a class="btn btn-danger btn-sm"
-                                                        onclick="deletePeminjamanBarang({{ $item }})"
-                                                        data-toggle="modal" data-target="#modal-delete-peminjamanbarang">
-                                                        <i class="fas fa-trash"></i></a>
                                                     <a class="btn btn-primary btn-sm"
                                                         onclick="endPeminjamanBarang({{ $item }})"
                                                         data-toggle="modal" data-target="#modal-end-peminjamanbarang">
                                                         <i class="fas fa-check"></i></a>
                                                 @endif
+                                                <a class="btn btn-danger btn-sm"
+                                                    onclick="deletePeminjamanBarang({{ $item }})"
+                                                    data-toggle="modal" data-target="#modal-delete-peminjamanbarang">
+                                                    <i class="fas fa-trash"></i></a>
                                             </td>
                                             <td>{{ $item->selesaidigunakan }}</td>
                                         </tr>
@@ -267,6 +267,37 @@
                     @csrf
                     <input type="hidden" name="end_id" id="end_id" value="" />
                     Apakah inventaris <span name="end_name" id="end_name"></span> sudah selesai dipinjam?
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Selesai</button>
+                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modal-delete-peminjamanbarang">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus {{ $data['page'] }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if (Auth::user()->role_id === 1)
+                        <form action="{{ route('admin.gudang.peminjaman.destroy') }}" method="post"
+                            class="form-horizontal">
+                        @else
+                            <form action="{{ route('management.gudang.peminjaman.destroy') }}" method="post"
+                                class="form-horizontal">
+                    @endif
+                    @csrf
+                    <input type="hidden" name="delete_id" id="delete_id" value="" />
+                    Apakah peminjaman inventaris <span name="delete_name" id="delete_name"></span> akan dihapus?
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -401,7 +432,7 @@
         function deletePeminjamanBarang(arr) {
             $('#delete_id').val(arr.id)
             $('#delete_inventarisbarang_id').val(arr.inventarisbarang_id)
-            $('#delete_nama').text(arr.inventarisbarang_id)
+            $('#delete_name').text(arr.inventarisbarang_id)
         }
 
     </script>

@@ -210,6 +210,10 @@
                                                         onclick="endDistribusiBarang({{ $item }})"
                                                         data-toggle="modal" data-target="#modal-end-distribusibarang">
                                                         <i class="fas fa-check"></i></a>
+                                                    <a class="btn btn-danger btn-sm"
+                                                        onclick="deleteDistribusiBarang({{ $item }})"
+                                                        data-toggle="modal" data-target="#modal-delete-distribusibarang">
+                                                        <i class="fas fa-trash"></i></a>
                                                 @endif
                                             </td>
                                             <td class="text-center">
@@ -268,6 +272,37 @@
                     <input type="hidden" name="end_id" id="end_id" value="" />
                     <input type="hidden" name="end_inventarisbarang_id" id="end_inventarisbarang_id" value="" />
                     Apakah inventaris <span name="end_name" id="end_name"></span> sudah selesai digunakan?
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modal-delete-distribusibarang">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus Distribusi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if (Auth::user()->role_id === 1)
+                        <form action="{{ route('admin.gudang.distribusi.destroy') }}" method="post" class="form-horizontal">
+                        @elseif(Auth::user()->role_id === 3)
+                            <form action="{{ route('management.gudang.distribusi.destroy') }}" method="post"
+                                class="form-horizontal">
+                    @endif
+                    @csrf
+                    <input type="hidden" name="delete_id" id="delete_id" value="" />
+                    <input type="hidden" name="delete_inventarisbarang_id" id="delete_inventarisbarang_id" value="" />
+                    Apakah inventaris <span name="delete_name" id="delete_name"></span> akan dihapus?
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -398,6 +433,12 @@
             $('#end_id').val(arr.id)
             $('#end_inventarisbarang_id').val(arr.inventarisbarang_id)
             $('#end_name').text(arr.id)
+        }
+
+        function deleteDistribusiBarang(arr) {
+            $('#delete_id').val(arr.id)
+            $('#delete_inventarisbarang_id').val(arr.inventarisbarang_id)
+            $('#delete_name').text(arr.id)
         }
 
     </script>
