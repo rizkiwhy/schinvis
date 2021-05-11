@@ -114,7 +114,7 @@
     </div>
 
     <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">User Credentials</h4>
