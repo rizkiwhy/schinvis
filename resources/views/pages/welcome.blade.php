@@ -510,7 +510,7 @@
                                     <!-- ./col -->
                                 </div>
                                 <!-- /.row -->
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-md-3">
                                         <div class="card card-primary collapsed-card">
                                             <div class="card-header">
@@ -596,7 +596,7 @@
                                     </div>
                                     <!-- /.col -->
                                 </div>
-                                <!-- /.row -->
+                                <!-- /.row --> --}}
                             </div>
 
                         </div>
